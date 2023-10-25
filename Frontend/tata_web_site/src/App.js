@@ -1,21 +1,43 @@
-import Navbar from './components/navbar.js';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router , Route} from 'react-router-dom';
-import Home from './components/Home.js';
+import { useState } from 'react';
+import HomeComponent from './components/Home_Components/HomeComponent';
+import {Influencer} from './components/Influencer_Components/Influencer';
+import Admin from'./components/Admin_Components/Admin';
+import Advertiser from './components/Advertiser_Components/Advertiser';
+
 function App() {
+  const [isAuth, setAuth] = useState(false);
+  const [type , setType] = useState('');  
+
+  function setIsAuth() {
+    setAuth(true);
+    setType('Influencer');
+  }
+
+  let comp;
+  if(!isAuth){
+      comp = <HomeComponent setIsAuth={setIsAuth}></HomeComponent>
+  }
+  else{
+    switch(type){
+      case 'Influencer' :
+          comp =  <Influencer></Influencer>
+      break;
+      case 'Advertiser' :
+          comp = <Advertiser></Advertiser>
+      break;
+      case 'Admin':
+          comp = <Admin></Admin>
+      break;
+      default:
+          comp = <HomeComponent></HomeComponent>
+    }
+  }
   return (
-    <Router>
-        <div className="App">
-          <Navbar/>
-          <div className="content">
-                <Route exact path="/">
-                  <Home/>
-                </Route>
-          </div>
-        </div>
-    </Router>
-  );
+    <div className="app">
+      {comp}
+    </div>
+    );
 }
 
 export default App;
