@@ -11,20 +11,26 @@ from 'mdb-react-ui-kit';
 import Form from 'react-bootstrap/Form';
 import './register.css'
 import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 const Register = () => {
     const [generateNewMedia,setNewMedia] = useState([]);
 
     const handleAddInput = () => {
-        const newInput = (
+        const newInput = 
             <MDBRow>
-                <MDBCol>
-                    <MDBInput wrapperClass='mb-4' label='Email' size='lg' id='platform' type='email'/>
+                 <MDBCol md='6' style={{
+                                        paddingLeft: '0px'
+                                    }}>
+                <MDBInput wrapperClass='mb-4' label='Email' size='lg' id='platform' type='email'/>
                 </MDBCol>
-                <MDBCol>
-                    <MDBInput className='mb-4' label='Url' size="lg" id='textAreaExample'/>
+                <MDBCol md='6' style={{
+                                        paddingRight: '0px'
+                                    }}>
+                <MDBInput className='mb-4' label='Url' size="lg" id='textAreaExample'/>
                 </MDBCol>
             </MDBRow>
-        );
+        
     
         setNewMedia([...generateNewMedia, newInput]);
       };
@@ -88,22 +94,24 @@ const Register = () => {
                                 <h4 className="fw-bold mb-4 pb-2 pb-md-0 mb-md-5 text-center mt-3">Media Links</h4>
                             </MDBCol>
                         </MDBRow>
-                            {
-                                generateNewMedia.map((input, index) => (
-                                    <MDBRow key={index}> 
-                                        {input}
-                                    </MDBRow>
-                            ))}
-                            <MDBRow>
-                                <MDBRow>
-                                    <MDBCol>
-                                        <MDBInput wrapperClass='mb-4' label='Email' size='lg' id='platform' type='email'/>
-                                    </MDBCol>
-                                    <MDBCol>
-                                        <MDBInput className='mb-4' label='Url' size="lg" id='textAreaExample'/>
-                                    </MDBCol>
-                                </MDBRow>
+                        <MDBRow>
+                            <MDBCol md='6' style={{
+                                        paddingLeft: '0px'
+                                    }}>
+                                    <MDBInput wrapperClass='mb-4' label='Email' size='lg' id='platform' type='email'/>
+                            </MDBCol>
+                            <MDBCol md='6' style={{
+                                        paddingRight: '0px'
+                                    }}>
+                                <MDBInput className='mb-4' label='Url' size="lg" id='textAreaExample'/>
+                            </MDBCol>
+                        </MDBRow>
+                        {
+                            generateNewMedia.map((input, index) => (
+                            <MDBRow key={index}> 
+                                {input}
                             </MDBRow>
+                        ))}
 
                         <MDBRow>     
                             </MDBRow>
@@ -115,7 +123,7 @@ const Register = () => {
                                         handleAddInput()
                                     }
                                 }>
-                                    Add More
+                                Add More
                                 </MDBBtn>
                             </MDBCol>
                         </MDBRow>            

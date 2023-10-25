@@ -9,6 +9,7 @@ const HomeComponent = ({setIsAuth}) => {
         <div className="App">
             <HomeNavbar></HomeNavbar>
             <Routes>
+                <Route path="/" element={<Home></Home>}></Route>
                 <Route path="/login" element={<Login setIsAuth={setIsAuth}></Login>} ></Route>
                 <Route path="/register" element={<Register></Register>}></Route>
             </Routes>   

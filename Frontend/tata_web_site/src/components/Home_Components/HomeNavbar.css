@@ -1,0 +1,6 @@
+#homeNavBar{
+    border-bottom: rgb(179, 179, 255) solid 1px;
+}
+.nav-item{
+    margin-left: 45px !important;
+}
