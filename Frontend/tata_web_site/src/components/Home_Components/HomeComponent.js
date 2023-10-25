@@ -8,7 +8,6 @@ const HomeComponent = ({setIsAuth}) => {
     return (
         <div className="App">
             <HomeNavbar></HomeNavbar>
-            <Home></Home>
             <Routes>
                 <Route path="/login" element={<Login setIsAuth={setIsAuth}></Login>} ></Route>
                 <Route path="/register" element={<Register></Register>}></Route>
