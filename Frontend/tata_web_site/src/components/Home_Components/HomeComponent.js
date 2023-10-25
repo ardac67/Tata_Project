@@ -13,6 +13,7 @@ const HomeComponent = ({setIsAuth}) => {
                 <Route path="/login" element={<Login setIsAuth={setIsAuth}></Login>} ></Route>
                 <Route path="/register" element={<Register></Register>}></Route>
             </Routes>   
+            <div></div>
         </div>
     )
 }
