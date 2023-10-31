@@ -27,7 +27,7 @@ const Login = ({ setIsAuth }) => {
         ...login_data,
         [e.target.name]: e.target.value
     })
-}
+  }
   return (
     <div
       className='App'

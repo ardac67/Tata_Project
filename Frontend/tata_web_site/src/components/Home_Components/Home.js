@@ -2,11 +2,7 @@ import React from 'react'
 import {
   MDBRow,
   MDBCol,
-  MDBBtn,
-  MDBBtnGroup,
   MDBContainer,
-  MDBFooter,
-  MDBIcon,
   MDBCarousel,
   MDBCarouselItem
 } from 'mdb-react-ui-kit'
