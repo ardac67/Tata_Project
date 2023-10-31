@@ -16,6 +16,7 @@ import Pic2 from './pictures/Home2.png'
 import Pic3 from './pictures/Home3.png'
 import FooterUniversal from '../../FooterUniversal'
 const Home = () => {
+
   return (
     <div className='App'>
       <MDBCarousel showIndicators showControls fade>
@@ -105,6 +106,12 @@ const Home = () => {
       <FooterUniversal />
     </div>
   )
+    return (
+        <div className="App">
+            This is home
+            asd
+        </div>
+    )
 }
 
 export default Home
