@@ -94,6 +94,7 @@ const Home = () => {
                 Our talented team of recruiters can help you find the best
                 influencer for the job and our technical co-pilots can even
                 manage the project for you.
+                asdsasad
               </div>
             </MDBCol>
           </MDBRow>
