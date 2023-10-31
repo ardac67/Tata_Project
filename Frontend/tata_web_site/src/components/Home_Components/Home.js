@@ -46,7 +46,7 @@ const Home = () => {
 
             <p className='MainLow'>
               Join our platform to showcase a wide range of products, including
-              clothing, cosmetics, cutting-edge technological devices.but also offer you the chance to monetize your influence
+              clothing, cosmetics, arda cutting-edge technological devices.but also offer you the chance to monetize your influence
             </p>
 
             <div className='mainbuttons text-center'></div>
