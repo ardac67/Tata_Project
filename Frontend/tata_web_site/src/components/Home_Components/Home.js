@@ -10,9 +10,11 @@ import './Home.css'
 import Pic1 from './pictures/Home1.png'
 import Pic2 from './pictures/Home2.png'
 import Pic3 from './pictures/Home3.png'
+import ipic1 from './pictures/i1.png'
+import ipic2 from './pictures/i2.png'
+import ipic3 from './pictures/i3.png'
 import FooterUniversal from '../../FooterUniversal'
 const Home = () => {
-
   return (
     <div className='App'>
       <MDBCarousel showIndicators showControls fade>
@@ -43,9 +45,10 @@ const Home = () => {
             </div>
 
             <p className='MainLow'>
-              Register on our site to introduce clothes, cosmetics,technological
-              devices, nutrition and everything like that .
+              Join our platform to showcase a wide range of products, including
+              clothing, cosmetics, cutting-edge technological devices.but also offer you the chance to monetize your influence
             </p>
+
             <div className='mainbuttons text-center'></div>
           </div>
         </MDBCarouselItem>
@@ -56,8 +59,33 @@ const Home = () => {
           src='https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg'
           alt='...'
         >
-          <h5>Second slide label</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <div className='Main'>
+            <h4 className='Header'>
+              Find Exciting Campaigns for Your Profile. Profitably and Securely.
+            </h4>
+            <div className='mainPictures'>
+              <MDBRow>
+                <MDBCol lg='4' md='12' className='mb-4'>
+                  <img src={Pic1} className='img-fluid rounded' alt='' />
+                </MDBCol>
+
+                <MDBCol lg='4' md='6' className='mb-4'>
+                  <img src={Pic2} className='img-fluid rounded' alt='' />
+                </MDBCol>
+
+                <MDBCol lg='4' md='6' className='mb-4'>
+                  <img src={Pic3} className='img-fluid rounded' alt='' />
+                </MDBCol>
+              </MDBRow>
+            </div>
+
+            <p className='MainLow'>
+            Join our platform to unlock incredible opportunities as an
+              influencer. By being part of our community, you can access
+              exciting campaigns across various industries
+            </p>
+            <div className='mainbuttons text-center'></div>
+          </div>
         </MDBCarouselItem>
       </MDBCarousel>
 
@@ -93,8 +121,7 @@ const Home = () => {
               <div className='MainBottomExp'>
                 Our talented team of recruiters can help you find the best
                 influencer for the job and our technical co-pilots can even
-                manage the project for you.
-                asdsasad
+                manage the project for you. asdsasad
               </div>
             </MDBCol>
           </MDBRow>
@@ -103,12 +130,6 @@ const Home = () => {
       <FooterUniversal />
     </div>
   )
-    return (
-        <div className="App">
-            This is home
-            asd
-        </div>
-    )
 }
 
 export default Home
