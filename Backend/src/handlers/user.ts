@@ -64,7 +64,7 @@ export const signin = async (req, res) => {
     }
     const token = createJWT(user)
     res.status(200)
-    res.json({ token: token, user_id: user.user_id })
+    res.json({ token: token, user_id: user.user_id,type:user.Type })
   } catch (e) {
     console.log(e)
     res.status(500)
