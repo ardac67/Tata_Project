@@ -9,3 +9,46 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model user {
+  user_id             String                @id @default(uuid())
+  user_name           String                @unique @db.VarChar(50)
+  password            String
+  Type                String
+  name                String                @db.VarChar(200)
+  contact             contact?
+  description         String?               @db.VarChar(500)
+  media_links         media_links[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime?
+  audience_demography audience_demography[]
+}
+
+model contact {
+  contact_id    String   @id @default(uuid())
+  email         String
+  phone         String?  @db.VarChar(20)
+  address       String?  @db.VarChar(1000)
+  belongsToUser user     @relation(fields: [user_id], references: [user_id])
+  user_id       String   @unique
+  createdAt     DateTime @default(now())
+}
+
+model media_links {
+  media_id         String  @id @default(uuid())
+  platform         String?
+  link_of_platform String?
+  belongsToUser    user?   @relation(fields: [user_id], references: [user_id])
+  user_id          String?
+  subscribers      String?
+}
+
+model audience_demography {
+  demograph_id       String  @id @default(uuid())
+  age_interval       String?
+  gender_information String?
+  location           String?
+  so_status          String?
+  belongsToUser      user?   @relation(fields: [user_id], references: [user_id])
+  user_id            String?
+}

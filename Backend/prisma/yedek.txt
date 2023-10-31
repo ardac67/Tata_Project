@@ -1,0 +1,92 @@
+model collaboration_pref {
+  pref_id       String  @id @default(uuid())
+  reason        String? @db.VarChar(800)
+  belongsToUser user?   @relation(fields: [user_id], references: [user_id])
+  user_id       String?
+}
+
+model audience_demography {
+  demograph_id       String               @id @default(uuid())
+  age_interval       String?
+  gender_information String?
+  auidence_interests auidence_interests[]
+  belongsToUser      user?                @relation(fields: [user_id], references: [user_id])
+  user_id            String?
+}
+
+model auidence_interests {
+  interest_id                  String               @id @default(uuid())
+  Description                  String?
+  belongsToAudience_demography audience_demography? @relation(fields: [demography_id], references: [demograph_id])
+  demography_id                String?
+}
+
+model collaboration_history {
+  collaboration_hist_id String  @id @default(uuid())
+  description           String? @db.VarChar(200)
+  outcomes              String? @db.VarChar(200)
+  belongsToUser         user?   @relation(fields: [user_id], references: [user_id])
+  user_id               String?
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////7
+model campaing_tags {
+  campaing_tags_id  String    @id @default(uuid())
+  tag_name          String?
+  belongsToCampaign campaign? @relation(fields: [campaign_id], references: [campaign_id])
+  campaign_id       String?
+}
+
+model campaign {
+  campaign_id     String           @id @default(uuid())
+  campaign_desc   String?          @db.Text
+  campaign_type   String?
+  campaign_status String?
+  campaign_budget String?
+  campaign_start  DateTime?
+  campaign_end    DateTime?
+  belongsToUser   user             @relation(fields: [user_id], references: [user_id])
+  user_id         String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime?
+  campaing_tags   campaing_tags[]
+  proposal        proposal[]
+  collaboration   collaboration[]
+  review_history  review_history[]
+}
+
+model proposal {
+  proposal_id       String    @id @default(uuid())
+  description       String?   @db.Text
+  belongsToCampaign campaign  @relation(fields: [campaign_id], references: [campaign_id])
+  campaign_id       String
+  belongsToUser     user      @relation(fields: [user_id], references: [user_id])
+  user_id           String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime?
+}
+
+model collaboration {
+  collaboration_id  String    @id @default(uuid())
+  description       String?   @db.Text
+  belongsToCampaign campaign  @relation(fields: [campaign_id], references: [campaign_id])
+  campaign_id       String
+  belongsToUser     user      @relation(fields: [user_id], references: [user_id])
+  user_id           String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime?
+}
+
+model review_history {
+  review_id         String    @id @default(uuid())
+  description       String?   @db.Text
+  belongsToUser     user      @relation(fields: [user_id], references: [user_id])
+  belongsToCampaign campaign  @relation(fields: [campaign_id], references: [campaign_id])
+  campaign_id       String
+  user_id           String
+  stars             Int?
+  toUser            String?
+  toAdvertiser      String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime?
+}
