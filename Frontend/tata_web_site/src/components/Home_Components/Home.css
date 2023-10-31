@@ -1,0 +1,41 @@
+.Header
+{
+    text-align: center;
+    padding-top: 30px;
+    color: white;
+    font-size: 25px;
+}
+.Main
+{
+    background-color: #6677e6;
+    padding: 20px;
+}
+.MainLow
+{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: white;
+}
+.inf{
+    background-color: red;
+}
+.mainbuttons
+{
+    padding-bottom: 30px;
+}
+.mainPictures
+{
+    margin-top: 30px;
+    margin-left: 60px;
+}
+.MainBottomHeader
+{
+    text-align: center;
+    margin-top: 40px;
+    font-size: 30px;
+}
+.MainBottomExp
+{
+    padding-top: 20px;
+}
