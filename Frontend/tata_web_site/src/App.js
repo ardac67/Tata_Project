@@ -8,10 +8,10 @@ import Advertiser from './components/Advertiser_Components/Advertiser';
 function App() {
   const [isAuth, setAuth] = useState(false);
   const [type , setType] = useState('');  
-
-  function setIsAuth() {
-    setAuth(true);
-    setType('Influencer');
+  
+  function setIsAuth(type, isAuth) {
+    setAuth(isAuth);
+    setType(type);
   }
 
   let comp;

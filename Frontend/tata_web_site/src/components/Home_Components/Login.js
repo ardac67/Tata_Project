@@ -13,13 +13,39 @@ import './Home.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import FooterUniversal from '../../FooterUniversal'
-const Login = ({ setIsAuth }) => {
+import Cookies from 'universal-cookie';
+import axios from 'axios'
 
+const Login = ({ setIsAuth }) => {
+  const navigate = useNavigate()
+  const cookies = new Cookies(null ,{ path: '/' });
   const [login_data, setLoginData] = useState({})
 
   const signIn = () => {
-    //setIsAuth(true)
-    console.log(login_data);
+        //let jsonData=JSON.stringify(login_data)
+        //console.log(jsonData)
+        axios.post('http://localhost:3001/signin',login_data)
+        .then(function (response) {
+            if(response.status===200){
+                cookies.set('user_id', response.data.user_id, {
+                    path:'/'                    
+                })
+                  cookies.set('token', response.data.token, {
+                    path:'/'                    
+                })
+                cookies.set('type', response.data.type, {
+                    path:'/'                    
+                })
+                window.alert("Login Successful")
+                setIsAuth(cookies.get("type"),true)
+            }
+            else{
+              window.alert(response.data.message)
+            }
+        })
+        .catch(function (error) {
+          window.alert(error)
+        })
   }
 
   const updateData = e => {
@@ -49,8 +75,8 @@ const Login = ({ setIsAuth }) => {
                   wrapperClass='mb-4'
                   label='Email address'
                   id='form1'
-                  type='email'
-                  name="email"
+                  type='user_name'
+                  name="user_name"
                   onChange={updateData }
                 />
                 <MDBInput
