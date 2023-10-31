@@ -2,6 +2,7 @@ const Home = () => {
     return (
         <div className="App">
             This is home
+            asd
         </div>
     )
 }
