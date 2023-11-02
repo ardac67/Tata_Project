@@ -20,7 +20,6 @@ const Login = ({ setIsAuth }) => {
   const navigate = useNavigate()
   const cookies = new Cookies(null ,{ path: '/' });
   const [login_data, setLoginData] = useState({})
-
   const signIn = () => {
         //let jsonData=JSON.stringify(login_data)
         //console.log(jsonData)
@@ -36,7 +35,14 @@ const Login = ({ setIsAuth }) => {
                 cookies.set('type', response.data.type, {
                     path:'/'                    
                 })
+                cookies.set('user_name', response.data.user_name, {
+                  path:'/'                    
+              })
+              cookies.set('full_name', response.data.full_name, {
+                  path:'/'                    
+              })
                 window.alert("Login Successful")
+                navigate(`/`)
                 setIsAuth(cookies.get("type"),true)
             }
             else{
