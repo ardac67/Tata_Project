@@ -3,11 +3,12 @@ import { hashPassword, createJWT, comparePasswords } from '../modules/aut'
 
 export const createNewUser = async (req, res) => {
   try {
-    const hash = await hashPassword(req.body.password);
+    const hash = await hashPassword(req.body.password)
     await prisma.$transaction(async tx => {
       const user = await tx.user.create({
         data: {
           user_name: req.body.user_name,
+          email: req.body.email,
           password: hash,
           Type: req.body.type,
           name: req.body.name,
@@ -16,31 +17,29 @@ export const createNewUser = async (req, res) => {
       })
       await tx.contact.create({
         data: {
-          email: req.body.contact.email,
           phone: req.body.contact.phone,
           user_id: user.user_id,
           address: req.body.contact.address
         }
       })
-      await tx.media_links.create({
-        data: {
-          platform: req.body.media_links.media_links,
-          user_id: user.user_id,
-          link_of_platform: req.body.media_links.link_of_platform,
-          subscribers: req.body.media_links.subscribers
-        }
-      })
-      const token = createJWT(user);
+        await tx.media_links.create({
+          data: {
+            youtube: req.body.media_links.youtube,
+            instagram: req.body.media_links.instagram,
+            twitter: req.body.media_links.twitter,
+            tiktok: req.body.media_links.tiktok,
+            user_id: user.user_id
+          }
+        })
+      const token = createJWT(user)
       res.json({
         data: {
-          user_id:user.user_id,
+          user_id: user.user_id,
           type: user.Type,
           token: token
-
         }
       })
     })
-    
   } catch (e) {
     console.log(e)
     res.status(500)
@@ -64,7 +63,29 @@ export const signin = async (req, res) => {
     }
     const token = createJWT(user)
     res.status(200)
-    res.json({ token: token, user_id: user.user_id,type:user.Type })
+    res.json({
+      token: token,
+      user_id: user.user_id,
+      type: user.Type,
+      user_name: user.user_name,
+      full_name: user.name
+    })
+  } catch (e) {
+    console.log(e)
+    res.status(500)
+    res.json({ error: e })
+  }
+}
+
+export const getUser = async (req, res) => {
+  try {
+      const user = await prisma.user.findUnique({
+        where:{
+          user_id: req.params.id
+        }
+      })
+    res.json({user})
+    res.status(200)
   } catch (e) {
     console.log(e)
     res.status(500)
