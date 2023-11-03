@@ -25,7 +25,7 @@ const ContactMainProfile = ({user}) => {
       </MDBSpinner>
     )
   }
-  var contact_data = result.data.user[0]
+  var contact_data = result.data.user
   return (
     <MDBCardBody>
       <MDBCardText style={{ fontSize: '20px' }}>

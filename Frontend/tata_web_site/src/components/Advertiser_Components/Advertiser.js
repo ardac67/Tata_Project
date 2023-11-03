@@ -3,6 +3,8 @@ import {Routes,Route } from "react-router-dom";
 import AcountSettings from "./AccountSettings";
 import Browse from "./Browse"
 import ViewProfile from "./ViewProfile";
+import CreateCampaign from "./CreateCampaing";
+import MyCampaigns from "./ManageComponents/MyCampaigns";
 const Advertiser = () =>{
     return (
         <div>
@@ -11,6 +13,9 @@ const Advertiser = () =>{
                 <Route path="/Settings" element={<AcountSettings></AcountSettings>}></Route>
                 <Route path="/ViewProfile" element={<ViewProfile></ViewProfile>}></Route>
                 <Route path="/" element={<Browse></Browse>}></Route>
+                <Route path="/Home" element={<Browse></Browse>}></Route>
+                <Route path="/CreateCampaign" element={<CreateCampaign></CreateCampaign>}></Route>
+                <Route path="/Campaigns" element={<MyCampaigns></MyCampaigns>}></Route>
             </Routes>   
         </div>
     )

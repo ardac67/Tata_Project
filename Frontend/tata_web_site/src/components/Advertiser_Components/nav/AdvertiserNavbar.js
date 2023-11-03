@@ -1,4 +1,4 @@
-import "./AdvertiserNavbar.css";
+import './AdvertiserNavbar.css'
 import {
   MDBContainer,
   MDBNavbar,
@@ -13,39 +13,41 @@ import {
   MDBDropdownToggle,
   MDBDropdown,
   MDBIcon,
-  MDBBadge,
-} from "mdb-react-ui-kit";
+  MDBBadge
+} from 'mdb-react-ui-kit'
 import profileTest from '../test.png'
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Cookies from 'universal-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser,faSquarePlus } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Cookies from 'universal-cookie'
 export const AdvertiserNavbar = () => {
-  const navigate = useNavigate();
-  const cookies = new Cookies(null ,{ path: '/' });
+  const navigate = useNavigate()
+  const cookies = new Cookies(null, { path: '/' })
   const logOut = () => {
-    cookies.set('token', null, { path: '/' });
-    cookies.set('full_name', null, { path: '/' });
-    cookies.set('user_id', null, { path: '/' });
-    cookies.set('type', null, { path: '/' }); 
-    window.location.reload();
+    cookies.set('token', null, { path: '/' })
+    cookies.set('full_name', null, { path: '/' })
+    cookies.set('user_id', null, { path: '/' })
+    cookies.set('type', null, { path: '/' })
+    window.location.reload()
     navigate('/Home')
   }
-  const [showNav, setShowNav] = useState(false);
+  const [showNav, setShowNav] = useState(false)
 
   return (
-    <MDBNavbar expand="lg" light bgColor="white" id="homeNavBar">
+    <MDBNavbar expand='lg' light bgColor='white' id='homeNavBar'>
       <MDBContainer fluid>
         <MDBNavbarBrand
-          style={{ marginLeft: "50px" }}
-          onMouseEnter={(e) => (e.target.style.fontWeight = "bold")}
-          onMouseLeave={(e) => (e.target.style.fontWeight = "normal")}
+          style={{ marginLeft: '50px' }}
+          onMouseEnter={e => (e.target.style.fontWeight = 'bold')}
+          onMouseLeave={e => (e.target.style.fontWeight = 'normal')}
         >
-          <Link to="/">TATA</Link>
+          <Link to='/'>TATA</Link>
         </MDBNavbarBrand>
         <MDBNavbarToggler
-          type="button"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          type='button'
+          aria-expanded='false'
+          aria-label='Toggle navigation'
           onClick={() => setShowNav(!showNav)}
         ></MDBNavbarToggler>
 
@@ -53,10 +55,10 @@ export const AdvertiserNavbar = () => {
           <MDBNavbarNav fullWidth={false}>
             <MDBNavbarItem>
               <MDBBtn
-                style={{ width: "150px" }}
-                onMouseEnter={(e) => (e.target.style.color = "black")}
-                onMouseLeave={(e) => (e.target.style.color = "white")}
-                onClick={() => navigate("/Browse")}
+                style={{ width: '150px' }}
+                onMouseEnter={e => (e.target.style.color = 'black')}
+                onMouseLeave={e => (e.target.style.color = 'white')}
+                onClick={() => navigate('/Browse')}
               >
                 Browse
               </MDBBtn>
@@ -65,14 +67,14 @@ export const AdvertiserNavbar = () => {
             <MDBNavbarItem>
               <MDBDropdown>
                 <MDBDropdownToggle
-                  style={{ width: "150px" }}
-                  onMouseEnter={(e) => (e.target.style.color = "black")}
-                  onMouseLeave={(e) => (e.target.style.color = "white")}
+                  style={{ width: '150px' }}
+                  onMouseEnter={e => (e.target.style.color = 'black')}
+                  onMouseLeave={e => (e.target.style.color = 'white')}
                 >
                   Manage
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
-                  <MDBDropdownItem link>My Proposals</MDBDropdownItem>
+                  <MDBDropdownItem link href='/Campaigns'>My Campaings</MDBDropdownItem>
                   <MDBDropdownItem link>My Colloborations</MDBDropdownItem>
                   <MDBDropdownItem link>Campaign Milesones</MDBDropdownItem>
                 </MDBDropdownMenu>
@@ -83,30 +85,38 @@ export const AdvertiserNavbar = () => {
           <MDBNavbarNav
             right
             fullWidth={false}
-            className="mb-2 mb-lg-0 mr-2"
-            style={{ marginRight: "50px" }}
-          >
+            className='mb-2 mb-lg-0 mr-2'
+            style={{ marginRight: '50px' }}
+          > 
+          
+              <MDBBtn 
+                onMouseEnter={e => (e.target.style.color = 'black')}
+                onMouseLeave={e => (e.target.style.color = 'white')}
+                onClick={() => navigate('/CreateCampaign')}
+              >
+                <FontAwesomeIcon icon={faSquarePlus} style={{marginRight:'10px',color:'white'}} /> Create Campaing
+              </MDBBtn>
             <MDBNavbarItem>
               <MDBDropdown>
-                <MDBDropdownToggle tag="a" id="notification">
-                  <MDBBadge pill color="danger">
+                <MDBDropdownToggle tag='a' id='notification'>
+                  <MDBBadge pill color='danger'>
                     !
                   </MDBBadge>
                   <span>
                     <MDBIcon
-                      icon="bell"
+                      icon='bell'
                       far
                       style={{
-                        fontSize: "1.5rem",
-                        background: "none",
-                        color: "inherit",
-                        border: "none",
-                        marginTop: "5px",
-                        transition: "color 0.3s ease",
-                        cursor: "pointer",
+                        fontSize: '1.5rem',
+                        background: 'none',
+                        color: 'inherit',
+                        border: 'none',
+                        marginTop: '5px',
+                        transition: 'color 0.3s ease',
+                        cursor: 'pointer'
                       }}
-                      onMouseEnter={(e) => (e.target.style.color = "black")}
-                      onMouseLeave={(e) => (e.target.style.color = "inherit")}
+                      onMouseEnter={e => (e.target.style.color = 'black')}
+                      onMouseLeave={e => (e.target.style.color = 'inherit')}
                     />
                   </span>
                 </MDBDropdownToggle>
@@ -120,25 +130,25 @@ export const AdvertiserNavbar = () => {
 
             <MDBNavbarItem>
               <MDBDropdown>
-                <MDBDropdownToggle tag="a" id="messages">
-                  <MDBBadge pill color="danger">
+                <MDBDropdownToggle tag='a' id='messages'>
+                  <MDBBadge pill color='danger'>
                     !
                   </MDBBadge>
                   <span>
                     <MDBIcon
                       far
-                      icon="envelope"
+                      icon='envelope'
                       style={{
-                        fontSize: "1.5rem",
-                        background: "none",
-                        color: "inherit",
-                        border: "none",
-                        marginTop: "5px",
-                        transition: "color 0.3s ease",
-                        cursor: "pointer",
+                        fontSize: '1.5rem',
+                        background: 'none',
+                        color: 'inherit',
+                        border: 'none',
+                        marginTop: '5px',
+                        transition: 'color 0.3s ease',
+                        cursor: 'pointer'
                       }}
-                      onMouseEnter={(e) => (e.target.style.color = "black")}
-                      onMouseLeave={(e) => (e.target.style.color = "inherit")}
+                      onMouseEnter={e => (e.target.style.color = 'black')}
+                      onMouseLeave={e => (e.target.style.color = 'inherit')}
                     />
                   </span>
                 </MDBDropdownToggle>
@@ -154,38 +164,22 @@ export const AdvertiserNavbar = () => {
             <MDBNavbarItem>
               <MDBDropdown>
                 <MDBDropdownToggle
-                  tag="a"
-                  className="nav-link d-flex align-items-center"
-                  href="#"
+                  tag='a'
+                  className='nav-link d-flex align-items-center'
                 >
-                  <img
-                    //src={profileTest}
-                    className="rounded-circle"
-                    height="22"
-                    alt="Avatar"
-                    loading="lazy"
-                    style={{marginRight: "5px"}}
-                  />
+                <FontAwesomeIcon icon={faUser} style={{ marginRight: '5px' }} />
                   {cookies.get('full_name')}
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
                   <MDBDropdownItem
-                    link
-                    onClick={() => navigate("/ViewProfile")}
-                  >
+                    link href='/ViewProfile'>
                     View Profile
                   </MDBDropdownItem>
-                  <MDBDropdownItem
-                    link
-                    onClick={() => navigate("/Settings")}
-                  >
+                  <MDBDropdownItem link href='/Settings'>
                     Account Settings
                   </MDBDropdownItem>
-                  <MDBDropdownItem
-                    link
-                    onClick={logOut}
-                  >
-                    Account Settings
+                  <MDBDropdownItem link onClick={logOut}>
+                    Log Out
                   </MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
@@ -194,7 +188,7 @@ export const AdvertiserNavbar = () => {
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>
-  );
-};
+  )
+}
 
-export default AdvertiserNavbar;
+export default AdvertiserNavbar
