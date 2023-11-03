@@ -4,10 +4,11 @@ import HomeComponent from './components/Home_Components/HomeComponent';
 import {Influencer} from './components/Influencer_Components/Influencer';
 import Admin from'./components/Admin_Components/Admin';
 import Advertiser from './components/Advertiser_Components/Advertiser';
-
+import Cookies from 'universal-cookie';
 function App() {
-  const [isAuth, setAuth] = useState(false);
-  const [type , setType] = useState('');  
+  const cookies = new Cookies(null, { path: '/' });
+  const [isAuth, setAuth] = useState(cookies.get('token') ? true : false);
+  const [type, setType] = useState(cookies.get('type') || '');
   
   function setIsAuth(type, isAuth) {
     setAuth(isAuth);

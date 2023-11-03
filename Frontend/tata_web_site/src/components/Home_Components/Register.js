@@ -5,7 +5,8 @@ import {
   MDBCardBody,
   MDBInput,
   MDBTextArea,
-  MDBCol
+  MDBCol,
+  MDBFile
 } from 'mdb-react-ui-kit'
 import { useNavigate } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
@@ -20,6 +21,8 @@ const Register = () => {
   const [register_data, setRegisterData] = useState({})
   const [contact_data, setContactData] = useState({})
   const [media_links_data, setMedia_links_data] = useState({})
+  const [selectedFile, setSelectedFile] = useState(null)
+
   let post_object = {}
   const push_as_register = () => {
     post_object = {
@@ -27,14 +30,13 @@ const Register = () => {
       contact: contact_data,
       media_links: media_links_data
     }
-    console.log(JSON.stringify(post_object))
-    let jsonData = JSON.stringify(post_object)
-    console.log(jsonData)
+    //console.log(post_object)
+    
     axios
       .post('http://localhost:3001/createUser', post_object)
       .then(function (response) {
         if (response.status === 200) {
-          window.alert("Başarili Yönlendiriliyorsunuz...")
+          window.alert('Başarili Yönlendiriliyorsunuz...')
           navigate('/Login')
         } else {
           window.alert(response.data.message)
@@ -43,6 +45,7 @@ const Register = () => {
       .catch(function (error) {
         window.alert(error)
       })
+      
   }
 
   const updateData = e => {
@@ -50,6 +53,9 @@ const Register = () => {
       ...register_data,
       [e.target.name]: e.target.value
     })
+  }
+  const setImage = e => {
+    setSelectedFile(e.target.files[0])
   }
   const updateContactData = e => {
     setContactData({
@@ -64,60 +70,6 @@ const Register = () => {
     })
   }
 
-  const handleAddInput = () => {
-    const newInput = (
-      <>
-        <MDBCol
-          md='4'
-          style={{
-            paddingLeft: '0px'
-          }}
-        >
-          <MDBInput
-            wrapperClass='mb-4'
-            label='Media Link'
-            size='lg'
-            id='platform'
-            type='media_link'
-            name='media_link'
-            onChange={update_media_links_data}
-          />
-        </MDBCol>
-        <MDBCol
-          md='4'
-          style={{
-            paddingRight: '0px'
-          }}
-        >
-          <MDBInput
-            className='mb-4'
-            label='Url'
-            size='lg'
-            id='Url'
-            name='url'
-            onChange={update_media_links_data}
-          />
-        </MDBCol>
-        <MDBCol
-          md='4'
-          style={{
-            paddingRight: '0px'
-          }}
-        >
-          <MDBInput
-            className='mb-4'
-            label='Subscribers'
-            size='lg'
-            id='textAreaExample'
-            name='subscribers'
-            onChange={update_media_links_data}
-          />
-        </MDBCol>
-      </>
-    )
-
-    setNewMedia([...generateNewMedia, newInput])
-  }
   return (
     <>
       <div className='centered-container'>
@@ -139,6 +91,16 @@ const Register = () => {
                       type='text'
                       name='name'
                       onChange={updateData}
+                    />
+                  </MDBRow>
+                  <MDBRow style={{ marginBottom: '15px' }}>
+                    <MDBFile
+                      wrapperClass='mb-4'
+                      size='lg'
+                      id='userName'
+                      type='file'
+                      name='file_image'
+                      onChange={setImage}
                     />
                   </MDBRow>
                   <MDBRow>
@@ -204,7 +166,7 @@ const Register = () => {
                       id='email'
                       type='email'
                       name='email'
-                      onChange={updateContactData}
+                      onChange={updateData}
                     />
                   </MDBRow>
                   <MDBRow>
@@ -244,55 +206,67 @@ const Register = () => {
 
                   <MDBRow>
                     <MDBCol
-                      md='4'
+                      md='3'
                       style={{
                         paddingLeft: '0px'
                       }}
                     >
                       <MDBInput
                         wrapperClass='mb-4'
-                        label='Media Link'
+                        label='Yotube'
                         size='lg'
                         id='media_link'
-                        type='media_link'
-                        name='media_link'
+                        type='media_link1'
+                        name='youtube'
                         onChange={update_media_links_data}
                       />
                     </MDBCol>
                     <MDBCol
-                      md='4'
+                      md='3'
                       style={{
                         paddingRight: '0px'
                       }}
                     >
                       <MDBInput
                         className='mb-4'
-                        label='Url'
+                        label='Twitter'
                         size='lg'
                         id='Url'
-                        name='url'
+                        name='twitter'
                         onChange={update_media_links_data}
                       />
                     </MDBCol>
                     <MDBCol
-                      md='4'
+                      md='3'
                       style={{
                         paddingRight: '0px'
                       }}
                     >
                       <MDBInput
                         className='mb-4'
-                        label='Subscribers'
+                        label='Tiktok'
                         size='lg'
                         id='textAreaExample'
-                        name='subscribers'
+                        name='tiktok'
+                        onChange={update_media_links_data}
+                      />
+                    </MDBCol>{' '}
+                    <MDBCol
+                      md='3'
+                      style={{
+                        paddingRight: '0px'
+                      }}
+                    >
+                      <MDBInput
+                        className='mb-4'
+                        label='Instagram'
+                        size='lg'
+                        id='textAreaExample'
+                        name='instagram'
                         onChange={update_media_links_data}
                       />
                     </MDBCol>
                   </MDBRow>
-                  {generateNewMedia.map((input, index) => (
-                    <MDBRow> {input} </MDBRow>
-                  ))}
 
                   <MDBRow></MDBRow>
                   <MDBCol
@@ -300,17 +274,7 @@ const Register = () => {
                     style={{
                       textAlign: 'right'
                     }}
-                  >
-                    <MDBBtn
-                      className='mb-4 mt-3'
-                      size='sm'
-                      onClick={() => {
-                        handleAddInput()
-                      }}
-                    >
-                      Add More
-                    </MDBBtn>
-                  </MDBCol>
+                  ></MDBCol>
                 </MDBRow>
                 {getType === 'Influencer' ? (
                   <MDBRow>
