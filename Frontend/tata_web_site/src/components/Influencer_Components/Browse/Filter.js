@@ -1,28 +1,22 @@
-import React, { useState } from "react";
-import { MDBRadio, MDBCard, MDBCardBody, MDBCol, MDBIcon, MDBCheckbox } from "mdb-react-ui-kit";
-
-
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCol,
+  MDBIcon,
+  MDBCheckbox,
+} from "mdb-react-ui-kit";
 
 const FilterBar = () => {
-  const [selectedFilter, setSelectedFilter] = useState("");
-  const [checked, setChecked] = useState(false);
-
-  const handleFilterChange = (filter) => {
-    setSelectedFilter(filter);
-    // Apply the filter logic or update the state in your component
-  };
-
   return (
-    <MDBCol md="2" className="mt-5">
+    <MDBCol md="2">
       <MDBCard className="filter-bar">
         <MDBCardBody>
           <h2 className="mt-1 mb-5">Filters</h2>
 
           <h4 className="mb-3">Platform</h4>
           <div className="radio-buttons">
-
             <MDBCheckbox
-              id='youtube'
+              id="youtube"
               label={
                 <div>
                   <MDBIcon fab icon="youtube" />
@@ -31,7 +25,7 @@ const FilterBar = () => {
               }
             />
             <MDBCheckbox
-              id='instagram'
+              id="instagram"
               label={
                 <div>
                   <MDBIcon fab icon="instagram" />
@@ -40,7 +34,7 @@ const FilterBar = () => {
               }
             />
             <MDBCheckbox
-              id='Tiktok'
+              id="Tiktok"
               label={
                 <div>
                   <span className="filter-label3"> Tiktok</span>
@@ -52,8 +46,8 @@ const FilterBar = () => {
           </div>
           <h4 className="mt-5 mb-3">Industry</h4>
           <div className="radio-buttons">
-          <MDBCheckbox
-              id='sport'
+            <MDBCheckbox
+              id="sport"
               label={
                 <div>
                   <MDBIcon fas icon="futbol" />
@@ -62,7 +56,7 @@ const FilterBar = () => {
               }
             />
             <MDBCheckbox
-              id='fashion'
+              id="fashion"
               label={
                 <div>
                   <MDBIcon fas icon="tshirt" />
@@ -71,22 +65,21 @@ const FilterBar = () => {
               }
             />
             <MDBCheckbox
-              id='Gaming'
+              id="Gaming"
               label={
                 <div>
                   <MDBIcon fas icon="gamepad" />
                   <span className="filter-label6"> Gaming</span>
                 </div>
-              }>
-
-              </MDBCheckbox>
+              }
+            ></MDBCheckbox>
 
             {/* Add more filter options as needed */}
           </div>
           <h4 className="mt-5 mb-3">Age Interval</h4>
           <div className="radio-buttons">
-          <MDBCheckbox
-              id='kids'
+            <MDBCheckbox
+              id="kids"
               label={
                 <div>
                   <MDBIcon fas icon="baby" />
@@ -95,7 +88,7 @@ const FilterBar = () => {
               }
             />
             <MDBCheckbox
-              id='young'
+              id="young"
               label={
                 <div>
                   <MDBIcon fas icon="tshirt" />
@@ -104,15 +97,14 @@ const FilterBar = () => {
               }
             />
             <MDBCheckbox
-              id='Elder'
+              id="Elder"
               label={
                 <div>
                   <MDBIcon fas icon="blind" />
                   <span className="filter-label9"> Elder</span>
                 </div>
-              }>
-
-              </MDBCheckbox>
+              }
+            ></MDBCheckbox>
 
             {/* Add more filter options as needed */}
           </div>

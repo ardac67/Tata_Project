@@ -67,8 +67,11 @@ export const InfluencerNavbar = () => {
                   Manage
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
-                  <MDBDropdownItem link>My Proposals</MDBDropdownItem>
-                  <MDBDropdownItem link>My Colloborations</MDBDropdownItem>
+                  <MDBDropdownItem 
+                    link
+                    onClick={() => redirect("/MyProposals")}>My Proposals</MDBDropdownItem>
+                  <MDBDropdownItem  link
+                    onClick={() => redirect("/MyCollaborations")}>My Colloborations</MDBDropdownItem>
                   <MDBDropdownItem link>Campaign Milesones</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
@@ -81,6 +84,16 @@ export const InfluencerNavbar = () => {
             className="mb-2 mb-lg-0 mr-2"
             style={{ marginRight: "50px" }}
           >
+            <MDBNavbarItem>
+              <MDBBtn
+                style={{ width: "160px" }}
+                onMouseEnter={(e) => (e.target.style.color = "black")}
+                onMouseLeave={(e) => (e.target.style.color = "white")}
+                onClick={() => redirect("/Browse")}
+              >
+                Create Proposal
+              </MDBBtn>
+            </MDBNavbarItem>
             <MDBNavbarItem>
               <MDBDropdown>
                 <MDBDropdownToggle tag="a" id="notification">

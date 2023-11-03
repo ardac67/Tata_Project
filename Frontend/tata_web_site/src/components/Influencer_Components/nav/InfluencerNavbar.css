@@ -5,3 +5,22 @@
 .nav-item {
     margin-left: 45px !important;
 }
+
+
+/* Modern styles for "Manage" and "Browse" buttons */
+.MDBBtn {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.MDBBtn:hover {
+    background-color: rgb(61, 78, 198);
+    /* You can adjust the hover color as needed */
+    transform: scale(1.05);
+    /* Add a slight scale effect on hover */
+}
