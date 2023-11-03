@@ -92,3 +92,25 @@ export const getUser = async (req, res) => {
     res.json({ error: e })
   }
 }
+export const updateUser = async (req, res) => {
+  try {
+      const user = await prisma.user.update({
+        where:{
+          user_id: req.params.id
+        },
+        data:{
+          user_name: req.body.user_name,
+          email: req.body.email,
+          name: req.body.full_name,
+          description: req.body.description,
+          updatedAt: new Date()
+        }
+      })
+    res.json({user})
+    res.status(200)
+  } catch (e) {
+    console.log(e)
+    res.status(500)
+    res.json({ error: e })
+  }
+}
