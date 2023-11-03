@@ -23,6 +23,7 @@ model user {
   createdAt           DateTime              @default(now())
   updatedAt           DateTime?
   audience_demography audience_demography[]
+  campaign            campaign[]
 }
 
 model contact {
@@ -35,21 +36,65 @@ model contact {
 }
 
 model media_links {
-  media_id         String  @id @default(uuid())
-  youtube String?
-  twitter String?
-  tiktok String?
-  instagram String?
-  belongsToUser    user?   @relation(fields: [user_id], references: [user_id])
-  user_id          String?
+  media_id      String  @id @default(uuid())
+  youtube       String?
+  twitter       String?
+  tiktok        String?
+  instagram     String?
+  belongsToUser user?   @relation(fields: [user_id], references: [user_id])
+  user_id       String?
 }
 
 model audience_demography {
   demograph_id       String  @id @default(uuid())
   age_interval       String?
   gender_information String? @db.Text
-  location           String? 
+  location           String?
   so_status          String? @db.Text
   belongsToUser      user?   @relation(fields: [user_id], references: [user_id])
   user_id            String?
+}
+
+model campaign {
+  campaign_id               String                      @id @default(uuid())
+  campaign_description      String?                     @db.Text
+  campaign_header           String?                     @db.Text
+  user                      user?                       @relation(fields: [user_id], references: [user_id])
+  user_id                   String?
+  status                    String?
+  startedAt                 DateTime?
+  endedAt                   DateTime?
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime?
+  collaboration_preferences collaboration_preferences[]
+  campaing_tags             campaing_tags[]
+}
+
+model collaboration_preferences {
+  preference_id        String                @id @default(uuid())
+  target_audience      String?               @db.Text
+  belongToCampaign     campaign?             @relation(fields: [campaign_id], references: [campaign_id])
+  campaign_id          String?
+  age_interval         String?               @db.Text
+  gender_information   String?               @db.Text
+  statistical_interval String?               @db.Text
+  preffered_platforms  preffered_platforms[]
+}
+
+model preffered_platforms {
+  platform_id         String                     @id @default(uuid())
+  platform            String?
+  belongsToPreference collaboration_preferences? @relation(fields: [preference_id], references: [preference_id])
+  preference_id       String?
+}
+
+model campaing_tags {
+  tag_id           String    @id @default(uuid())
+  tag1             String?
+  tag2             String?
+  tag3             String?
+  tag4             String?
+  tag5             String?
+  belongToCampaign campaign? @relation(fields: [campaign_id], references: [campaign_id])
+  campaign_id      String?
 }
