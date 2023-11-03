@@ -15,7 +15,8 @@ import { useState } from 'react'
 import FooterUniversal from '../../FooterUniversal'
 import Cookies from 'universal-cookie';
 import axios from 'axios'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Login = ({ setIsAuth }) => {
   const navigate = useNavigate()
   const cookies = new Cookies(null ,{ path: '/' });
@@ -45,12 +46,21 @@ const Login = ({ setIsAuth }) => {
                 navigate(`/`)
                 setIsAuth(cookies.get("type"),true)
             }
+            else if(response.status===401){
+              toast.error("Invalid Credidentials !", {
+                position: toast.POSITION.TOP_LEFT
+              });
+            }
             else{
-              window.alert(response.data.message)
+              toast.error("SERVER ERROR !", {
+                position: toast.POSITION.TOP_LEFT
+              });
             }
         })
         .catch(function (error) {
-          window.alert(error)
+          toast.error("Invalid Credidentials  !", {
+            position: toast.POSITION.TOP_LEFT
+          });
         })
   }
 
@@ -68,6 +78,7 @@ const Login = ({ setIsAuth }) => {
       }}
     >
       <MDBContainer fluid>
+      <ToastContainer />
         <MDBRow className='d-flex justify-content-center align-items-center h-100'>
           <MDBCol col='12'>
             <MDBCard

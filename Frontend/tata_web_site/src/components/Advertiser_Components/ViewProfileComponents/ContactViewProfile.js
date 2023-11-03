@@ -18,7 +18,6 @@ const ContactMainProfile = ({user}) => {
   const id = cookies.get('user_id')
   const token = cookies.get('token')
   const result = useQuery(['contact', id,token], fetchContact)
-  const contact_data = result.data.user[0]
   if (result.isLoading) {
     return (
       <MDBSpinner role='status'>
@@ -26,6 +25,7 @@ const ContactMainProfile = ({user}) => {
       </MDBSpinner>
     )
   }
+  var contact_data = result.data.user[0]
   return (
     <MDBCardBody>
       <MDBCardText style={{ fontSize: '20px' }}>

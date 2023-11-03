@@ -1,7 +1,8 @@
+import EditProfile from './EditProfileComponents/EditProfile'
 const AccountSettings = () => { 
     return (
         <div>
-            <h1>Ardac</h1>
+            <EditProfile />
         </div>
     )
 }
