@@ -69,6 +69,22 @@ export const getAllCampaign = async (req, res) => {
     res.json({ error: e });
   }
 };
+export const getAllCampaignInfluencer = async (req, res) => {
+  try {
+    const campaign = await prisma.campaign.findMany({
+      where: {
+        
+      },
+    });
+    res.json({
+      campaign: campaign,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+    res.json({ error: e });
+  }
+};
 
 function parseAndFormatDate(dateString) {
   // Parse the date string to a JavaScript Date object

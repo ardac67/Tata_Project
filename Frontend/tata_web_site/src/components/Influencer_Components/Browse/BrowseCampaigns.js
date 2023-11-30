@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MDBRow,
   MDBCol,
@@ -8,6 +8,9 @@ import {
   MDBRipple,
   MDBBtn,
   MDBSpinner,
+  MDBPagination,
+  MDBPaginationItem,
+  MDBPaginationLink,
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import fetchAllCampaigns from "../../Advertiser_Components/Fetch/fetchAllCampaign";
@@ -16,11 +19,14 @@ import Cookies from "universal-cookie";
 
 function App() {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const campaignsPerPage = 5; // Adjust this according to your needs
 
   const cookies = new Cookies(null, { path: "/" });
   const id = cookies.get("user_id");
   const token = cookies.get("token");
   const result = useQuery(["campaignAll", token], fetchAllCampaigns);
+
   if (result.isLoading) {
     return (
       <MDBSpinner role="status">
@@ -28,6 +34,7 @@ function App() {
       </MDBSpinner>
     );
   }
+
   const campaigns = result.data.campaign;
   console.log(campaigns);
 
@@ -35,13 +42,23 @@ function App() {
     navigate(path);
   };
 
+  // Calculate the indexes of the campaigns to be displayed on the current page
+  const indexOfLastCampaign = currentPage * campaignsPerPage;
+  const indexOfFirstCampaign = indexOfLastCampaign - campaignsPerPage;
+  const currentCampaigns = campaigns.slice(
+    indexOfFirstCampaign,
+    indexOfLastCampaign
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <MDBCol md="7">
-      {!campaigns.length ? (
+      {!currentCampaigns.length ? (
         <h1>No Campaigns Found</h1>
       ) : (
-        campaigns.map((campaign) => (
-          <MDBCard className="border rounded-3">
+        currentCampaigns.map((campaign) => (
+          <MDBCard className="border rounded-3" key={campaign.id}>
             <MDBCardBody>
               <MDBRow>
                 <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">
@@ -115,6 +132,36 @@ function App() {
           </MDBCard>
         ))
       )}
+      <MDBPagination className="mt-3 justify-content-end">
+        <MDBPaginationItem disabled={currentPage === 1}>
+          <MDBPaginationLink onClick={() => paginate(currentPage - 1)}>
+            Previous
+          </MDBPaginationLink>
+        </MDBPaginationItem>
+
+        {[...Array(Math.ceil(campaigns.length / campaignsPerPage)).keys()].map(
+          (number) => (
+            <MDBPaginationItem
+              key={number + 1}
+              active={currentPage === number + 1}
+            >
+              <MDBPaginationLink onClick={() => paginate(number + 1)}>
+                {number + 1}
+              </MDBPaginationLink>
+            </MDBPaginationItem>
+          )
+        )}
+
+        <MDBPaginationItem
+          disabled={
+            currentPage === Math.ceil(campaigns.length / campaignsPerPage)
+          }
+        >
+          <MDBPaginationLink onClick={() => paginate(currentPage + 1)}>
+            Next
+          </MDBPaginationLink>
+        </MDBPaginationItem>
+      </MDBPagination>
     </MDBCol>
   );
 }
