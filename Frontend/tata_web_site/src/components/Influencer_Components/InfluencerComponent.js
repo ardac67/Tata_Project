@@ -16,7 +16,7 @@ const InfluencerComponent = ({setIsAuth}) => {
         <div className="App">
             <InfluencerNavbar></InfluencerNavbar>
             <Routes>
-                <Route path="/" element={<Home></Home>}></Route>
+                <Route path="/" element={<Browse></Browse>}></Route>
                 <Route path="/Browse" element={<Browse></Browse>} ></Route>
                 <Route path="/Manage" element={<Manage></Manage>}></Route>
                 <Route path="/AccountSettings" element={<AccountSettings></AccountSettings>}></Route>
