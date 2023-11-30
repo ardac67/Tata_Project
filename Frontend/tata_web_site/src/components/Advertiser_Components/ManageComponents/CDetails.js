@@ -165,9 +165,11 @@ const CDetails = () => {
             </MDBContainer>
             
        </div>
-       <div className='proposals ms-5 me-5'>
-            <MDBListGroup style={{ minWidth: '22rem' }} light>
-      <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
+       <h2 style={{ textAlign:' center', color: '#6677EA', }}>Given Proposals</h2>
+       <div className='proposals' style={{ margin:'120px', marginTop: '50px'}}>
+        
+            <MDBListGroup style={{  }} light>
+      <MDBListGroupItem className='d-flex justify-content-between align-items-center square bg-secondary rounded-8 border-dark mb-2 ps-4 pe-4'>
         <div className='d-flex align-items-center'>
           <img
             src='https://mdbootstrap.com/img/new/avatars/8.jpg'
@@ -184,7 +186,7 @@ const CDetails = () => {
           Active
         </MDBBadge>
       </MDBListGroupItem>
-      <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
+      <MDBListGroupItem className='d-flex justify-content-between align-items-center square bg-secondary rounded-8 border-dark mb-2 ps-4 pe-4'>
         <div className='d-flex align-items-center'>
           <img
             src='https://mdbootstrap.com/img/new/avatars/6.jpg'
@@ -201,7 +203,7 @@ const CDetails = () => {
           Onboarding
         </MDBBadge>
       </MDBListGroupItem>
-      <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
+      <MDBListGroupItem className='d-flex justify-content-between align-items-center square bg-secondary rounded-8 border-dark mb-2 ps-4 pe-4'>
         <div className='d-flex align-items-center'>
           <img
             src='https://mdbootstrap.com/img/new/avatars/7.jpg'

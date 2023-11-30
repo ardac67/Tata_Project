@@ -35,14 +35,7 @@ function BrowseCampaigns({ searchTerm }) {
   }
 
   const campaigns = result.data.campaign;
-
-  // Filter campaigns based on the search term
-  const filteredCampaigns = campaigns.filter((campaign) =>
-    campaign.campaign_header.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   console.log(campaigns);
-  console.log(filteredCampaigns);
 
   const redirect = (path) => {
     navigate(path);
@@ -127,7 +120,9 @@ function BrowseCampaigns({ searchTerm }) {
                       color="success"
                       size="sm"
                       className="mt-2"
-                      onClick={() => redirect("/CreateProposal")}
+                      onClick={() =>
+                        redirect(`/CreateProposal/${campaign.campaign_id}`)
+                      }
                     >
                       Propose
                     </MDBBtn>
