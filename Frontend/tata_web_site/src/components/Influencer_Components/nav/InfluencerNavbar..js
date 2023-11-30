@@ -17,15 +17,28 @@ import {
 } from "mdb-react-ui-kit";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from 'universal-cookie'
+
+
+
 
 export const InfluencerNavbar = () => {
   const navigate = useNavigate();
-
+  const cookies = new Cookies(null, { path: '/' })
   const redirect = (path) => {
     navigate(path);
   };
 
   const [showNav, setShowNav] = useState(false);
+  const logOut = () => {
+    cookies.set('token', null, { path: '/' })
+    cookies.set('full_name', null, { path: '/' })
+    cookies.set('user_id', null, { path: '/' })
+    cookies.set('type', null, { path: '/' })
+    navigate('/Home')
+    window.location.reload()
+    
+  }
 
   return (
     <MDBNavbar expand="lg" light bgColor="white" id="homeNavBar">
@@ -167,7 +180,6 @@ export const InfluencerNavbar = () => {
                   href="#"
                 >
                   <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img(31).webp"
                     className="rounded-circle"
                     height="22"
                     alt="Avatar"
@@ -186,6 +198,11 @@ export const InfluencerNavbar = () => {
                     onClick={() => redirect("/AccountSettings")}
                   >
                     Account Settings
+                  </MDBDropdownItem>
+                  <MDBDropdownItem
+                  link onClick={logOut} 
+                  >
+                    Logout
                   </MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
