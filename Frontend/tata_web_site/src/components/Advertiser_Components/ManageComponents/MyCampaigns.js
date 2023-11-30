@@ -5,7 +5,9 @@ import { useQuery } from '@tanstack/react-query'
 import Cookies from 'universal-cookie'
 import DataTable from 'react-data-table-component'
 import fetchCampaigns from '../Fetch/fetchCampaigns'
+import { Link, useNavigate } from 'react-router-dom'
 const MyCampaigns = () => {
+  const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
   const id = cookies.get('user_id')
   const token = cookies.get('token')
@@ -18,11 +20,12 @@ const MyCampaigns = () => {
     )
   }
   const campaigns = result.data.campaign
-
   const columns = [
     {
       name: 'Campaign ID',
-      selector: row => row.campaign_id
+      selector: row => (
+        <Link to={`/details/${row.campaign_id}`}>{row.campaign_id}</Link>
+      )
     },
     {
       name: 'Campaign Header',
@@ -73,12 +76,19 @@ const MyCampaigns = () => {
           <MDBRow>
             <MDBCol md='6'>
               <MDBBtn size='md'>
-                <FontAwesomeIcon icon={faEye} />
+                <FontAwesomeIcon
+                  onClick={() => {
+                    navigate(`/details/:${row.campaign_id}`)
+                  }}
+                  icon={faEye}
+                />
               </MDBBtn>
             </MDBCol>
             <MDBCol md='6'>
               <MDBBtn size='md'>
-                <FontAwesomeIcon icon={faPenToSquare} />
+                <FontAwesomeIcon onClick={() => {
+                  navigate(`/details/:${row.campaign_id}`)
+                }} icon={faPenToSquare} />
               </MDBBtn>
             </MDBCol>
           </MDBRow>
@@ -91,7 +101,6 @@ const MyCampaigns = () => {
     data.push(campaigns[i])
   }
 
-  console.log(data)
   return (
     <div
       style={{

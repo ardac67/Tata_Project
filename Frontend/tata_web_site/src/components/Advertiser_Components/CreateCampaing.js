@@ -21,9 +21,12 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css';
 const cookies = new Cookies(null, { path: '/' })
 const CreateCampaign = () => {
   const navigate = useNavigate()
+  const { quill, quillRef } = useQuill();
   const token = cookies.get('token')
   const [dateStart, setDateStart] = useState(new Date())
   const [dateEnd, setDateEnd] = useState(new Date())
@@ -43,6 +46,8 @@ const CreateCampaign = () => {
     Authorization: `Bearer ${token}`
   }
   const pushToApi = () => {
+    console.log(formData)
+    
     axios
       .post(`http://localhost:3001/api/createCampaign`, formData, { headers })
       .then(response => {
@@ -61,6 +66,7 @@ const CreateCampaign = () => {
           position: toast.POSITION.TOP_CENTER
         })
       })
+      
   }
   return (
     <div
@@ -220,12 +226,9 @@ const CreateCampaign = () => {
                   </h6>
                 </MDBCol>
                 <MDBCol md='10' className='justify-content-start'>
-                  <MDBTextArea
-                    label='Description'
-                    id='textAreaExample'
-                    rows={10}
-                    name='campaign_description'
+                  <MDBCol ref={quillRef}
                     onChange={setData}
+                    size={{marginBottom:'10px'}}
                   />
                 </MDBCol>
               </MDBRow>

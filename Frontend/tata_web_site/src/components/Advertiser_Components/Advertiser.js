@@ -5,6 +5,7 @@ import Browse from "./Browse"
 import ViewProfile from "./ViewProfile";
 import CreateCampaign from "./CreateCampaing";
 import MyCampaigns from "./ManageComponents/MyCampaigns";
+import CDetails from "./ManageComponents/CDetails";
 const Advertiser = () =>{
     return (
         <div>
@@ -16,6 +17,7 @@ const Advertiser = () =>{
                 <Route path="/Home" element={<Browse></Browse>}></Route>
                 <Route path="/CreateCampaign" element={<CreateCampaign></CreateCampaign>}></Route>
                 <Route path="/Campaigns" element={<MyCampaigns></MyCampaigns>}></Route>
+                <Route path="/details/:id" element={<CDetails></CDetails>} />
             </Routes>   
         </div>
     )
