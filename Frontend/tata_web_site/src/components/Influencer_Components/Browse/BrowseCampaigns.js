@@ -23,7 +23,7 @@ function App() {
   const campaignsPerPage = 5; // Adjust this according to your needs
 
   const cookies = new Cookies(null, { path: "/" });
-  // const id = cookies.get("user_id");
+  const id = cookies.get("user_id");
   const token = cookies.get("token");
   const result = useQuery(["campaignAll", token], fetchAllCampaigns);
 
