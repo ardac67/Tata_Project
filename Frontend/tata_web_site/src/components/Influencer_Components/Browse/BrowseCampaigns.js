@@ -41,8 +41,10 @@ function BrowseCampaigns({ searchTerm }) {
     campaign.campaign_header.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  console.log(campaigns);
-  console.log(filteredCampaigns);
+  // Reset current page when searchTerm changes
+  if (currentPage !== 1 && searchTerm) {
+    setCurrentPage(1);
+  }
 
   const redirect = (path) => {
     navigate(path);
@@ -57,6 +59,7 @@ function BrowseCampaigns({ searchTerm }) {
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  console.log(currentPage);
 
   return (
     <MDBCol md="7">
@@ -64,7 +67,7 @@ function BrowseCampaigns({ searchTerm }) {
         <h1>No Campaigns Found</h1>
       ) : (
         currentCampaigns.map((campaign) => (
-          <MDBCard className="border rounded-3" key={campaign.id}>
+          <MDBCard className="border rounded-3 mb-2" key={campaign.id}>
             <MDBCardBody>
               <MDBRow>
                 <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">
