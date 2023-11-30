@@ -24,6 +24,7 @@ model user {
   updatedAt           DateTime?
   audience_demography audience_demography[]
   campaign            campaign[]
+  proposal            proposal[]
 }
 
 model contact {
@@ -68,6 +69,7 @@ model campaign {
   updatedAt                 DateTime?
   collaboration_preferences collaboration_preferences[]
   campaing_tags             campaing_tags[]
+  proposal                  proposal[]
 }
 
 model collaboration_preferences {
@@ -97,4 +99,16 @@ model campaing_tags {
   tag5             String?
   belongToCampaign campaign? @relation(fields: [campaign_id], references: [campaign_id])
   campaign_id      String?
+}
+
+model proposal {
+  proposal_id       String    @id @default(uuid())
+  proposal_body     String?   @db.Text
+  proposal_status   String?   @db.Text
+  belongsToUser     user?     @relation(fields: [user_id], references: [user_id])
+  user_id           String?
+  belongsToCampaign campaign? @relation(fields: [campaign_id], references: [campaign_id])
+  campaign_id       String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime?
 }
