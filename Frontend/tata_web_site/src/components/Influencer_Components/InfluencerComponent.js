@@ -3,7 +3,7 @@ import Browse from "./Browse/Browse";
 import Home from "../Home_Components/Home";
 import Manage from "./Manage/Manage";
 import AccountSettings from "./Account/AccountSettings";
-import ViewProfile from "./Account/ViewProfile";
+import ViewProfile from "./Account/ViewProfile/ViewProfile";
 import MyProposals from "./Manage/MyProposals";
 import MyCollaborations from "./Manage/MyCollaborations";
 import CampaignMilestones from "./Manage/CampaignMilestones";
