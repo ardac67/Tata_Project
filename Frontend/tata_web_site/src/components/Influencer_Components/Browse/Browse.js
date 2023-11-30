@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import {
   MDBBtn,
   MDBInput,
@@ -11,14 +11,19 @@ import BrowseCampaigns from "./BrowseCampaigns";
 import FilterBar from "./Filter";
 
 export default function Browse() {
-  
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <>
       <MDBContainer fluid className="mt-5 w-75">
         <MDBRow center>
           <h1>Browse</h1>
           <MDBInputGroup>
-            <MDBInput label="Search" />
+            <MDBInput
+              label="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <MDBBtn rippleColor="dark">
               <MDBIcon icon="search" />
             </MDBBtn>
@@ -29,7 +34,7 @@ export default function Browse() {
       <MDBContainer fluid>
         <MDBRow className="justify-content-center mt-5">
           <FilterBar />
-          <BrowseCampaigns />
+          <BrowseCampaigns searchTerm={searchTerm} />
         </MDBRow>
       </MDBContainer>
     </>

@@ -17,13 +17,12 @@ import fetchAllCampaigns from "../../Advertiser_Components/Fetch/fetchAllCampaig
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
 
-function App() {
+function BrowseCampaigns({ searchTerm }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const campaignsPerPage = 5; // Adjust this according to your needs
 
   const cookies = new Cookies(null, { path: "/" });
-  const id = cookies.get("user_id");
   const token = cookies.get("token");
   const result = useQuery(["campaignAll", token], fetchAllCampaigns);
 
@@ -36,7 +35,14 @@ function App() {
   }
 
   const campaigns = result.data.campaign;
+
+  // Filter campaigns based on the search term
+  const filteredCampaigns = campaigns.filter((campaign) =>
+    campaign.campaign_header.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   console.log(campaigns);
+  console.log(filteredCampaigns);
 
   const redirect = (path) => {
     navigate(path);
@@ -45,7 +51,7 @@ function App() {
   // Calculate the indexes of the campaigns to be displayed on the current page
   const indexOfLastCampaign = currentPage * campaignsPerPage;
   const indexOfFirstCampaign = indexOfLastCampaign - campaignsPerPage;
-  const currentCampaigns = campaigns.slice(
+  const currentCampaigns = filteredCampaigns.slice(
     indexOfFirstCampaign,
     indexOfLastCampaign
   );
@@ -139,22 +145,25 @@ function App() {
           </MDBPaginationLink>
         </MDBPaginationItem>
 
-        {[...Array(Math.ceil(campaigns.length / campaignsPerPage)).keys()].map(
-          (number) => (
-            <MDBPaginationItem
-              key={number + 1}
-              active={currentPage === number + 1}
-            >
-              <MDBPaginationLink onClick={() => paginate(number + 1)}>
-                {number + 1}
-              </MDBPaginationLink>
-            </MDBPaginationItem>
-          )
-        )}
+        {[
+          ...Array(
+            Math.ceil(filteredCampaigns.length / campaignsPerPage)
+          ).keys(),
+        ].map((number) => (
+          <MDBPaginationItem
+            key={number + 1}
+            active={currentPage === number + 1}
+          >
+            <MDBPaginationLink onClick={() => paginate(number + 1)}>
+              {number + 1}
+            </MDBPaginationLink>
+          </MDBPaginationItem>
+        ))}
 
         <MDBPaginationItem
           disabled={
-            currentPage === Math.ceil(campaigns.length / campaignsPerPage)
+            currentPage ===
+            Math.ceil(filteredCampaigns.length / campaignsPerPage)
           }
         >
           <MDBPaginationLink onClick={() => paginate(currentPage + 1)}>
@@ -166,4 +175,4 @@ function App() {
   );
 }
 
-export default App;
+export default BrowseCampaigns;
