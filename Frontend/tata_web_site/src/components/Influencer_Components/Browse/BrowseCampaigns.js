@@ -36,7 +36,7 @@ function App() {
   }
 
   const campaigns = result.data.campaign;
-  console.log(campaigns);
+  //console.log(campaigns);
 
   const redirect = (path) => {
     navigate(path);
@@ -121,7 +121,7 @@ function App() {
                       color="success"
                       size="sm"
                       className="mt-2"
-                      onClick={() => redirect("/CreateProposal")}
+                      onClick={() => redirect(`/CreateProposal/${campaign.campaign_id}`)}
                     >
                       Propose
                     </MDBBtn>

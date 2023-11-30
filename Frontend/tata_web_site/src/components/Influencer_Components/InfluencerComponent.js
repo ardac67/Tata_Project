@@ -25,7 +25,7 @@ const InfluencerComponent = ({setIsAuth}) => {
                 <Route path="/CampaignMilestones" element={<CampaignMilestones></CampaignMilestones>}></Route>
                 <Route path="/ViewProfile" element={<ViewProfile></ViewProfile>}></Route>
                 <Route path="/CampaignDetails" element={<CampaignDetails></CampaignDetails>}></Route>
-                <Route path="/CreateProposal" element={<CreateProposal></CreateProposal>}></Route>
+                <Route path="/CreateProposal/:id" element={<CreateProposal></CreateProposal>}></Route>
             </Routes>   
             <div></div>
         </div>
