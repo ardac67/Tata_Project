@@ -30,7 +30,7 @@ const Register = () => {
       contact: contact_data,
       media_links: media_links_data
     }
-    //console.log(post_object)
+    console.log(post_object)
     
     axios
       .post('http://localhost:3001/createUser', post_object)
