@@ -14,7 +14,9 @@ import {
   MDBListGroup,
   MDBListGroupItem,
   MDBBadge,
-  MDBSpinner
+  MDBSpinner,
+  MDBCardHeader,
+  MDBCardFooter
 } from 'mdb-react-ui-kit'
 import fetchProposal from '../Fetch/fetchProposal'
 import Cookies from 'universal-cookie'
@@ -22,6 +24,7 @@ import { useQuery } from '@tanstack/react-query'
 import fetchCampaigns from '../Fetch/fetchCampaigns'
 import axios from 'axios'
 import getAllCampaignsBYid from '../Fetch/getAllCampaignsBYid'
+import RatingComponent from '../ViewProfileComponents/RatingComponent'
 const CDetails = () => {
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
@@ -228,39 +231,29 @@ const CDetails = () => {
                         </MDBCardText>
                         <MDBCardText className='fs-8 d-inline'>
                           <MDBRow>
-                            <MDBCol sm='2' style={{marginRight:'1px'}}>
+                            <MDBCol sm='2' style={{ marginRight: '1px' }}>
                               <MDBBadge pill light>
-                                {
-                                  c_data.campaing_tags[0].tag1
-                                }
+                                {c_data.campaing_tags[0].tag1}
                               </MDBBadge>
                             </MDBCol>
                             <MDBCol sm='2'>
                               <MDBBadge pill light>
-                                {
-                                  c_data.campaing_tags[0].tag2
-                                }
+                                {c_data.campaing_tags[0].tag2}
                               </MDBBadge>
                             </MDBCol>
                             <MDBCol sm='2'>
                               <MDBBadge pill light>
-                                {
-                                  c_data.campaing_tags[0].tag3
-                                }
+                                {c_data.campaing_tags[0].tag3}
                               </MDBBadge>
                             </MDBCol>
                             <MDBCol sm='2'>
                               <MDBBadge pill light>
-                                {
-                                  c_data.campaing_tags[0].tag4
-                                }
+                                {c_data.campaing_tags[0].tag4}
                               </MDBBadge>
                             </MDBCol>
                             <MDBCol sm='2'>
                               <MDBBadge pill light>
-                                {
-                                  c_data.campaing_tags[0].tag5
-                                }
+                                {c_data.campaing_tags[0].tag5}
                               </MDBBadge>
                             </MDBCol>
                           </MDBRow>
@@ -310,7 +303,9 @@ const CDetails = () => {
                         icon='twitter fa-lg'
                         style={{ color: '#55acee' }}
                       />
-                      <MDBCardText>{c_data.user.media_links[0].twitter}</MDBCardText>
+                      <MDBCardText>
+                        {c_data.user.media_links[0].twitter}
+                      </MDBCardText>
                     </MDBListGroupItem>
                     <MDBListGroupItem className='d-flex justify-content-between align-items-center p-3'>
                       <MDBIcon
@@ -318,7 +313,9 @@ const CDetails = () => {
                         icon='instagram fa-lg'
                         style={{ color: '#ac2bac' }}
                       />
-                      <MDBCardText>{c_data.user.media_links[0].instagram}</MDBCardText>
+                      <MDBCardText>
+                        {c_data.user.media_links[0].instagram}
+                      </MDBCardText>
                     </MDBListGroupItem>
                     <MDBListGroupItem className='d-flex justify-content-between align-items-center p-3'>
                       <MDBIcon
@@ -326,7 +323,9 @@ const CDetails = () => {
                         icon='youtube fa-lg'
                         style={{ color: '#3b5998' }}
                       />
-                      <MDBCardText>{c_data.user.media_links[0].youtube}</MDBCardText>
+                      <MDBCardText>
+                        {c_data.user.media_links[0].youtube}
+                      </MDBCardText>
                     </MDBListGroupItem>
                     <MDBListGroupItem className='d-flex justify-content-between align-items-center p-3'>
                       <MDBIcon
@@ -334,7 +333,9 @@ const CDetails = () => {
                         icon='fa-brands fa-tiktok'
                         style={{ color: '#3b5998' }}
                       />
-                      <MDBCardText>{c_data.user.media_links[0].tiktok}</MDBCardText>
+                      <MDBCardText>
+                        {c_data.user.media_links[0].tiktok}
+                      </MDBCardText>
                     </MDBListGroupItem>
                   </MDBListGroup>
                 </MDBCardBody>
@@ -347,64 +348,77 @@ const CDetails = () => {
         Given Proposals
       </h2>
       <div className='proposals' style={{ margin: '120px', marginTop: '50px' }}>
-        <MDBListGroup style={{}} light>
+        <MDBCard alignment='left' style={{ marginTop: '10px' }}>
+          <MDBCardHeader style={{ fontSize: '28px' }}>Proposals</MDBCardHeader>
           {data.length === 0 ? (
-            <h1>No Campaigns Found</h1>
+            <h6 className="text-center">No Proposal Found</h6>
           ) : (
             data.map(data => (
-              <MDBListGroupItem className='d-flex justify-content-between align-items-center square bg-secondary rounded-8 border-dark mb-2 ps-4 pe-4'>
-                <MDBRow className='w-100'>
-                  <MDBCol md='8'>
-                    <div className='d-flex align-items-center'>
-                      <img
-                        src='https://mdbootstrap.com/img/new/avatars/8.jpg'
-                        alt=''
-                        style={{ width: '45px', height: '45px' }}
-                        className='rounded-circle'
-                      />
-                      <div className='ms-3'>
-                        <p className='fw-bold mb-1'>
-                          {data.belongsToUser.name}
-                        </p>
-                        <p className='text-muted mb-0'>
-                          {data.belongsToUser.email}
-                        </p>
-                        <p className='text-muted mb-0'>{data.proposal_body}</p>
-                      </div>
-                    </div>
-                  </MDBCol>
-                  <MDBCol
-                    md='4'
-                    className='d-flex justify-content-end'
-                    style={{ marginLeft: '0px' }}
-                  >
-                    <MDBBtn
-                      onClick={() => {
-                        acceptOrReject(
-                          0,
-                          data.proposal_id,
-                          data.belongsToUser.user_id
-                        )
+              <MDBCardBody>
+                <MDBCardBody className='square border border-3'>
+                  <MDBRow>
+                    <MDBCardHeader style={{ fontSize: '15px' }}>
+                      📊 {data.belongsToUser.name} | 🎨
+                      {data.belongsToUser.email} | 💡{' '}
+                      {data.belongsToUser.user_name}
+                    </MDBCardHeader>
+                    <MDBCardBody>
+                      <MDBCardText style={{ marginTop: '10px' }}>
+                        {data.proposal_body}
+                      </MDBCardText>
+                      <MDBCardText style={{ marginTop: '10px' }}>
+                        Tags: #{c_data.campaing_tags[0].tag1} #
+                        {c_data.campaing_tags[0].tag2} #
+                        {c_data.campaing_tags[0].tag3} #
+                        {c_data.campaing_tags[0].tag4} #
+                        {c_data.campaing_tags[0].tag5}
+                      </MDBCardText>
+                      <MDBCardText style={{ marginTop: '10px' }}>
+                        {data.belongsToUser.name} @
+                        {data.belongsToUser.user_name} Created At:{' '}
+                        {data.createdAt}
+                      </MDBCardText>
+                    </MDBCardBody>
+                    <MDBRow
+                      style={{
+                        fontSize: '15px'
                       }}
-                      color='success'
-                      className='me-2'
+                    ></MDBRow>
+                  </MDBRow>
+                  <MDBCardFooter>
+                    <MDBCol
+                      md='12'
+                      className='d-flex justify-content-end'
+                      style={{ marginLeft: '0px' }}
                     >
-                      Accept
-                    </MDBBtn>
-                    <MDBBtn
-                      onClick={() => {
-                        acceptOrReject(1, data.proposal_id)
-                      }}
-                      color='danger'
-                    >
-                      Reject
-                    </MDBBtn>
-                  </MDBCol>
-                </MDBRow>
-              </MDBListGroupItem>
+                      <MDBBtn
+                        onClick={() => {
+                          acceptOrReject(
+                            0,
+                            data.proposal_id,
+                            data.belongsToUser.user_id
+                          )
+                        }}
+                        color='success'
+                        className='me-2'
+                      >
+                        Accept
+                      </MDBBtn>
+                      <MDBBtn
+                        onClick={() => {
+                          acceptOrReject(1, data.proposal_id)
+                        }}
+                        color='danger'
+                      >
+                        Reject
+                      </MDBBtn>
+                    </MDBCol>
+                  </MDBCardFooter>
+                </MDBCardBody>
+              </MDBCardBody>
             ))
           )}
-        </MDBListGroup>
+        </MDBCard>
       </div>
     </>
   )
