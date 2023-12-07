@@ -121,7 +121,7 @@ function BrowseCampaigns({ searchTerm }) {
                     <MDBBtn
                       color="primary"
                       size="sm"
-                      onClick={() => redirect(`/CampaignDetails`,)}
+                      onClick={() => redirect(`/CampaignDetails/${campaign.campaign_id}`,)}
                     >
                       Campaign Details
                     </MDBBtn>
