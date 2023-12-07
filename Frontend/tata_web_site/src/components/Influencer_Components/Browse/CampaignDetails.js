@@ -248,7 +248,7 @@ export default function CampaignDetails() {
                       <MDBIcon
                         fab
                         icon='youtube fa-lg'
-                        style={{ color: '#3b5998' }}
+                        style={{ color: '#cd201f' }}
                       />
                       <MDBCardText>{campaign.user.media_links[0].youtube}</MDBCardText>
                     </MDBListGroupItem>
@@ -256,7 +256,7 @@ export default function CampaignDetails() {
                       <MDBIcon
                         fab
                         icon='fa-brands fa-tiktok'
-                        style={{ color: '#3b5998' }}
+                        style={{ color: '#000000' }}
                       />
                       <MDBCardText>{campaign.user.media_links[0].tiktok}</MDBCardText>
                     </MDBListGroupItem>
