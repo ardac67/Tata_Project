@@ -2,6 +2,19 @@ import prisma from '../db'
 
 export const postProposal = async (req, res) => {
   try {
+    const proposal_find = await prisma.proposal.count({
+      where: {
+        user_id: req.body.user_id,
+        belongsToCampaign: {
+          campaign_id: req.body.campaign_id
+        }
+      }
+    })
+    if(proposal_find > 0){
+      res.status(500)
+      res.json({error: 'Proposal already sent'})
+      return
+    }
     const proposal = await prisma.proposal.create({
       data: {
         user_id: req.body.user_id,

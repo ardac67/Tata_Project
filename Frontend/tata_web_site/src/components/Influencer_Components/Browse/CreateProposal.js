@@ -19,6 +19,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 import {useParams} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'
 
 export default function CreateProposal () {
   const  campaign_id  = useParams()
@@ -47,10 +48,20 @@ export default function CreateProposal () {
     axios
       .post(`http://localhost:3001/api/postProposal`, data, { headers })
       .then(response => {
-        window.alert('success')
+        if (response.status === 200) {
+          // Assuming status code 200 or 201 indicates success
+          toast.success('Success message here', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 4000
+          });
+          
+        }
       })
       .catch(error => {
-        console.error('Error:', error)
+          toast.error(`Already applied ${error}`, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 4000
+          });
       })
   }
   const redirect = path => {
@@ -59,6 +70,7 @@ export default function CreateProposal () {
   return (
     <section style={{ backgroundColor: '#eee' }}>
       <MDBContainer className='py-5'>
+      <ToastContainer />
         <MDBRow>
           <MDBCol lg='8'>
             <MDBCard className='mb-4'>

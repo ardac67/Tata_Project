@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import {
   MDBRow,
   MDBCol,
@@ -10,112 +10,118 @@ import {
   MDBSpinner,
   MDBPagination,
   MDBPaginationItem,
-  MDBPaginationLink,
-} from "mdb-react-ui-kit";
-import { useNavigate } from "react-router-dom";
-import fetchAllCampaigns from "./fetchAllCampaign";
-import { useQuery } from "@tanstack/react-query";
-import Cookies from "universal-cookie";
-import "./BrowseCampaigns.css";
+  MDBPaginationLink
+} from 'mdb-react-ui-kit'
+import { useNavigate } from 'react-router-dom'
+import fetchAllCampaigns from './fetchAllCampaign'
+import { useQuery } from '@tanstack/react-query'
+import Cookies from 'universal-cookie'
+import './BrowseCampaigns.css'
+import { ProgressBar } from 'react-loader-spinner'
+function BrowseCampaigns ({ searchTerm }) {
+  const navigate = useNavigate()
+  const [currentPage, setCurrentPage] = useState(1)
+  const campaignsPerPage = 5 // Adjust this according to your needs
 
-function BrowseCampaigns({ searchTerm }) {
-  const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const campaignsPerPage = 5; // Adjust this according to your needs
-
-  const cookies = new Cookies(null, { path: "/" });
-  const token = cookies.get("token");
-  const result = useQuery(["campaignAll", token], fetchAllCampaigns);
+  const cookies = new Cookies(null, { path: '/' })
+  const token = cookies.get('token')
+  const result = useQuery(['campaignAll', token], fetchAllCampaigns)
 
   if (result.isLoading) {
     return (
-      <MDBSpinner role="status">
-        <span className="visually-hidden">Loading...</span>
-      </MDBSpinner>
-    );
+      <ProgressBar
+        height='500'
+        width='500'
+        ariaLabel='progress-bar-loading'
+        wrapperStyle={{}}
+        wrapperClass='progress-bar-wrapper'
+        borderColor='#F4442E'
+        barColor='#51E5FF'
+      />
+    )
   }
 
-  const campaigns = result.data.campaign;
+  const campaigns = result.data.campaign
 
   // Filter campaigns based on the search term
-  const filteredCampaigns = campaigns.filter((campaign) =>
+  const filteredCampaigns = campaigns.filter(campaign =>
     campaign.campaign_header.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  )
 
   // Reset current page when searchTerm changes
   if (currentPage !== 1 && searchTerm) {
-    setCurrentPage(1);
+    setCurrentPage(1)
   }
 
   // Calculate the indexes of the campaigns to be displayed on the current page
-  const indexOfLastCampaign = currentPage * campaignsPerPage;
-  const indexOfFirstCampaign = indexOfLastCampaign - campaignsPerPage;
+  const indexOfLastCampaign = currentPage * campaignsPerPage
+  const indexOfFirstCampaign = indexOfLastCampaign - campaignsPerPage
   const currentCampaigns = filteredCampaigns.slice(
     indexOfFirstCampaign,
     indexOfLastCampaign
-  );
+  )
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = pageNumber => setCurrentPage(pageNumber)
 
-  console.log(campaigns);
+  console.log(campaigns)
 
   return (
-    <MDBCol md="7">
+    <MDBCol md='7'>
       {!currentCampaigns.length ? (
         <h1>No Campaigns Found</h1>
       ) : (
-        currentCampaigns.map((campaign) => (
-          <MDBCard className="border rounded-3 mb-2" key={campaign.id}>
+        currentCampaigns.map(campaign => (
+          <MDBCard className='border rounded-3 mb-2' key={campaign.id}>
             <MDBCardBody>
               <MDBRow>
-                <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">
+                <MDBCol md='12' lg='3' className='mb-4 mb-lg-0'>
                   <MDBRipple
-                    rippleColor="light"
-                    rippleTag="div"
-                    className="bg-image rounded hover-zoom hover-overlay"
+                    rippleColor='light'
+                    rippleTag='div'
+                    className='bg-image rounded hover-zoom hover-overlay'
                   >
                     <MDBCardImage
                       src={campaign.image}
                       fluid
-                      className="w-100"
+                      className='w-100'
                     />
-                    <a href="#!">
+                    <a href='#!'>
                       <div
-                        className="mask"
+                        className='mask'
                         style={{
-                          backgroundColor: "rgba(251, 251, 251, 0.15)",
+                          backgroundColor: 'rgba(251, 251, 251, 0.15)'
                         }}
                       ></div>
                     </a>
                   </MDBRipple>
                 </MDBCol>
-                <MDBCol md="6">
+                <MDBCol md='6'>
                   <h5>{campaign.campaign_header}</h5>
-                  <div className="mt-1 mb-2 text-muted small">
+                  <div className='mt-1 mb-2 text-muted small'>
                     <span>{campaign.campaing_tags[0].tag1}</span>
-                    <span className="text-primary"> • </span>
+                    <span className='text-primary'> • </span>
                     <span>{campaign.campaing_tags[0].tag2}</span>
-                    <span className="text-primary"> • </span>
+                    <span className='text-primary'> • </span>
                     <span>{campaign.campaing_tags[0].tag3}</span>
-                    <span className="text-primary"> • </span>
+                    <span className='text-primary'> • </span>
                     <span>{campaign.campaing_tags[0].tag4}</span>
-                    <span className="text-primary"> • </span>
+                    <span className='text-primary'> • </span>
                     <span>{campaign.campaing_tags[0].tag5}</span>
                     <br />
                   </div>
-                  <p className="text-truncate-multiline mb-4 mb-md-0">
+                  <p className='text-truncate-multiline mb-4 mb-md-0'>
                     {campaign.campaign_description}
                   </p>
                 </MDBCol>
                 <MDBCol
-                  md="6"
-                  lg="3"
-                  className="border-sm-start-none border-start"
+                  md='6'
+                  lg='3'
+                  className='border-sm-start-none border-start'
                 >
-                  <div className="d-flex flex-column mt-4">
+                  <div className='d-flex flex-column mt-4'>
                     <MDBBtn
-                      color="primary"
-                      size="sm"
+                      color='primary'
+                      size='sm'
                       onClick={() =>
                         navigate(`/CampaignDetails/${campaign.campaign_id}`)
                       }
@@ -124,9 +130,9 @@ function BrowseCampaigns({ searchTerm }) {
                     </MDBBtn>
                     <MDBBtn
                       outline
-                      color="success"
-                      size="sm"
-                      className="mt-2"
+                      color='success'
+                      size='sm'
+                      className='mt-2'
                       onClick={() =>
                         navigate(`/CreateProposal/${campaign.campaign_id}`)
                       }
@@ -207,7 +213,7 @@ function BrowseCampaigns({ searchTerm }) {
             </MDBRow>
           </MDBCardBody>
         </MDBCard> */}
-      <MDBPagination className="mt-3 justify-content-end">
+      <MDBPagination className='mt-3 justify-content-end'>
         <MDBPaginationItem disabled={currentPage === 1}>
           <MDBPaginationLink onClick={() => paginate(currentPage - 1)}>
             Previous
@@ -217,8 +223,8 @@ function BrowseCampaigns({ searchTerm }) {
         {[
           ...Array(
             Math.ceil(filteredCampaigns.length / campaignsPerPage)
-          ).keys(),
-        ].map((number) => (
+          ).keys()
+        ].map(number => (
           <MDBPaginationItem
             key={number + 1}
             active={currentPage === number + 1}
@@ -241,7 +247,7 @@ function BrowseCampaigns({ searchTerm }) {
         </MDBPaginationItem>
       </MDBPagination>
     </MDBCol>
-  );
+  )
 }
 
-export default BrowseCampaigns;
+export default BrowseCampaigns

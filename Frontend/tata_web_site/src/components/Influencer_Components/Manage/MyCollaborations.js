@@ -69,7 +69,7 @@ export default function MyCollaborations () {
           </MDBTableHead>
           <MDBTableBody>
             {data.length === 0 ? (
-              <h1>No Proposal Found</h1>
+              <h1>No Collaborations Found</h1>
             ) : (
               data.map(data => (
                 <tr>
@@ -82,7 +82,7 @@ export default function MyCollaborations () {
                   </td>
                   <td>
                     <a
-                      onClick={() => redirect('/CampaignDetails')}
+                      onClick={() => navigate(`/CampaignDetails/${data.belongToCampaign.campaign_id}`)}
                       style={{ cursor: 'pointer' }}
                       className='hover-link'
                     >

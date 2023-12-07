@@ -8,15 +8,10 @@ import {
   MDBInput,
   MDBIcon,
   MDBInputGroup,
-  MDBSpinner,
-  MDBModal,
-  MDBModalDialog,
-  MDBModalContent,
-  MDBModalHeader,
-  MDBModalTitle,
-  MDBModalBody,
-  MDBModalFooter,
+  MDBSpinner
 } from 'mdb-react-ui-kit'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
 import { Link, useNavigate } from 'react-router-dom'
 import fetchProposal from '../../Advertiser_Components/Fetch/fetchIndividualProposals'
 import Cookies from 'universal-cookie'
@@ -32,15 +27,13 @@ export default function MyProposals () {
     let minutes = String(date.getMinutes()).padStart(2, '0')
     return `${year}-${month}-${day} ${hour}:${minutes}`
   }
-  const [basicModal, setBasicModal] = useState(false)
 
-  const toggleOpen = () => setBasicModal(!basicModal)
   const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
   const id = cookies.get('user_id')
   const result = useQuery(['proposalIndidual', id, token], fetchProposal)
-  console.log(result.data)
+
   if (result.isLoading) {
     return (
       <MDBSpinner role='status'>
@@ -140,7 +133,7 @@ export default function MyProposals () {
 
                   <td>{formatDateAndHour(data.createdAt)}</td>
                   <td>
-                    <MDBBtn color='light' rounded size='md'>
+                    <MDBBtn onClick={console.log('arda')} color='light' rounded size='md'>
                       <i class='far fa-pen-to-square fa-lg text-primary'></i>
                     </MDBBtn>
                     <MDBBtn color='light' rounded size='md'>
@@ -152,29 +145,6 @@ export default function MyProposals () {
             )}
           </MDBTableBody>
         </MDBTable>
-        <MDBBtn onClick={toggleOpen}>LAUNCH DEMO MODAL</MDBBtn>
-        <MDBModal open={basicModal} setopen={setBasicModal} tabIndex='-1'>
-          <MDBModalDialog>
-            <MDBModalContent>
-              <MDBModalHeader>
-                <MDBModalTitle>Modal title</MDBModalTitle>
-                <MDBBtn
-                  className='btn-close'
-                  color='none'
-                  onClick={toggleOpen}
-                ></MDBBtn>
-              </MDBModalHeader>
-              <MDBModalBody>...</MDBModalBody>
-
-              <MDBModalFooter>
-                <MDBBtn color='secondary' onClick={toggleOpen}>
-                  Close
-                </MDBBtn>
-                <MDBBtn>Save changes</MDBBtn>
-              </MDBModalFooter>
-            </MDBModalContent>
-          </MDBModalDialog>
-        </MDBModal>
       </>
     </>
   )
