@@ -29,8 +29,17 @@ export default function MyCollaborations () {
       </MDBSpinner>
     )
   }
-
+  function formatDateAndHour (dateStr) {
+    let date = new Date(dateStr)
+    let year = date.getFullYear()
+    let month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-indexed
+    let day = String(date.getDate()).padStart(2, '0')
+    let hour = date.getHours()
+    let minutes = String(date.getMinutes()).padStart(2, '0')
+    return `${year}-${month}-${day} ${hour}:${minutes}`
+  }
   var data = result.data.proposal
+  console.log(data)
   const redirect = path => {
     navigate(path)
   }
@@ -55,7 +64,7 @@ export default function MyCollaborations () {
               <th scope='col'>Campaign</th>
               <th scope='col'>Campaign Owner</th>
               <th scope='col'>Created & End Date</th>
-              <th scope='col'>Status</th>
+              <th scope='col'>Campaing Status</th>
             </tr>
           </MDBTableHead>
           <MDBTableBody>
@@ -77,7 +86,7 @@ export default function MyCollaborations () {
                       style={{ cursor: 'pointer' }}
                       className='hover-link'
                     >
-                      Influencer Partnership
+                      {data.belongToCampaign.campaign_description}
                     </a>
                   </td>
                   <td>
@@ -89,15 +98,19 @@ export default function MyCollaborations () {
                         className='rounded-circle'
                       />
                       <div className='ms-3'>
-                        <p className='fw-bold mb-1'>Hepsiburada</p>
-                        <p className='text-muted mb-0'>hepsiburada@gmail.com</p>
+                        <p className='fw-bold mb-1'>
+                          {data.belongToCampaign.user.name}
+                        </p>
+                        <p className='text-muted mb-0'>
+                          {data.belongToCampaign.user.email}
+                        </p>
                       </div>
                     </div>
                   </td>
-                  <td>11.11.2023 - 25.11.2023</td>
+                  <td>{formatDateAndHour(data.belongToCampaign.startedAt)} || {formatDateAndHour(data.belongToCampaign.endedAt)}</td>
                   <td>
                     <MDBBadge color='success' pill>
-                      Ongoing
+                    {data.belongToCampaign.status}
                     </MDBBadge>
                   </td>
                 </tr>
