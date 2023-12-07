@@ -18,6 +18,8 @@ import {
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from 'universal-cookie'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser,faSquarePlus } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -175,15 +177,18 @@ export const InfluencerNavbar = () => {
 
             <MDBNavbarItem>
               <MDBDropdown>
+              
                 <MDBDropdownToggle
                   tag="a"
                   className="nav-link d-flex align-items-center"
                   href="#"
                 >
+                  <FontAwesomeIcon icon={faUser} style={{ marginRight: '5px' }} />
+                  {cookies.get('full_name')}
                   <img
                     className="rounded-circle"
                     height="22"
-                    alt="Avatar"
+                    alt=""
                     loading="lazy"
                   />
                 </MDBDropdownToggle>
