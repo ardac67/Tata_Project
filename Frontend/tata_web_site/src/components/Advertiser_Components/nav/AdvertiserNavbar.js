@@ -74,7 +74,7 @@ export const AdvertiserNavbar = () => {
                   Manage
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
-                  <MDBDropdownItem link href='/Campaigns'>My Campaings</MDBDropdownItem>
+                  <MDBDropdownItem link href='/Campaigns'>My Campaigns</MDBDropdownItem>
                   <MDBDropdownItem link>My Colloborations</MDBDropdownItem>
                   <MDBDropdownItem link>Campaign Milesones</MDBDropdownItem>
                 </MDBDropdownMenu>
@@ -94,7 +94,7 @@ export const AdvertiserNavbar = () => {
                 onMouseLeave={e => (e.target.style.color = 'white')}
                 onClick={() => navigate('/CreateCampaign')}
               >
-                <FontAwesomeIcon icon={faSquarePlus} style={{marginRight:'10px',color:'white'}} /> Create Campaing
+                <FontAwesomeIcon icon={faSquarePlus} style={{marginRight:'10px',color:'white'}} /> Create Campaign
               </MDBBtn>
             <MDBNavbarItem>
               <MDBDropdown>

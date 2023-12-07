@@ -11,7 +11,7 @@ import {
   MDBSpinner
 } from 'mdb-react-ui-kit'
 import { Link, useNavigate } from 'react-router-dom'
-import fetchProposal from '/Users/ardac/Desktop/Arda/term3/software_engineering/Frontend/tata_web_site/src/components/Advertiser_Components/Fetch/fetchIndividualProposals'
+import fetchProposal from '../../Advertiser_Components/Fetch/fetchIndividualProposals'
 import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
 export default function MyProposals () {

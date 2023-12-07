@@ -167,7 +167,8 @@ export const InfluencerNavbar = () => {
                   <MDBDropdownItem link>Message 1</MDBDropdownItem>
                   <MDBDropdownItem link>Message 2</MDBDropdownItem>
                   <MDBDropdownItem link>Message 3</MDBDropdownItem>
-                  <MDBDropdownItem link>Show all Messages</MDBDropdownItem>
+                  <MDBDropdownItem link
+                    onClick={() => redirect("/ShowAllMessages")}>Show all Messages</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavbarItem>

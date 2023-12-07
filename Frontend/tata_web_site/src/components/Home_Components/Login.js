@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   MDBBtn,
   MDBContainer,
@@ -6,79 +6,67 @@ import {
   MDBCol,
   MDBCard,
   MDBCardBody,
-  MDBInput,
-  MDBIcon
-} from 'mdb-react-ui-kit'
-import './Home.css'
-import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import FooterUniversal from '../../FooterUniversal'
+  MDBInput
+} from 'mdb-react-ui-kit';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import FooterUniversal from '../../FooterUniversal';
 import Cookies from 'universal-cookie';
-import axios from 'axios'
+import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const Login = ({ setIsAuth }) => {
-  const navigate = useNavigate()
-  const cookies = new Cookies(null ,{ path: '/' });
-  const [login_data, setLoginData] = useState({})
+  const navigate = useNavigate();
+  const cookies = new Cookies(null, { path: '/' });
+  const [login_data, setLoginData] = useState({});
+
   const signIn = () => {
-        //let jsonData=JSON.stringify(login_data)
-        //console.log(jsonData)
-        axios.post('http://localhost:3001/signin',login_data)
-        .then(function (response) {
-            if(response.status===200){
-                cookies.set('user_id', response.data.user_id, {
-                    path:'/'                    
-                })
-                  cookies.set('token', response.data.token, {
-                    path:'/'                    
-                })
-                cookies.set('type', response.data.type, {
-                    path:'/'                    
-                })
-                cookies.set('user_name', response.data.user_name, {
-                  path:'/'                    
-              })
-              cookies.set('full_name', response.data.full_name, {
-                  path:'/'                    
-              })
-                window.alert("Login Successful")
-                navigate(`/`)
-                setIsAuth(cookies.get("type"),true)
-            }
-            else if(response.status===401){
-              toast.error("Invalid Credidentials !", {
-                position: toast.POSITION.TOP_LEFT
-              });
-            }
-            else{
-              toast.error("SERVER ERROR !", {
-                position: toast.POSITION.TOP_LEFT
-              });
-            }
-        })
-        .catch(function (error) {
-          toast.error("Invalid Credidentials  !", {
+    axios.post('http://localhost:3001/signin', login_data)
+      .then(function (response) {
+        if (response.status === 200) {
+          cookies.set('user_id', response.data.user_id, { path: '/' });
+          cookies.set('token', response.data.token, { path: '/' });
+          cookies.set('type', response.data.type, { path: '/' });
+          cookies.set('user_name', response.data.user_name, { path: '/' });
+          cookies.set('full_name', response.data.full_name, { path: '/' });
+          window.alert("Login Successful");
+          navigate(`/`);
+          setIsAuth(cookies.get("type"), true);
+        } else if (response.status === 401) {
+          toast.error("Invalid Credentials!", {
             position: toast.POSITION.TOP_LEFT
           });
-        })
-  }
+        } else {
+          toast.error("SERVER ERROR!", {
+            position: toast.POSITION.TOP_LEFT
+          });
+        }
+      })
+      .catch(function (error) {
+        toast.error("Invalid Credentials!", {
+          position: toast.POSITION.TOP_LEFT
+        });
+      });
+  };
 
   const updateData = e => {
     setLoginData({
-        ...login_data,
-        [e.target.name]: e.target.value
-    })
-  }
+      ...login_data,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      signIn();
+    }
+  };
+
   return (
-    <div
-      className='App'
-      style={{
-        color: 'black'
-      }}
-    >
+    <div className='App' style={{ color: 'black' }}>
       <MDBContainer fluid>
-      <ToastContainer />
+        <ToastContainer />
         <MDBRow className='d-flex justify-content-center align-items-center h-100'>
           <MDBCol col='12'>
             <MDBCard
@@ -94,7 +82,7 @@ const Login = ({ setIsAuth }) => {
                   id='form1'
                   type='user_name'
                   name="user_name"
-                  onChange={updateData }
+                  onChange={updateData}
                 />
                 <MDBInput
                   wrapperClass='mb-4'
@@ -102,11 +90,12 @@ const Login = ({ setIsAuth }) => {
                   id='form2'
                   type='password'
                   name="password"
-                  onChange={ updateData }
+                  onChange={updateData}
+                  onKeyPress={handleKeyPress} // Add this line
                 />
 
                 <p className='small mb-3 pb-lg-2'>
-                  <a class='text-dark-50' href='#!'>
+                  <a className='text-dark-50' href='#!'>
                     Forgot password?
                   </a>
                 </p>
@@ -118,47 +107,13 @@ const Login = ({ setIsAuth }) => {
                   className='d-flex justify-content-between mx-auto mb-4'
                   style={{ width: '40%' }}
                 >
-                  <MDBBtn
-                    tag='a'
-                    color='none'
-                    className='m-1'
-                    style={{ color: '#1266f1' }}
-                  >
-                    <MDBIcon fab icon='facebook-f' size='sm' />
-                  </MDBBtn>
-
-                  <MDBBtn
-                    tag='a'
-                    color='none'
-                    className='m-1'
-                    style={{ color: '#1266f1' }}
-                  >
-                    <MDBIcon fab icon='twitter' size='sm' />
-                  </MDBBtn>
-
-                  <MDBBtn
-                    tag='a'
-                    color='none'
-                    className='m-1'
-                    style={{ color: '#1266f1' }}
-                  >
-                    <MDBIcon fab icon='google' size='sm' />
-                  </MDBBtn>
-
-                  <MDBBtn
-                    tag='a'
-                    color='none'
-                    className='m-1'
-                    style={{ color: '#1266f1' }}
-                  >
-                    <MDBIcon fab icon='github' size='sm' />
-                  </MDBBtn>
+                  {/* ... (previous code) */}
                 </div>
 
                 <div>
                   <p className='mb-0'>
                     Don't have an account?
-                    <Link class='text-dark-50 fw-bold' to={`/register`}>
+                    <Link className='text-dark-50 fw-bold' to={`/register`}>
                       {' '}
                       Sign Up
                     </Link>
@@ -171,7 +126,7 @@ const Login = ({ setIsAuth }) => {
       </MDBContainer>
       <FooterUniversal />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
