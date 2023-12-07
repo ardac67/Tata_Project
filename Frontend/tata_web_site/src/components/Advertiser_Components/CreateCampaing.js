@@ -55,7 +55,7 @@ const CreateCampaign = () => {
       status: 'pending'
     });
   };
-
+  console.log(setFormData)
   const headers = {
     Authorization: `Bearer ${token}`
   }
@@ -240,10 +240,7 @@ const CreateCampaign = () => {
                   </h6>
                 </MDBCol>
                 <MDBCol md='10' className='justify-content-start'>
-                  <MDBCol ref={quillRef}
-                    onChange={setData}
-                    size={{marginBottom:'10px'}}
-                  />
+                <MDBTextArea name="campaign_description" id='textAreaExample' rows={4} onChange={setData} />
                 </MDBCol>
               </MDBRow>
             </MDBCardBody>
@@ -272,7 +269,7 @@ const CreateCampaign = () => {
                       </h6>
                     </MDBCol>
                     <MDBCol md='10'>
-                       <ReactQuill theme="snow"  onChange={setEditorData} />
+                    <MDBTextArea name="target_audience" id='textAreaExample' rows={4} onChange={setData} />
                     </MDBCol>
                   </MDBRow>
                 </MDBCol>
@@ -290,7 +287,7 @@ const CreateCampaign = () => {
                   </h6>
                 </MDBCol>
                 <MDBCol md='10' className='justify-content-start'>
-                <ReactQuill theme="snow" name="age_interval" onChange={setEditorData} />
+                <MDBTextArea name="age_interval" id='textAreaExample' rows={4} onChange={setData}/>
                 </MDBCol>
               </MDBRow>
               <MDBRow style={{ marginTop: '25px' }}>
@@ -306,7 +303,7 @@ const CreateCampaign = () => {
                   </h6>
                 </MDBCol>
                 <MDBCol md='10' className='justify-content-start'>
-                <ReactQuill theme="snow" name="gender_information" onChange={setEditorData} />
+                <MDBTextArea name="gender_information" id='textAreaExample' rows={4} onChange={setData}/>
                 </MDBCol>
               </MDBRow>
               <MDBRow style={{ marginTop: '25px' }}>
@@ -322,7 +319,7 @@ const CreateCampaign = () => {
                   </h6>
                 </MDBCol>
                 <MDBCol md='10' className='justify-content-start'>
-                <ReactQuill theme="snow" name="statistical_interval" onChange={setEditorData} />
+                <MDBTextArea name="statistical_interval" id='textAreaExample' rows={4} onChange={setData}/>
                 </MDBCol>
               </MDBRow>
             </MDBCardBody>
@@ -351,7 +348,7 @@ const CreateCampaign = () => {
                       </h6>
                     </MDBCol>
                     <MDBCol md='10'>
-                    <ReactQuill theme="snow" name="platform"onChange={setEditorData} />
+                    <MDBTextArea name="platform" id='textAreaExample' rows={4} onChange={setData}/>
                     </MDBCol>
                   </MDBRow>
                 </MDBCol>

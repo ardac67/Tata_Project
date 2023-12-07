@@ -20,6 +20,7 @@ export default function MyProposals () {
   const token = cookies.get('token')
   const id = cookies.get('user_id')
   const result = useQuery(['proposalIndidual', id, token], fetchProposal)
+  console.log(result.data)
   if (result.isLoading) {
     return (
       <MDBSpinner role='status'>

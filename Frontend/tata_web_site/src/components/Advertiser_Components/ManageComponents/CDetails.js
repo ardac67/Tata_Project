@@ -19,13 +19,17 @@ import {
 import fetchProposal from '../Fetch/fetchProposal'
 import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
+import fetchCampaigns from '../Fetch/fetchCampaigns'
 import axios from 'axios'
+import getAllCampaignsBYid from '../Fetch/getAllCampaignsBYid'
 const CDetails = () => {
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
   const user_id = cookies.get('user_id')
   const { id } = useParams()
   const result = useQuery(['proposal', id, token], fetchProposal)
+  const c_result = useQuery(['xx', id, token], getAllCampaignsBYid)
+  console.log(c_result)
   if (result.isLoading) {
     return (
       <MDBSpinner role='status'>
@@ -33,14 +37,23 @@ const CDetails = () => {
       </MDBSpinner>
     )
   }
+  if (c_result.isLoading) {
+    return (
+      <MDBSpinner role='status'>
+        <span className='visually-hidden'>Loading...</span>
+      </MDBSpinner>
+    )
+  }
   var data = result.data.proposal
-  console.log(data.proposal_id)
-  console.log(data)
+  const c_data = c_result.data.campaign[0]
+  console.log(c_data)
+  //console.log(data.proposal_id)
+  //console.log(data)
   const headers = {
     Authorization: `Bearer ${token}`
   }
-  var newData;
-  const acceptOrReject = (type, id_proposal,user_id1) => {
+  var newData
+  const acceptOrReject = (type, id_proposal, user_id1) => {
     if (type == 0) {
       /*
         campaign_id: req.body.campaign_id,
@@ -83,10 +96,10 @@ const CDetails = () => {
                   <MDBRow>
                     <MDBCol className='d-flex justify-content-between'>
                       <MDBCardText className='d-inline fw-bold fs-4'>
-                        Influencer Partnership
+                        {c_data.campaign_header}
                       </MDBCardText>
                       <MDBCardText className='d-inline fw-bold fs-8 text-end'>
-                        10.11.2023
+                        {c_data.createdAt}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -107,15 +120,7 @@ const CDetails = () => {
                     </MDBCol>
                     <MDBCol sm='9'>
                       <MDBCardText className='text-muted'>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                        {c_data.campaign_description}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -128,7 +133,7 @@ const CDetails = () => {
                     </MDBCol>
                     <MDBCol sm='9'>
                       <MDBBadge color='success' pill>
-                        Ongoing
+                        {c_data.status}
                       </MDBBadge>
                     </MDBCol>
                   </MDBRow>
@@ -141,7 +146,7 @@ const CDetails = () => {
                     </MDBCol>
                     <MDBCol sm='9'>
                       <MDBCardText className='text-muted'>
-                        11.11.2023 - 25.11.2023
+                        {c_data.startedAt} - {c_data.endedAt}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -149,18 +154,17 @@ const CDetails = () => {
                   <MDBRow>
                     <MDBCol>
                       <MDBCardText className='fw-semibold fs-6'>
-                        Collaboration Preferences
+                        Information:
                       </MDBCardText>
                     </MDBCol>
                     <MDBRow>
                       <MDBCol sm='9' className='ms-5'>
                         <MDBCardText className='fs-8 d-inline fw-semibold'>
-                          • Target Audience
+                          • Target Audience :
                         </MDBCardText>
                         <MDBCardText className='fs-8 d-inline'>
                           {' '}
-                          Tech-savvy young adults passionate about fitness and
-                          wellness.
+                          {c_data.collaboration_preferences[0].target_audience}
                         </MDBCardText>
                       </MDBCol>
                     </MDBRow>
@@ -171,7 +175,7 @@ const CDetails = () => {
                         </MDBCardText>
                         <MDBCardText className='fs-8 d-inline'>
                           {' '}
-                          25 - 35
+                          {c_data.collaboration_preferences[0].age_interval}
                         </MDBCardText>
                       </MDBCol>
                     </MDBRow>
@@ -182,30 +186,103 @@ const CDetails = () => {
                         </MDBCardText>
                         <MDBCardText className='fs-8 d-inline'>
                           {' '}
-                          Male
+                          {
+                            c_data.collaboration_preferences[0]
+                              .gender_information
+                          }
                         </MDBCardText>
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol sm='9' className='ms-5'>
                         <MDBCardText className='fs-8 d-inline fw-semibold'>
-                          • Subscription Interval :
+                          • Preferred Platforms :
                         </MDBCardText>
                         <MDBCardText className='fs-8 d-inline'>
                           {' '}
-                          1M+
+                          {
+                            c_data.collaboration_preferences[0]
+                              .preffered_platforms[0].platform
+                          }
+                        </MDBCardText>
+                      </MDBCol>
+                    </MDBRow>{' '}
+                    <MDBRow>
+                      <MDBCol sm='9' className='ms-5'>
+                        <MDBCardText className='fs-8 d-inline fw-semibold'>
+                          • Required Statistics :
+                        </MDBCardText>
+                        <MDBCardText className='fs-8 d-inline'>
+                          {' '}
+                          {
+                            c_data.collaboration_preferences[0]
+                              .preffered_platforms[0].statistical_interval
+                          }
+                        </MDBCardText>
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
+                      <MDBCol sm='9' className='ms-5'>
+                        <MDBCardText className='fs-8 d-inline fw-semibold'>
+                          • Target Audience :
+                        </MDBCardText>
+                        <MDBCardText className='fs-8 d-inline'>
+                          {' '}
+                          {
+                            c_data.collaboration_preferences[0]
+                              .preffered_platforms[0].target_audience
+                          }
+                        </MDBCardText>
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
+                      <MDBCol d-flex sm='12' className='ms-5'>
+                        <MDBCardText className='fs-8 d-inline fw-semibold'>
+                          • Campaign Tags :
+                        </MDBCardText>
+                        <MDBCardText className='fs-8 d-inline'>
+                          <MDBRow>
+                            <MDBCol sm='2' style={{marginRight:'1px'}}>
+                              <MDBBadge pill light>
+                                {
+                                  c_data.campaing_tags[0].tag1
+                                }
+                              </MDBBadge>
+                            </MDBCol>
+                            <MDBCol sm='2'>
+                              <MDBBadge pill light>
+                                {
+                                  c_data.campaing_tags[0].tag2
+                                }
+                              </MDBBadge>
+                            </MDBCol>
+                            <MDBCol sm='2'>
+                              <MDBBadge pill light>
+                                {
+                                  c_data.campaing_tags[0].tag3
+                                }
+                              </MDBBadge>
+                            </MDBCol>
+                            <MDBCol sm='2'>
+                              <MDBBadge pill light>
+                                {
+                                  c_data.campaing_tags[0].tag4
+                                }
+                              </MDBBadge>
+                            </MDBCol>
+                            <MDBCol sm='2'>
+                              <MDBBadge pill light>
+                                {
+                                  c_data.campaing_tags[0].tag5
+                                }
+                              </MDBBadge>
+                            </MDBCol>
+                          </MDBRow>
                         </MDBCardText>
                       </MDBCol>
                     </MDBRow>
                   </MDBRow>
                   <hr />
-                  <MDBRow className='justify-content-end'>
-                    <MDBCol className='d-flex justify-content-center' sm='3'>
-                      <MDBBtn color='success' size='sm'>
-                        Propose
-                      </MDBBtn>
-                    </MDBCol>
-                  </MDBRow>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -219,8 +296,8 @@ const CDetails = () => {
                     style={{ width: '150px' }}
                     fluid
                   />
-                  <p className='mb-1 mt-2 fw-bold'>Trendyol</p>
-                  <p className='text-muted mb-4'>@trendyol</p>
+                  <p className='mb-1 mt-2 fw-bold'>{c_data.user.name}</p>
+                  <p className='text-muted mb-4'>@{c_data.user.user_name}</p>
                   <p className='text-muted mb-4'>
                     <MDBIcon>
                       <i class='fas fa-star'></i>
@@ -247,7 +324,7 @@ const CDetails = () => {
                         icon='twitter fa-lg'
                         style={{ color: '#55acee' }}
                       />
-                      <MDBCardText>@MrBeast</MDBCardText>
+                      <MDBCardText>{c_data.user.media_links[0].twitter}</MDBCardText>
                     </MDBListGroupItem>
                     <MDBListGroupItem className='d-flex justify-content-between align-items-center p-3'>
                       <MDBIcon
@@ -255,15 +332,15 @@ const CDetails = () => {
                         icon='instagram fa-lg'
                         style={{ color: '#ac2bac' }}
                       />
-                      <MDBCardText>www.instagram.com/MrBeast</MDBCardText>
+                      <MDBCardText>{c_data.user.media_links[0].instagram}</MDBCardText>
                     </MDBListGroupItem>
                     <MDBListGroupItem className='d-flex justify-content-between align-items-center p-3'>
                       <MDBIcon
                         fab
-                        icon='facebook fa-lg'
+                        icon='youtube fa-lg'
                         style={{ color: '#3b5998' }}
                       />
-                      <MDBCardText>www.facebook.com/MrBeast</MDBCardText>
+                      <MDBCardText>{c_data.user.media_links[0].youtube}</MDBCardText>
                     </MDBListGroupItem>
                     <MDBListGroupItem className='d-flex justify-content-between align-items-center p-3'>
                       <MDBIcon
@@ -271,7 +348,7 @@ const CDetails = () => {
                         icon='fa-brands fa-tiktok'
                         style={{ color: '#3b5998' }}
                       />
-                      <MDBCardText>www.tiktok.com/MrBeast</MDBCardText>
+                      <MDBCardText>{c_data.user.media_links[0].tiktok}</MDBCardText>
                     </MDBListGroupItem>
                   </MDBListGroup>
                 </MDBCardBody>
@@ -317,7 +394,11 @@ const CDetails = () => {
                   >
                     <MDBBtn
                       onClick={() => {
-                        acceptOrReject(0, data.proposal_id,data.belongsToUser.user_id)
+                        acceptOrReject(
+                          0,
+                          data.proposal_id,
+                          data.belongsToUser.user_id
+                        )
                       }}
                       color='success'
                       className='me-2'
