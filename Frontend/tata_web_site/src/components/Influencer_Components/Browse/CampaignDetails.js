@@ -61,7 +61,7 @@ export default function CampaignDetails() {
                                 <MDBRow>
                                     <MDBCol  className='d-flex justify-content-between'>
                                         <MDBCardText className='d-inline fw-bold fs-4'>{campaign.campaign_header}</MDBCardText>
-                                        <MDBCardText className='d-inline fw-bold fs-8 text-end'>{campaign.formatDateAndHour(createdAt)}</MDBCardText>
+                                        <MDBCardText className='d-inline fw-bold fs-8 text-end'>{formatDateAndHour(campaign.createdAt)}</MDBCardText>
                                     </MDBCol>
 
                                 </MDBRow>
@@ -99,7 +99,7 @@ export default function CampaignDetails() {
                                         <MDBCardText className='fw-semibold fs-6'>Start & End Date</MDBCardText>
                                     </MDBCol>
                                     <MDBCol sm="9">
-                                        <MDBCardText className="text-muted">{campaign.formatDateAndHour(startedAt)} - {campaign.formatDateAndHour(endedAt)}</MDBCardText>
+                                        <MDBCardText className="text-muted">{formatDateAndHour(campaign.startedAt)} - {formatDateAndHour(campaign.endedAt)}</MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
                                 <hr />
