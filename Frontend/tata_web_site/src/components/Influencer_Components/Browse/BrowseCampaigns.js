@@ -97,19 +97,6 @@ function BrowseCampaigns ({ searchTerm }) {
                 </MDBCol>
                 <MDBCol md='6'>
                   <h5>{campaign.campaign_header}</h5>
-
-                  <div className='mt-1 mb-2 text-muted small'>
-                    <span>{campaign.campaing_tags[0].tag1}</span>
-                    <span className='text-primary'> • </span>
-                    <span>{campaign.campaing_tags[0].tag2}</span>
-                    <span className='text-primary'> • </span>
-                    <span>{campaign.campaing_tags[0].tag3}</span>
-                    <span className='text-primary'> • </span>
-                    <span>{campaign.campaing_tags[0].tag4}</span>
-                    <span className='text-primary'> • </span>
-                    <span>{campaign.campaing_tags[0].tag5}</span>
-                    <br />
-                  </div>
                   <div className="mt-1 mb-2 text-muted small">
                     {campaign.campaing_tags[0].tag1 && (
                       <span>{campaign.campaing_tags[0].tag1}</span>
@@ -138,8 +125,8 @@ function BrowseCampaigns ({ searchTerm }) {
                         <span>{campaign.campaing_tags[0].tag5}</span>
                       </>
                     )}
-
                   </div>
+
                   <p className='text-truncate-multiline mb-4 mb-md-0'>
                     {campaign.campaign_description}
                   </p>
