@@ -18,6 +18,16 @@ import { useNavigate,useParams } from "react-router-dom";
 import fetchCampaign from "./fetchCampaign"
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
+function formatDateAndHour(dateStr) {
+  let date = new Date(dateStr);
+  let year = date.getFullYear();
+  let month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  let day = String(date.getDate()).padStart(2, '0');
+  let hour = date.getHours();
+  let minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hour}:${minutes}`;
+}
+
 
 export default function CampaignDetails() {
     const navigate = useNavigate();
@@ -51,7 +61,7 @@ export default function CampaignDetails() {
                                 <MDBRow>
                                     <MDBCol  className='d-flex justify-content-between'>
                                         <MDBCardText className='d-inline fw-bold fs-4'>{campaign.campaign_header}</MDBCardText>
-                                        <MDBCardText className='d-inline fw-bold fs-8 text-end'>{campaign.createdAt}</MDBCardText>
+                                        <MDBCardText className='d-inline fw-bold fs-8 text-end'>{formatDateAndHour(campaign.createdAt)}</MDBCardText>
                                     </MDBCol>
 
                                 </MDBRow>
@@ -89,7 +99,7 @@ export default function CampaignDetails() {
                                         <MDBCardText className='fw-semibold fs-6'>Start & End Date</MDBCardText>
                                     </MDBCol>
                                     <MDBCol sm="9">
-                                        <MDBCardText className="text-muted">{campaign.startedAt} - {campaign.endedAt}</MDBCardText>
+                                        <MDBCardText className="text-muted">{formatDateAndHour(campaign.startedAt)} - {formatDateAndHour(campaign.endedAt)}</MDBCardText>
                                     </MDBCol>
                                 </MDBRow>
                                 <hr />
