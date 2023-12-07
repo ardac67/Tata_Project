@@ -113,7 +113,7 @@ const MediaEdit = () => {
               label='Instagram'
               id='formControlDefault'
               type='text'
-              name='twitter'
+              name='instagram'
               defaultValue={user.data[0].instagram}
               onChange={handleEdit}
             />
@@ -136,7 +136,7 @@ const MediaEdit = () => {
               label='Youtube'
               id='formControlDefault'
               type='text'
-              name='twitter'
+              name='youtube'
               defaultValue={user.data[0].youtube}
               onChange={handleEdit}
             />
@@ -159,7 +159,7 @@ const MediaEdit = () => {
               label='Tiktok'
               id='formControlDefault'
               type='text'
-              name='twitter'
+              name='tiktok'
               defaultValue={user.data[0].tiktok}
               onChange={handleEdit}
             />
