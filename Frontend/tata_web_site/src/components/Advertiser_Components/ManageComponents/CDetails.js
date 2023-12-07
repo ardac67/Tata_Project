@@ -66,6 +66,7 @@ const CDetails = () => {
       )
       .then(response => {
         window.alert('success')
+        window.location.reload()
       })
       .catch(error => {
         window.alert('error')
