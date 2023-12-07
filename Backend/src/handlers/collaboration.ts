@@ -4,6 +4,14 @@ export const getCollaborationInfluencer = async (req, res) => {
     const proposal = await prisma.collaboration.findMany({
       where: {
         proposed_user_id: req.body.user_id
+      },
+      include: {
+        belongToCampaign:{
+          include:{
+            user:true
+          }
+        },
+        belongToUser: true,
       }
     })
     res.json({ proposal })

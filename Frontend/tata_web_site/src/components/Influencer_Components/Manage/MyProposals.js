@@ -8,13 +8,33 @@ import {
   MDBInput,
   MDBIcon,
   MDBInputGroup,
-  MDBSpinner
+  MDBSpinner,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
 } from 'mdb-react-ui-kit'
 import { Link, useNavigate } from 'react-router-dom'
 import fetchProposal from '../../Advertiser_Components/Fetch/fetchIndividualProposals'
 import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 export default function MyProposals () {
+  function formatDateAndHour (dateStr) {
+    let date = new Date(dateStr)
+    let year = date.getFullYear()
+    let month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-indexed
+    let day = String(date.getDate()).padStart(2, '0')
+    let hour = date.getHours()
+    let minutes = String(date.getMinutes()).padStart(2, '0')
+    return `${year}-${month}-${day} ${hour}:${minutes}`
+  }
+  const [basicModal, setBasicModal] = useState(false)
+
+  const toggleOpen = () => setBasicModal(!basicModal)
   const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
@@ -52,8 +72,8 @@ export default function MyProposals () {
               <th scope='col'>Proposal ID</th>
               <th scope='col'>Campaign</th>
               <th scope='col'>Campaign Owner</th>
-              <th scope='col'>Campaign Status</th>
-              <th scope='col'>Date</th>
+              <th scope='col'>Proposal Status</th>
+              <th scope='col'>Created Date</th>
               <th scope='col'>Actions</th>
             </tr>
           </MDBTableHead>
@@ -63,6 +83,7 @@ export default function MyProposals () {
             ) : (
               data.map(data => (
                 <tr>
+                  <p hidden> {data.belongsToCampaign.campaign_id}</p>
                   <td>
                     <div className='d-flex align-items-center'>
                       <div className='ms-3'>
@@ -72,7 +93,11 @@ export default function MyProposals () {
                   </td>
                   <td>
                     <a
-                      onClick={() => redirect('/CampaignDetails')}
+                      onClick={() =>
+                        redirect(
+                          `/CampaignDetails/${data.belongsToCampaign.campaign_id}`
+                        )
+                      }
                       style={{ cursor: 'pointer' }}
                       className='hover-link'
                     >
@@ -112,7 +137,8 @@ export default function MyProposals () {
                       </MDBBadge>
                     )}
                   </td>
-                  <td>{data.createdAt}</td>
+
+                  <td>{formatDateAndHour(data.createdAt)}</td>
                   <td>
                     <MDBBtn color='light' rounded size='md'>
                       <i class='far fa-pen-to-square fa-lg text-primary'></i>
@@ -126,6 +152,29 @@ export default function MyProposals () {
             )}
           </MDBTableBody>
         </MDBTable>
+        <MDBBtn onClick={toggleOpen}>LAUNCH DEMO MODAL</MDBBtn>
+        <MDBModal open={basicModal} setopen={setBasicModal} tabIndex='-1'>
+          <MDBModalDialog>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>Modal title</MDBModalTitle>
+                <MDBBtn
+                  className='btn-close'
+                  color='none'
+                  onClick={toggleOpen}
+                ></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>...</MDBModalBody>
+
+              <MDBModalFooter>
+                <MDBBtn color='secondary' onClick={toggleOpen}>
+                  Close
+                </MDBBtn>
+                <MDBBtn>Save changes</MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
       </>
     </>
   )
