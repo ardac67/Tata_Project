@@ -216,21 +216,7 @@ const CDetails = () => {
                           {' '}
                           {
                             c_data.collaboration_preferences[0]
-                              .preffered_platforms[0].statistical_interval
-                          }
-                        </MDBCardText>
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol sm='9' className='ms-5'>
-                        <MDBCardText className='fs-8 d-inline fw-semibold'>
-                          • Target Audience :
-                        </MDBCardText>
-                        <MDBCardText className='fs-8 d-inline'>
-                          {' '}
-                          {
-                            c_data.collaboration_preferences[0]
-                              .preffered_platforms[0].target_audience
+                              .statistical_interval
                           }
                         </MDBCardText>
                       </MDBCol>
