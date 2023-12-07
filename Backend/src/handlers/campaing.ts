@@ -69,6 +69,36 @@ export const getAllCampaign = async (req, res) => {
     res.json({ error: e });
   }
 };
+export const getAllCampaign_byCampaign_id = async (req, res) => {
+  try {
+    const campaign = await prisma.campaign.findMany({
+      where: {
+        campaign_id: req.params.id,
+      },
+      include: {
+        user:{
+          include:{
+            media_links:true,
+            contact:true
+          }
+        },
+        collaboration_preferences: {
+          include: {
+            preffered_platforms: true
+          }
+        },
+        campaing_tags: true,
+      }
+    });
+    res.json({
+      campaign: campaign,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+    res.json({ error: e });
+  }
+};
 export const getAllCampaignInfluencer = async (req, res) => {
   try {
     const campaign = await prisma.campaign.findMany({
