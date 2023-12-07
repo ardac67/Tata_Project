@@ -92,16 +92,33 @@ function BrowseCampaigns({ searchTerm }) {
                 <MDBCol md="6">
                   <h5>{campaign.campaign_header}</h5>
                   <div className="mt-1 mb-2 text-muted small">
-                    <span>{campaign.campaing_tags[0].tag1}</span>
-                    <span className="text-primary"> • </span>
-                    <span>{campaign.campaing_tags[0].tag2}</span>
-                    <span className="text-primary"> • </span>
-                    <span>{campaign.campaing_tags[0].tag3}</span>
-                    <span className="text-primary"> • </span>
-                    <span>{campaign.campaing_tags[0].tag4}</span>
-                    <span className="text-primary"> • </span>
-                    <span>{campaign.campaing_tags[0].tag5}</span>
-                    <br />
+                    {campaign.campaing_tags[0].tag1 && (
+                      <span>{campaign.campaing_tags[0].tag1}</span>
+                    )}
+                    {campaign.campaing_tags[0].tag2 && (
+                      <>
+                        <span className="text-primary"> • </span>
+                        <span>{campaign.campaing_tags[0].tag2}</span>
+                      </>
+                    )}
+                    {campaign.campaing_tags[0].tag3 && (
+                      <>
+                        <span className="text-primary"> • </span>
+                        <span>{campaign.campaing_tags[0].tag3}</span>
+                      </>
+                    )}
+                    {campaign.campaing_tags[0].tag4 && (
+                      <>
+                        <span className="text-primary"> • </span>
+                        <span>{campaign.campaing_tags[0].tag4}</span>
+                      </>
+                    )}
+                    {campaign.campaing_tags[0].tag5 && (
+                      <>
+                        <span className="text-primary"> • </span>
+                        <span>{campaign.campaing_tags[0].tag5}</span>
+                      </>
+                    )}
                   </div>
                   <p className="text-truncate-multiline mb-4 mb-md-0">
                     {campaign.campaign_description}
