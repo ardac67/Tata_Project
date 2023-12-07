@@ -22,15 +22,15 @@ export const createNewUser = async (req, res) => {
           address: req.body.contact.address
         }
       })
-        await tx.media_links.create({
-          data: {
-            youtube: req.body.media_links.youtube,
-            instagram: req.body.media_links.instagram,
-            twitter: req.body.media_links.twitter,
-            tiktok: req.body.media_links.tiktok,
-            user_id: user.user_id
-          }
-        })
+      await tx.media_links.create({
+        data: {
+          youtube: req.body.media_links.youtube,
+          instagram: req.body.media_links.instagram,
+          twitter: req.body.media_links.twitter,
+          tiktok: req.body.media_links.tiktok,
+          user_id: user.user_id
+        }
+      })
       const token = createJWT(user)
       res.json({
         data: {
@@ -79,12 +79,12 @@ export const signin = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-      const user = await prisma.user.findUnique({
-        where:{
-          user_id: req.params.id
-        }
-      })
-    res.json({user})
+    const user = await prisma.user.findUnique({
+      where: {
+        user_id: req.params.id
+      }
+    })
+    res.json({ user })
     res.status(200)
   } catch (e) {
     console.log(e)
@@ -94,19 +94,35 @@ export const getUser = async (req, res) => {
 }
 export const updateUser = async (req, res) => {
   try {
-      const user = await prisma.user.update({
-        where:{
-          user_id: req.params.id
-        },
-        data:{
-          user_name: req.body.user_name,
-          email: req.body.email,
-          name: req.body.full_name,
-          description: req.body.description,
-          updatedAt: new Date()
-        }
-      })
-    res.json({user})
+    const user = await prisma.user.update({
+      where: {
+        user_id: req.params.id
+      },
+      data: {
+        user_name: req.body.user_name,
+        email: req.body.email,
+        name: req.body.full_name,
+        description: req.body.description,
+        updatedAt: new Date()
+      }
+    })
+    res.json({ user })
+    res.status(200)
+  } catch (e) {
+    console.log(e)
+    res.status(500)
+    res.json({ error: e })
+  }
+}
+
+export const getInfluencer = async (req, res) => {
+  try {
+    const influencer = await prisma.user.findMany({
+      where:{
+        Type:'Influencer'
+      }
+    })
+    res.json({ influencer })
     res.status(200)
   } catch (e) {
     console.log(e)

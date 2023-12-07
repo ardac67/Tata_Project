@@ -3,10 +3,11 @@ import { body, oneOf } from 'express-validator';
 import { createContact, deleteContact, editContact, getContact } from './handlers/contact';
 import { handleInputError } from './modules/middleware';
 import { getMediaLinks ,updateMedia} from './handlers/mediaLinks';
-import {getUser,updateUser} from './handlers/user'
+import {getInfluencer, getUser,updateUser} from './handlers/user'
 import { createCampagin, getAllCampaign, getAllCampaignInfluencer } from './handlers/campaing';
 import { changeStatusOfProposal, getIndividualProposal, getProposal, postProposal } from './handlers/proposal';
 import { getCollaborationInfluencer } from './handlers/collaboration';
+import getTags from './handlers/campaign_tags';
 const router = Router();
 
 router.get('/getUser/:id', getUser);
@@ -23,4 +24,6 @@ router.get('/getProposal/:id',getProposal)
 router.get('/getIndividualProposal/:id',getIndividualProposal)
 router.put('/acceptOrRejectProposal/:id',changeStatusOfProposal)
 router.get('/getCollaborationInfluencer/:id',getCollaborationInfluencer)
+router.get('/getTags',getTags)
+router.get('/getInfluencer',getInfluencer)
 export default router;

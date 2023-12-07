@@ -27,7 +27,8 @@ export const getProposal = async (req, res) => {
         belongsToUser: true
       },
       where: {
-        campaign_id: req.params.id
+        campaign_id: req.params.id,
+        proposal_status: 'pending'
       }
     })
     res.json({ proposal })

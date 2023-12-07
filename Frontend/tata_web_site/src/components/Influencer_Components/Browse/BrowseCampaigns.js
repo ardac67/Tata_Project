@@ -121,7 +121,7 @@ function BrowseCampaigns({ searchTerm }) {
                     <MDBBtn
                       color="primary"
                       size="sm"
-                      onClick={() => redirect("/CampaignDetails")}
+                      onClick={() => redirect(`/CampaignDetails`,)}
                     >
                       Campaign Details
                     </MDBBtn>
@@ -130,7 +130,7 @@ function BrowseCampaigns({ searchTerm }) {
                       color="success"
                       size="sm"
                       className="mt-2"
-                      onClick={() => redirect("/CreateProposal")}
+                      onClick={() => redirect(`/CreateProposal/${campaign.campaign_id}`)}
                     >
                       Propose
                     </MDBBtn>
