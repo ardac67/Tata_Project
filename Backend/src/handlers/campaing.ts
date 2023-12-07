@@ -105,6 +105,9 @@ export const getAllCampaignInfluencer = async (req, res) => {
       where: {
         
       },
+      include:{
+        campaing_tags:true,
+      }
     });
     res.json({
       campaign: campaign,
