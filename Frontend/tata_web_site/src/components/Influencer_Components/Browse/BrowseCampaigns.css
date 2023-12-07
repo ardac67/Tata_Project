@@ -1,0 +1,10 @@
+/* Add this to your CSS file */
+
+.text-truncate-multiline {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 4; /* Adjust this to control the number of visible lines */
+  text-overflow: ellipsis;
+  margin-bottom: 20px; /* Optional: Add some spacing after the truncated text */
+}

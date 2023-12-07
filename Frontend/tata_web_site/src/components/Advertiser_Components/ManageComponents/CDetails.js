@@ -24,7 +24,19 @@ import { useQuery } from '@tanstack/react-query'
 import fetchCampaigns from '../Fetch/fetchCampaigns'
 import axios from 'axios'
 import getAllCampaignsBYid from '../Fetch/getAllCampaignsBYid'
+
 import RatingComponent from '../ViewProfileComponents/RatingComponent'
+
+function formatDateAndHour(dateStr) {
+    let date = new Date(dateStr);
+    let year = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    let day = String(date.getDate()).padStart(2, '0');
+    let hour = date.getHours();
+    let minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hour}:${minutes}`;
+}
+
 const CDetails = () => {
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
@@ -102,7 +114,7 @@ const CDetails = () => {
                         {c_data.campaign_header}
                       </MDBCardText>
                       <MDBCardText className='d-inline fw-bold fs-8 text-end'>
-                        {c_data.createdAt}
+                        {formatDateAndHour(c_data.createdAt)}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -149,7 +161,7 @@ const CDetails = () => {
                     </MDBCol>
                     <MDBCol sm='9'>
                       <MDBCardText className='text-muted'>
-                        {c_data.startedAt} - {c_data.endedAt}
+                        {formatDateAndHour(c_data.startedAt)} - {formatDateAndHour(c_data.endedAt)}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
