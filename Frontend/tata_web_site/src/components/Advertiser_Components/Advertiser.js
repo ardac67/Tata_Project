@@ -5,6 +5,7 @@ import ViewProfile from "./ViewProfile";
 import CreateCampaign from "./CreateCampaing";
 import MyCampaigns from "./ManageComponents/MyCampaigns";
 import CDetails from "./ManageComponents/CDetails";
+import MyCollaborations from "./ManageComponents/MyCollaborations";
 import Browse from "./Browse/Browse";
 
 const Advertiser = () =>{
@@ -20,6 +21,7 @@ const Advertiser = () =>{
                 <Route path="/CreateCampaign" element={<CreateCampaign></CreateCampaign>}></Route>
                 <Route path="/Campaigns" element={<MyCampaigns></MyCampaigns>}></Route>
                 <Route path="/details/:id" element={<CDetails></CDetails>} />
+                <Route path="/MyCollaborations" element={<MyCollaborations></MyCollaborations>} />
             </Routes>   
         </div>
     )

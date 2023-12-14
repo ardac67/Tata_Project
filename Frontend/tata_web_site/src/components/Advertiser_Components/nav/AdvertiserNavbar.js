@@ -75,7 +75,7 @@ export const AdvertiserNavbar = () => {
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
                   <MDBDropdownItem link href='/Campaigns'>My Campaigns</MDBDropdownItem>
-                  <MDBDropdownItem link>My Colloborations</MDBDropdownItem>
+                  <MDBDropdownItem link href='/MyCollaborations'>My Colloborations</MDBDropdownItem>
                   <MDBDropdownItem link>Campaign Milesones</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
