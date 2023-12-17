@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   MDBCard,
   MDBCardBody,
@@ -6,15 +7,29 @@ import {
   MDBCheckbox,
 } from "mdb-react-ui-kit";
 
-const FilterBar = () => {
+const FilterBar = ({ onFilterChange }) => {
+  const [platformFilters, setPlatformFilters] = useState([]);
+  // const [industryFilters, setIndustryFilters] = useState([]);
+  const [tagsFilters, setTagsFilters] = useState([]);
+
+  useEffect(() => {
+    // Combine all selected filters and pass them to the parent component
+    const selectedFilters = {
+      platform: platformFilters,
+      // industry: industryFilters,
+      tags: tagsFilters,
+    };
+
+    // Apply filters immediately upon change
+    onFilterChange(selectedFilters);
+  }, [platformFilters, tagsFilters, onFilterChange]);
+
   return (
     <MDBCol md="2">
       <MDBCard className="filter-bar">
         <MDBCardBody>
-          <h2 className="mt-1 mb-5">Filters</h2>
-
           <h4 className="mb-3">Platform</h4>
-          <div className="radio-buttons">
+          <div className="checkboxes">
             <MDBCheckbox
               id="youtube"
               label={
@@ -23,90 +38,57 @@ const FilterBar = () => {
                   <span className="filter-label1"> Youtube</span>
                 </div>
               }
-            />
-            <MDBCheckbox
-              id="instagram"
-              label={
-                <div>
-                  <MDBIcon fab icon="instagram" />
-                  <span className="filter-label2"> Instagram</span>
-                </div>
+              checked={platformFilters.includes("youtube")}
+              onChange={() =>
+                setPlatformFilters((prevFilters) =>
+                  prevFilters.includes("youtube")
+                    ? prevFilters.filter((filter) => filter !== "youtube")
+                    : [...prevFilters, "youtube"]
+                )
               }
             />
-            <MDBCheckbox
-              id="Tiktok"
-              label={
-                <div>
-                  <span className="filter-label3"> Tiktok</span>
-                </div>
-              }
-            />
-
-            {/* Add more filter options as needed */}
+            {/* Add similar checkboxes for other platform filters */}
           </div>
-          <h4 className="mt-5 mb-3">Industry</h4>
-          <div className="radio-buttons">
-            <MDBCheckbox
-              id="sport"
-              label={
-                <div>
-                  <MDBIcon fas icon="futbol" />
-                  <span className="filter-label4"> Sports</span>
-                </div>
-              }
-            />
-            <MDBCheckbox
-              id="fashion"
-              label={
-                <div>
-                  <MDBIcon fas icon="tshirt" />
-                  <span className="filter-label5"> Fashion</span>
-                </div>
-              }
-            />
-            <MDBCheckbox
-              id="Gaming"
-              label={
-                <div>
-                  <MDBIcon fas icon="gamepad" />
-                  <span className="filter-label6"> Gaming</span>
-                </div>
-              }
-            ></MDBCheckbox>
 
-            {/* Add more filter options as needed */}
-          </div>
-          <h4 className="mt-5 mb-3">Age Interval</h4>
-          <div className="radio-buttons">
-            <MDBCheckbox
-              id="kids"
-              label={
-                <div>
-                  <MDBIcon fas icon="baby" />
-                  <span className="filter-label7"> Kids</span>
-                </div>
-              }
-            />
-            <MDBCheckbox
-              id="young"
-              label={
-                <div>
-                  <MDBIcon fas icon="tshirt" />
-                  <span className="filter-label8"> Young</span>
-                </div>
-              }
-            />
-            <MDBCheckbox
-              id="Elder"
-              label={
-                <div>
-                  <MDBIcon fas icon="blind" />
-                  <span className="filter-label9"> Elder</span>
-                </div>
-              }
-            ></MDBCheckbox>
+          {/* Industry Filters */}
+          {/* Uncomment and add similar checkboxes for industry filters */}
 
-            {/* Add more filter options as needed */}
+          {/* Tags Filters */}
+          <h4 className="mt-5 mb-3">Tags</h4>
+          <div className="checkboxes">
+            <MDBCheckbox
+              id="summer"
+              label={
+                <div>
+                  <span className="summerFilter">Summer</span>
+                </div>
+              }
+              checked={tagsFilters.includes("Summer")}
+              onChange={() =>
+                setTagsFilters((prevFilters) =>
+                  prevFilters.includes("Summer")
+                    ? prevFilters.filter((filter) => filter !== "Summer")
+                    : ["Summer", ...prevFilters]
+                )
+              }
+            />
+            <MDBCheckbox
+              id="test1"
+              label={
+                <div>
+                  <span className="test1">Test1</span>
+                </div>
+              }
+              checked={tagsFilters.includes("Test1")}
+              onChange={() =>
+                setTagsFilters((prevFilters) =>
+                  prevFilters.includes("Test1")
+                    ? prevFilters.filter((filter) => filter !== "Test1")
+                    : ["Test1", ...prevFilters]
+                )
+              }
+            />
+            {/* Add similar checkboxes for other tag filters */}
           </div>
         </MDBCardBody>
       </MDBCard>

@@ -12,6 +12,14 @@ import FilterBar from "./Filter";
 
 export default function Browse() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState({
+    platform: [],
+    // industry: [],
+    tags: [],
+  });
+  const handleFilterChange = (filters) => {
+    setSelectedFilters(filters);
+  };
 
   return (
     <>
@@ -33,8 +41,8 @@ export default function Browse() {
 
       <MDBContainer fluid>
         <MDBRow className="justify-content-center mt-5">
-          <FilterBar />
-          <BrowseCampaigns searchTerm={searchTerm} />
+          <FilterBar onFilterChange={handleFilterChange} />
+          <BrowseCampaigns searchTerm={searchTerm} filters={selectedFilters} />
         </MDBRow>
       </MDBContainer>
     </>
