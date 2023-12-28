@@ -22,7 +22,7 @@ const FilterBar = ({ onFilterChange }) => {
 
     // Apply filters immediately upon change
     onFilterChange(selectedFilters);
-  }, [platformFilters, tagsFilters, onFilterChange]);
+  }, [platformFilters, tagsFilters]);
 
   return (
     <MDBCol md="2">

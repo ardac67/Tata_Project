@@ -29,16 +29,30 @@ function BrowseCampaigns({ searchTerm, filters }) {
 
   if (result.isLoading) {
     return (
-      <ProgressBar
-        height="500"
-        width="500"
-        ariaLabel="progress-bar-loading"
-        wrapperStyle={{}}
-        wrapperClass="progress-bar-wrapper"
-        borderColor="#F4442E"
-        barColor="#51E5FF"
-      />
+      <MDBCol md="7">
+        <ProgressBar
+          height="500"
+          width="500"
+          ariaLabel="progress-bar-loading"
+          wrapperStyle={{}}
+          wrapperClass="progress-bar-wrapper"
+          borderColor="#F4442E"
+          barColor="#51E5FF"
+        />
+      </MDBCol>
     );
+  }
+
+  function bufferToBase64(buffer) {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+
+    return window.btoa(binary);
   }
 
   const campaigns = result.data.campaign;
@@ -106,7 +120,13 @@ function BrowseCampaigns({ searchTerm, filters }) {
                     className="bg-image rounded hover-zoom hover-overlay"
                   >
                     <MDBCardImage
-                      src={campaign.image}
+                      src={
+                        campaign.campaign_image
+                          ? `data:image/jpeg;base64,${bufferToBase64(
+                              campaign.campaign_image.data
+                            )}`
+                          : "" // Provide a placeholder image
+                      }
                       fluid
                       className="w-100"
                     />

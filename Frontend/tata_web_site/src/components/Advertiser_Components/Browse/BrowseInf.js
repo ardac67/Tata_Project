@@ -28,9 +28,11 @@ function BrowseInf({ searchTerm }) {
 
   if (result.isLoading) {
     return (
-      <MDBSpinner role="status">
-        <span className="visually-hidden">Loading...</span>
-      </MDBSpinner>
+      <MDBCol md="7">
+        <MDBSpinner role="status">
+          <span className="visually-hidden">Loading...</span>
+        </MDBSpinner>
+      </MDBCol>
     );
   }
 
@@ -72,7 +74,7 @@ function BrowseInf({ searchTerm }) {
                     className="bg-image rounded hover-zoom hover-overlay"
                   >
                     <MDBCardImage
-                      src="https://yt3.googleusercontent.com/ytc/APkrFKaBA66UMsPD6mKXojVXoPMjn_Gltm3TaZUB87MLWg=s900-c-k-c0x00ffffff-no-rj"
+                      // src="https://yt3.googleusercontent.com/ytc/APkrFKaBA66UMsPD6mKXojVXoPMjn_Gltm3TaZUB87MLWg=s900-c-k-c0x00ffffff-no-rj"
                       fluid
                       className="w-100 square bg-primary rounded-circle"
                     />
