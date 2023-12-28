@@ -75,7 +75,12 @@ function BrowseCampaigns({ searchTerm, filters }) {
   });
 
   // Reset current page when searchTerm changes
-  if (currentPage !== 1 && searchTerm) {
+  if (
+    (currentPage !== 1 && searchTerm) ||
+    filters.platform.length ||
+    filters.tags.length
+    // filters.industry.length
+  ) {
     setCurrentPage(1);
   }
 
