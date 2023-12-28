@@ -18,6 +18,8 @@ import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
 import "./BrowseCampaigns.css";
 import { ProgressBar } from "react-loader-spinner";
+import { bufferToBase64 } from "../../../utils";
+
 function BrowseCampaigns({ searchTerm, filters }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,18 +43,6 @@ function BrowseCampaigns({ searchTerm, filters }) {
         />
       </MDBCol>
     );
-  }
-
-  function bufferToBase64(buffer) {
-    let binary = "";
-    const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-
-    return window.btoa(binary);
   }
 
   const campaigns = result.data.campaign;
@@ -127,8 +117,12 @@ function BrowseCampaigns({ searchTerm, filters }) {
                             )}`
                           : "" // Provide a placeholder image
                       }
-                      fluid
                       className="w-100"
+                      style={{
+                        height: "200px",
+                        width: "%100",
+                        objectFit: "cover",
+                      }}
                     />
                     <a href="#!">
                       <div

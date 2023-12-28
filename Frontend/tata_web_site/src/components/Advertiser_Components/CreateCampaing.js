@@ -29,20 +29,22 @@ const CreateCampaign = () => {
   const [image, setImage] = useState(null);
   const [dateStart, setDateStart] = useState(new Date());
   const [dateEnd, setDateEnd] = useState(new Date());
-  const [formData, setFormData] = useState({});
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+
   const [buttonState, setButtonState] = useState(false);
-  const setData = (e) => {
+  const [formData, setFormData] = useState({ tag1: '', tag2: '', tag3: '', tag4: '' });
+
+  const tagsOptions = ['Wellness', 'Beauty', 'Tech', 'Eco', 'Fashion', 'Gourmet', 'Travel', 'Parenting', 'DIY', 'Fitness', 'Entertainment', 'Finance', 'Gaming', 'Learning', 'Pets'];  // Add more tags as needed
+  const setData = e => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-
-      campaign_image: image,
       campaignStartDate: dateStart,
       campaignEndDate: dateEnd,
-      user_id: cookies.get("user_id"),
-      status: "pending",
-    });
-  };
+      user_id: cookies.get('user_id'),
+      status: 'pending'
+    })
+  }
 
   const handleImageChange = (event) => {
     const selectedImage = event.target.files[0];
@@ -63,6 +65,7 @@ const CreateCampaign = () => {
     Authorization: `Bearer ${token}`,
   };
   const pushToApi = () => {
+    setIsButtonClicked(true);
     console.log(formData);
 
     axios
@@ -387,89 +390,65 @@ const CreateCampaign = () => {
             </MDBCardHeader>
             <MDBCardBody>
               <MDBRow>
-                <MDBCol md="12">
-                  <MDBRow>
-                    {" "}
-                    <MDBCol md="2">
-                      <h6
-                        style={{
-                          marginTop: "5px",
-                          color: "#7d8fb1",
-                          fontWeight: "400",
-                        }}
-                      >
-                        Platforms
-                      </h6>
-                    </MDBCol>
-                    <MDBCol md="10">
-                      <MDBTextArea
-                        name="platform"
-                        id="textAreaExample"
-                        rows={4}
-                        onChange={setData}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                </MDBCol>
+                <MDBRow>
+                  <MDBCol md="12">
+                    <MDBRow>
+                      {" "}
+                      <MDBCol md="2">
+                        <h6
+                          style={{
+                            marginTop: "5px",
+                            color: "#7d8fb1",
+                            fontWeight: "400",
+                          }}
+                        >
+                          Platforms
+                        </h6>
+                      </MDBCol>
+                      <MDBCol md="10">
+                        <MDBTextArea
+                          name="platform"
+                          id="textAreaExample"
+                          rows={4}
+                          onChange={setData}
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCol>
+                </MDBRow>
+
                 <MDBCol md="12" style={{ marginTop: "10px" }}>
                   <MDBRow>
                     {" "}
-                    <MDBCol md="2">
-                      <h6
-                        style={{
-                          marginTop: "5px",
-                          color: "#7d8fb1",
-                          fontWeight: "400",
-                        }}
-                      >
-                        Campaign Tags
-                      </h6>
-                    </MDBCol>
-                    <MDBCol md="2">
-                      <MDBInput
-                        label="Tag 1"
-                        id="formControlDefault"
-                        type="text"
-                        name="tag1"
-                        onChange={setData}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2">
-                      <MDBInput
-                        label="Tag 2"
-                        id="formControlDefault"
-                        type="text"
-                        name="tag2"
-                        onChange={setData}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2">
-                      <MDBInput
-                        label="Tag 3"
-                        id="formControlDefault"
-                        type="text"
-                        name="tag3"
-                        onChange={setData}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2">
-                      <MDBInput
-                        label="Tag 4"
-                        id="formControlDefault"
-                        type="text"
-                        name="tag4"
-                        onChange={setData}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2">
-                      <MDBInput
-                        label="Tag 5"
-                        id="formControlDefault"
-                        type="text"
-                        name="tag5"
-                        onChange={setData}
-                      />
-                    </MDBCol>
+                    <h6
+                      style={{
+                        marginTop: "5px",
+                        color: "#7d8fb1",
+                        fontWeight: "400",
+                      }}
+                    >
+                      Campaign Tags
+                    </h6>
+
+                    {[1, 2, 3, 4, 5].map((tagNumber) => (
+
+                      <MDBCol>
+                        <label htmlFor={`tag${tagNumber}`}>Tag {tagNumber}</label>
+                        <select
+                          id={`tag${tagNumber}`}
+                          name={`tag${tagNumber}`}
+                          onChange={setData}
+                          value={formData[`tag${tagNumber}`]}
+                          className='form-control'
+                        >
+                          <option value="">Select Tag</option>
+                          {tagsOptions.map((tag, index) => (
+                            <option key={index} value={tag}>{tag}</option>
+                          ))}
+                        </select>
+                      </MDBCol>
+
+                    ))}
                   </MDBRow>
                 </MDBCol>
               </MDBRow>
@@ -488,6 +467,7 @@ const CreateCampaign = () => {
               color="primary"
               onClick={pushToApi}
               enabled={buttonState}
+              disabled={isButtonClicked}
             >
               Create Campaign
             </MDBBtn>

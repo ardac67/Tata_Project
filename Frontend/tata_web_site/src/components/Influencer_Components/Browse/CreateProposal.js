@@ -40,6 +40,7 @@ export default function CampaignDetails() {
   //console.log(campaign_id)
   var id1 = campaign_id.id;
   const [proposal, setProposal] = useState();
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
   const setProposals = (e) => {
     setProposal(e.target.value);
   };
@@ -50,6 +51,7 @@ export default function CampaignDetails() {
     Authorization: `Bearer ${token}`,
   };
   const postProposal = async () => {
+    setIsButtonClicked(true);
     var data = {
       user_id: userid,
       campaign_id: id1,
@@ -87,7 +89,7 @@ export default function CampaignDetails() {
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5" key={campaign}>
-      <ToastContainer />
+        <ToastContainer />
         <MDBRow>
           <MDBCol lg="8">
             <MDBCard className="mb-4">
@@ -282,6 +284,7 @@ export default function CampaignDetails() {
                           color="success"
                           size="sm"
                           onClick={postProposal}
+                          disabled={isButtonClicked} 
                         >
                           Propose
                         </MDBBtn>
