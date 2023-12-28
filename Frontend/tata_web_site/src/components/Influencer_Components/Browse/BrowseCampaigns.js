@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MDBRow,
   MDBCol,
@@ -28,6 +28,11 @@ function BrowseCampaigns({ searchTerm, filters }) {
   const cookies = new Cookies(null, { path: "/" });
   const token = cookies.get("token");
   const result = useQuery(["campaignAll", token], fetchAllCampaigns);
+
+  // Check if the current page is not 1 and there are filters or search term
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters, searchTerm]);
 
   if (result.isLoading) {
     return (
@@ -74,16 +79,7 @@ function BrowseCampaigns({ searchTerm, filters }) {
     return matchesSearchTerm && matchesFilters;
   });
 
-  // Reset current page when searchTerm changes
-  if (
-    (currentPage !== 1 && searchTerm) ||
-    filters.platform.length ||
-    filters.tags.length
-    // filters.industry.length
-  ) {
-    setCurrentPage(1);
-  }
-
+  console.log("uzunluksafasfas:", filters.tags.length);
   console.log("searchTerm:", searchTerm);
   console.log("filters:", filters);
 
@@ -96,7 +92,6 @@ function BrowseCampaigns({ searchTerm, filters }) {
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   console.log(campaigns);
 
   return (
