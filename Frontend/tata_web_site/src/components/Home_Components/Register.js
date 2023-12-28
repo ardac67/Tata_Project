@@ -22,6 +22,7 @@ const Register = () => {
   const [contact_data, setContactData] = useState({})
   const [media_links_data, setMedia_links_data] = useState({})
   const [selectedFile, setSelectedFile] = useState(null)
+  const [passwordError, setPasswordError] = useState('');  // State to hold password error message
 
   let post_object = {}
   const push_as_register = () => {
@@ -47,8 +48,21 @@ const Register = () => {
       })
       
   }
+  
 
   const updateData = e => {
+    const { name, value } = e.target;
+
+    // Specific validation for the password field
+    if (name === 'password') {
+      if (value.length < 6 && value.length > 0) {
+        // Set error if password is less than 6 characters
+        setPasswordError('Password should be at least 6 characters long.');
+      } else {
+        // Clear error if password meets the criteria
+        setPasswordError('');
+      }
+    }
     setRegisterData({
       ...register_data,
       [e.target.name]: e.target.value
@@ -124,6 +138,8 @@ const Register = () => {
                       name='password'
                       onChange={updateData}
                     />
+                    {/* Display error message if there's an error */}
+                    {passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
                   </MDBRow>
                   <MDBRow>
                     <Form.Select

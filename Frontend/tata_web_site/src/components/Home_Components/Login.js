@@ -22,6 +22,16 @@ const Login = ({ setIsAuth }) => {
   const [login_data, setLoginData] = useState({});
 
   const signIn = () => {
+    if (!login_data.user_name) {
+      toast.error("Email is required!", { position: toast.POSITION.TOP_LEFT });
+      return;
+    }
+    if (!login_data.password) {
+      toast.error("Password is required!", { position: toast.POSITION.TOP_LEFT });
+      return;
+    }
+
+    
     axios.post('http://localhost:3001/signin', login_data)
       .then(function (response) {
         if (response.status === 200) {
@@ -80,8 +90,8 @@ const Login = ({ setIsAuth }) => {
                   wrapperClass='mb-4'
                   label='Email address'
                   id='form1'
-                  type='user_name'
-                  name="user_name"
+                  type='email' // Change this to 'email'
+                  name="user_name" // Consider renaming this to 'email' for clarity
                   onChange={updateData}
                 />
                 <MDBInput
@@ -91,7 +101,7 @@ const Login = ({ setIsAuth }) => {
                   type='password'
                   name="password"
                   onChange={updateData}
-                  onKeyPress={handleKeyPress} // Add this line
+                  onKeyPress={handleKeyPress}
                 />
 
                 <p className='small mb-3 pb-lg-2'>
