@@ -58,6 +58,7 @@ model audience_demography {
 }
 
 model campaign {
+  campaign_image            Bytes?                  
   campaign_id               String                      @id @default(uuid())
   campaign_description      String?                     @db.Text
   campaign_header           String?                     @db.Text

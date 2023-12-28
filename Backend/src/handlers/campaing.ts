@@ -5,6 +5,7 @@ export const createCampagin = async (req, res) => {
     await prisma.$transaction(async (tx) => {
       const campaign = await tx.campaign.create({
         data: {
+          campaign_image: req.body.campaign_image,
           user_id: req.body.user_id,
           campaign_header: req.body.campaign_header,
           campaign_description: req.body.campaign_description,
@@ -76,19 +77,19 @@ export const getAllCampaign_byCampaign_id = async (req, res) => {
         campaign_id: req.params.id,
       },
       include: {
-        user:{
-          include:{
-            media_links:true,
-            contact:true
-          }
+        user: {
+          include: {
+            media_links: true,
+            contact: true,
+          },
         },
         collaboration_preferences: {
           include: {
-            preffered_platforms: true
-          }
+            preffered_platforms: true,
+          },
         },
         campaing_tags: true,
-      }
+      },
     });
     res.json({
       campaign: campaign,
@@ -102,12 +103,10 @@ export const getAllCampaign_byCampaign_id = async (req, res) => {
 export const getAllCampaignInfluencer = async (req, res) => {
   try {
     const campaign = await prisma.campaign.findMany({
-      where: {
-        
+      where: {},
+      include: {
+        campaing_tags: true,
       },
-      include:{
-        campaing_tags:true,
-      }
     });
     res.json({
       campaign: campaign,
