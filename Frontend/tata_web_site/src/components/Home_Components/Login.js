@@ -20,10 +20,12 @@ const Login = ({ setIsAuth }) => {
   const navigate = useNavigate();
   const cookies = new Cookies(null, { path: '/' });
   const [login_data, setLoginData] = useState({});
-
+  const [userNameError, setUserNameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const signIn = () => {
     if (!login_data.user_name) {
-      toast.error("Email is required!", { position: toast.POSITION.TOP_LEFT });
+      toast.error("Username is required!", { position: toast.POSITION.TOP_LEFT });
       return;
     }
     if (!login_data.password) {
@@ -31,7 +33,7 @@ const Login = ({ setIsAuth }) => {
       return;
     }
 
-    
+
     axios.post('http://localhost:3001/signin', login_data)
       .then(function (response) {
         if (response.status === 200) {
@@ -61,12 +63,40 @@ const Login = ({ setIsAuth }) => {
   };
 
   const updateData = e => {
+    const { name, value } = e.target;
     setLoginData({
       ...login_data,
       [e.target.name]: e.target.value
     });
-  };
 
+    // Check for username input
+    if (name === 'user_name' && value.trim() === '') {
+      // Set an error message for an empty username
+      setUserNameError('Username is required.');
+    } else {
+      // Clear the error message for the username
+      setUserNameError('');
+    }
+
+    // Check for password input
+    if (name === 'password' && value.length < 6) {
+      // Set an error message for a password less than 6 characters
+      setIsButtonEnabled(false);
+      setPasswordError('Password should be at least 6 characters long.');
+    } else {
+      setIsButtonEnabled(true);
+      // Clear the error message for the password
+      setPasswordError('');
+    };
+  }
+  /*
+    const updateData = e => {
+      setLoginData({
+        ...login_data,
+        [e.target.name]: e.target.value
+      });
+    };
+  */
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       signIn();
@@ -86,14 +116,18 @@ const Login = ({ setIsAuth }) => {
               <MDBCardBody className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
                 <h2 className='mb-5 text-uppercase'>Login</h2>
 
+
                 <MDBInput
                   wrapperClass='mb-4'
-                  label='Email address'
+                  label='Username'
                   id='form1'
                   type='email' // Change this to 'email'
                   name="user_name" // Consider renaming this to 'email' for clarity
                   onChange={updateData}
                 />
+                {/* Display error message for username */}
+                {userNameError && <div style={{ color: 'red' }}>{userNameError}</div>}
+
                 <MDBInput
                   wrapperClass='mb-4'
                   label='Password'
@@ -103,13 +137,16 @@ const Login = ({ setIsAuth }) => {
                   onChange={updateData}
                   onKeyPress={handleKeyPress}
                 />
+                {passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
 
                 <p className='small mb-3 pb-lg-2'>
                   <a className='text-dark-50' href='#!'>
                     Forgot password?
                   </a>
                 </p>
-                <MDBBtn className='mb-4' onClick={signIn}>
+                <MDBBtn className='mb-4'
+                disabled={!isButtonEnabled}
+                 onClick={signIn}>
                   Sign in
                 </MDBBtn>
 

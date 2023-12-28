@@ -23,6 +23,9 @@ const Register = () => {
   const [media_links_data, setMedia_links_data] = useState({})
   const [selectedFile, setSelectedFile] = useState(null)
   const [passwordError, setPasswordError] = useState('');  // State to hold password error message
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const [emailError, setEmailError] = useState('');
+
 
   let post_object = {}
   const push_as_register = () => {
@@ -32,7 +35,7 @@ const Register = () => {
       media_links: media_links_data
     }
     console.log(post_object)
-    
+
     axios
       .post('http://localhost:3001/createUser', post_object)
       .then(function (response) {
@@ -46,21 +49,33 @@ const Register = () => {
       .catch(function (error) {
         window.alert(error)
       })
-      
+
   }
-  
+
 
   const updateData = e => {
     const { name, value } = e.target;
 
-    // Specific validation for the password field
-    if (name === 'password') {
-      if (value.length < 6 && value.length > 0) {
-        // Set error if password is less than 6 characters
-        setPasswordError('Password should be at least 6 characters long.');
+    if (name === 'email') {  // Check if the name is 'email'
+      if (!value) {
+        setEmailError('Email is required.');
+        setIsButtonEnabled(false);
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3}$/i.test(value)) {
+        setEmailError('Invalid email address.');
+        setIsButtonEnabled(false);
       } else {
-        // Clear error if password meets the criteria
+        setEmailError('');
+        setIsButtonEnabled(true);
+      }
+    }
+
+    if (name === 'password') {
+      if (value.length < 6) {
+        setPasswordError('Password should be at least 6 characters long.');
+        setIsButtonEnabled(false);
+      } else {
         setPasswordError('');
+        setIsButtonEnabled(true);
       }
     }
     setRegisterData({
@@ -375,6 +390,7 @@ const Register = () => {
                 <MDBBtn
                   className='mb-4 mt-3'
                   size='lg'
+                  disabled={!isButtonEnabled}
                   onClick={push_as_register}
                 >
                   Submit
