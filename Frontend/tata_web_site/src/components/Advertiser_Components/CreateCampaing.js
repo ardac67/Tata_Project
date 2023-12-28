@@ -29,6 +29,7 @@ const CreateCampaign = () => {
   const [image, setImage] = useState(null);
   const [dateStart, setDateStart] = useState(new Date());
   const [dateEnd, setDateEnd] = useState(new Date());
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const [buttonState, setButtonState] = useState(false);
   const [formData, setFormData] = useState({ tag1: '', tag2: '', tag3: '', tag4: '' });
@@ -64,6 +65,7 @@ const CreateCampaign = () => {
     Authorization: `Bearer ${token}`,
   };
   const pushToApi = () => {
+    setIsButtonClicked(true);
     console.log(formData);
 
     axios
@@ -465,6 +467,7 @@ const CreateCampaign = () => {
               color="primary"
               onClick={pushToApi}
               enabled={buttonState}
+              disabled={isButtonClicked}
             >
               Create Campaign
             </MDBBtn>
