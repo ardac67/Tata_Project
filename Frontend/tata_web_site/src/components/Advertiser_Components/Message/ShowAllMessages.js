@@ -16,7 +16,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import fetchCollaboration from '../Manage/fetchCollaboration'
+import fetchCollaboration from '../ManageComponents/fetchCollaboration'
 import io from 'socket.io-client'
 import { useState, useEffect } from 'react'
 import { create } from '@mui/material/styles/createTransitions'
@@ -126,8 +126,7 @@ export default function App () {
                           />
                           <div className='pt-1'>
                             <p className='fw-bold mb-0'>
-                              {collab.belongToUser.name} -{' '}
-                              {collab.belongToCampaign.campaign_header}
+                              {collab.proposed_user_id} -{' '}
                             </p>
                             <p className='small text-muted'>
                               Hello, Are you there?

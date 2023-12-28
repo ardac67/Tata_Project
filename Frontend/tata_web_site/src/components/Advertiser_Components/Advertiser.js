@@ -7,6 +7,7 @@ import MyCampaigns from "./ManageComponents/MyCampaigns";
 import CDetails from "./ManageComponents/CDetails";
 import MyCollaborations from "./ManageComponents/MyCollaborations";
 import Browse from "./Browse/Browse";
+import ShowAllMessages from "./Message/ShowAllMessages";
 
 const Advertiser = () =>{
     return (
@@ -22,6 +23,7 @@ const Advertiser = () =>{
                 <Route path="/Campaigns" element={<MyCampaigns></MyCampaigns>}></Route>
                 <Route path="/details/:id" element={<CDetails></CDetails>} />
                 <Route path="/MyCollaborations" element={<MyCollaborations></MyCollaborations>} />
+                <Route path="/ShowAllMessages" element={<ShowAllMessages></ShowAllMessages>}></Route>
             </Routes>   
         </div>
     )
