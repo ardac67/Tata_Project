@@ -98,7 +98,7 @@ const Login = ({ setIsAuth }) => {
     };
   */
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && isButtonEnabled) {
       signIn();
     }
   };
