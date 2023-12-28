@@ -8,6 +8,7 @@ import { createCampagin, getAllCampaign, getAllCampaignInfluencer, getAllCampaig
 import { changeStatusOfProposal, getIndividualProposal, getProposal, postProposal } from './handlers/proposal';
 import { getCollaborationInfluencer } from './handlers/collaboration';
 import getTags from './handlers/campaign_tags';
+import getCollaborationAdvertiser from './handlers/CollaborationsAdv';
 const router = Router();
 
 router.get('/getUser/:id', getUser);
@@ -24,6 +25,7 @@ router.get('/getProposal/:id',getProposal)
 router.get('/getIndividualProposal/:id',getIndividualProposal)
 router.put('/acceptOrRejectProposal/:id',changeStatusOfProposal)
 router.get('/getCollaborationInfluencer/:id',getCollaborationInfluencer)
+router.get('/getCollaborationAdvertiser/:id',getCollaborationAdvertiser)
 router.get('/getTags',getTags)
 router.get('/getInfluencer',getInfluencer)
 router.get('/getAllCampaign_byCampaign_id/:id',getAllCampaign_byCampaign_id)
