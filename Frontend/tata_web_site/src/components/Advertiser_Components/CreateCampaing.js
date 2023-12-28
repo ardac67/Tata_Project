@@ -32,19 +32,41 @@ const CreateCampaign = () => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const [buttonState, setButtonState] = useState(false);
-  const [formData, setFormData] = useState({ tag1: '', tag2: '', tag3: '', tag4: '' });
+  const [formData, setFormData] = useState({
+    tag1: "",
+    tag2: "",
+    tag3: "",
+    tag4: "",
+  });
 
-  const tagsOptions = ['Wellness', 'Beauty', 'Tech', 'Eco', 'Fashion', 'Gourmet', 'Travel', 'Parenting', 'DIY', 'Fitness', 'Entertainment', 'Finance', 'Gaming', 'Learning', 'Pets'];  // Add more tags as needed
-  const setData = e => {
+  const tagsOptions = [
+    "Wellness",
+    "Beauty",
+    "Tech",
+    "Eco",
+    "Fashion",
+    "Gourmet",
+    "Travel",
+    "Parenting",
+    "DIY",
+    "Fitness",
+    "Entertainment",
+    "Finance",
+    "Gaming",
+    "Learning",
+    "Pets",
+  ]; // Add more tags as needed
+  const setData = (e) => {
     setFormData({
       ...formData,
+      campaign_image: image,
       [e.target.name]: e.target.value,
       campaignStartDate: dateStart,
       campaignEndDate: dateEnd,
-      user_id: cookies.get('user_id'),
-      status: 'pending'
-    })
-  }
+      user_id: cookies.get("user_id"),
+      status: "pending",
+    });
+  };
 
   const handleImageChange = (event) => {
     const selectedImage = event.target.files[0];
@@ -429,25 +451,26 @@ const CreateCampaign = () => {
                     >
                       Campaign Tags
                     </h6>
-
                     {[1, 2, 3, 4, 5].map((tagNumber) => (
-
                       <MDBCol>
-                        <label htmlFor={`tag${tagNumber}`}>Tag {tagNumber}</label>
+                        <label htmlFor={`tag${tagNumber}`}>
+                          Tag {tagNumber}
+                        </label>
                         <select
                           id={`tag${tagNumber}`}
                           name={`tag${tagNumber}`}
                           onChange={setData}
                           value={formData[`tag${tagNumber}`]}
-                          className='form-control'
+                          className="form-control"
                         >
                           <option value="">Select Tag</option>
                           {tagsOptions.map((tag, index) => (
-                            <option key={index} value={tag}>{tag}</option>
+                            <option key={index} value={tag}>
+                              {tag}
+                            </option>
                           ))}
                         </select>
                       </MDBCol>
-
                     ))}
                   </MDBRow>
                 </MDBCol>
