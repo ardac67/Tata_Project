@@ -110,7 +110,7 @@ export default function MyProposals () {
                   }
                   alt="avatar"
                   className="rounded-circle"
-                  style={{ width: "80px" }}
+                  style={{ width: "60px" }}
                   fluid
                       />
                       <div className='ms-3'>
