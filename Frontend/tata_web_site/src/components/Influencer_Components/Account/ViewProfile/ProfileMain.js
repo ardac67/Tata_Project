@@ -20,17 +20,20 @@ const ProfileMain = ({user}) => {
       <MDBRow>
         <MDBCol md='5'>
           {' '}
-          <MDBRow>
-          <img
-              src={
-                user.user_image
-                  ? `data:image/jpeg;base64,${bufferToBase64(
-                      user.user_image.data
-                    )}`
-                  : "" // Provide a placeholder image
-              }
-            />
-          </MDBRow>
+          <MDBRow style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <img
+        src={
+          user.user_image
+            ? `data:image/jpeg;base64,${bufferToBase64(user.user_image.data)}`
+            : "path/to/your/placeholder/image.jpg" // Replace with your placeholder image path
+        }
+        style={{
+          width: '300px', // Adjust as needed
+          height: '300px', // Adjust as needed
+          objectFit: 'cover',
+        }}
+      />
+    </MDBRow>
         </MDBCol>
         <MDBCol md='7'>
           <MDBRow style={{ marginLeft: '10px', fontSize: '28px' }}>
