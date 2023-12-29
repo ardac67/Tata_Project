@@ -23,6 +23,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 export const AdvertiserNavbar = () => {
   const navigate = useNavigate();
+  const redirect = (path) => {
+    navigate(path);
+  };
   const cookies = new Cookies(null, { path: "/" });
   const logOut = () => {
     cookies.set("token", null, { path: "/" });
@@ -163,7 +166,7 @@ export const AdvertiserNavbar = () => {
                   <MDBDropdownItem link>Message 1</MDBDropdownItem>
                   <MDBDropdownItem link>Message 2</MDBDropdownItem>
                   <MDBDropdownItem link>Message 3</MDBDropdownItem>
-                  <MDBDropdownItem link>Show all Messages</MDBDropdownItem>
+                  <MDBDropdownItem link onClick={() => redirect("/ShowAllMessages")}>Show all Messages</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavbarItem>
