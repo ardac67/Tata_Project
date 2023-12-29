@@ -27,7 +27,7 @@ function formatDate(dateString) {
     hour: "2-digit",
     minute: "2-digit",
   };
-  return new Date(dateString).toLocaleDateString("en-US", options);
+  return new Date(dateString).toLocaleDateString("en-UK", options);
 }
 function BrowseInf({ searchTerm }) {
   const navigate = useNavigate();
@@ -125,13 +125,11 @@ function BrowseInf({ searchTerm }) {
                   lg="3"
                   className="border-sm-start-none border-start"
                 >
-                  <div>
-                    <p className="ms-5 mb-5">
+                  <div className="text-center">
+                    <p className="mb-5">
                       Join Date<br></br>
                     </p>
-                    <p className="ms-5 mb-5">
-                      {formatDate(influencer.createdAt)}
-                    </p>
+                    <p className="mb-5">{formatDate(influencer.createdAt)}</p>
                   </div>
                   <div className="d-flex flex-column mt-4">
                     <MDBBtn color="primary" size="sm" className="mt-5">

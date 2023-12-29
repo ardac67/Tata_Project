@@ -37,15 +37,9 @@ function BrowseCampaigns({ searchTerm, filters }) {
   if (result.isLoading) {
     return (
       <MDBCol md="7">
-        <ProgressBar
-          height="500"
-          width="500"
-          ariaLabel="progress-bar-loading"
-          wrapperStyle={{}}
-          wrapperClass="progress-bar-wrapper"
-          borderColor="#F4442E"
-          barColor="#51E5FF"
-        />
+        <MDBSpinner role="status">
+          <span className="visually-hidden">Loading...</span>
+        </MDBSpinner>
       </MDBCol>
     );
   }
@@ -61,7 +55,9 @@ function BrowseCampaigns({ searchTerm, filters }) {
     // Check if platform, industry, and tags filters match
     const matchesFilters =
       (filters.platform.length === 0 ||
-        filters.platform.includes(campaign.platform)) &&
+        filters.platform.includes(
+          campaign.collaboration_preferences[0].preffered_platforms[0].platform
+        )) &&
       // (filters.industry.length === 0 ||
       //   filters.industry.includes(campaign.industry)) &&
       (filters.tags.length === 0 ||
