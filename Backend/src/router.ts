@@ -9,6 +9,7 @@ import { changeStatusOfProposal, getIndividualProposal, getProposal, postProposa
 import { getCollaborationInfluencer } from './handlers/collaboration';
 import getTags from './handlers/campaign_tags';
 import getCollaborationAdvertiser from './handlers/CollaborationsAdv';
+import { createMessage, returnBasedMessages } from './handlers/message';
 const router = Router();
 
 router.get('/getUser/:id', getUser);
@@ -29,4 +30,6 @@ router.get('/getCollaborationAdvertiser/:id',getCollaborationAdvertiser)
 router.get('/getTags',getTags)
 router.get('/getInfluencer',getInfluencer)
 router.get('/getAllCampaign_byCampaign_id/:id',getAllCampaign_byCampaign_id)
+router.post('/createMessage',createMessage)
+router.get('/returnBasedMessages/:id',returnBasedMessages)
 export default router;

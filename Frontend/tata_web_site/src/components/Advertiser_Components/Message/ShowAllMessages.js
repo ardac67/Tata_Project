@@ -20,20 +20,38 @@ import fetchCollaboration from '../ManageComponents/fetchCollaboration'
 import io from 'socket.io-client'
 import { useState, useEffect } from 'react'
 import { create } from '@mui/material/styles/createTransitions'
+import getMessage from './getMessage'
 var socket = io.connect('http://localhost:3002')
 export default function App () {
   const navigate = useNavigate()
   const [messageList, setMessageListe] = useState([])
+  const [room_idd, setRoom] = useState('')
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
   const user_id = cookies.get('user_id')
   const user_name = cookies.get('user_name')
   const [message, setMessage] = useState('')
   const [idLast, setID] = useState('')
+  const [shouldFetch, setShouldFetch] = useState(false)
   const setMessageList = e => {
     setMessage(e.target.value)
   }
-
+  const messageData = useQuery(['message', token, room_idd], getMessage, {
+    enabled: shouldFetch,
+    cacheTime: 0,
+    staleTime: 0,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false
+  });
+  useEffect(() => {
+    if (messageData.isSuccess && messageData.data.messages) {
+      const oldMessages = messageData.data.messages.map(msg => ({
+        user: msg.user_name,
+        message: msg.message_body
+      }))
+      setMessageListe(oldMessages)
+    }
+  }, [messageData.isSuccess, messageData.data])
   function bufferToBase64 (buffer) {
     let binary = ''
     const bytes = new Uint8Array(buffer)
@@ -45,6 +63,7 @@ export default function App () {
 
     return window.btoa(binary)
   }
+
   useEffect(() => {
     const handleMessageReceive = data => {
       if (data.user !== user_name) {
@@ -70,13 +89,35 @@ export default function App () {
   const collaborations = result.data
   const joinRoom = async id => {
     setMessageListe([])
-    setID(id)
+    setRoom(id)
+    //const messageData = useQuery(['message', token, id], getMessage)
+    //
+    setShouldFetch(true)
     await socket.emit('join_room', {
       user: user_id,
       user_name: user_name,
       room: id
     })
+   
+    if (messageData.isLoading) {
+      return (
+        <MDBSpinner role='status'>
+          <span className='visually-hidden'>Loading...</span>
+        </MDBSpinner>
+      )
+    }
+
+
+    console.log('message', messageData.data.messages)
+    const oldMessages = messageData.data.messages.map(msg => ({
+      user: msg.user_name,
+      message: msg.message_body
+    }))
+    console.log('oldMessage', oldMessages)
+    setMessageListe(list => [...list], oldMessages)
+    setID(id)
   }
+
   const sendMessage = async () => {
     const newMessage = {
       user: user_name,
@@ -84,14 +125,29 @@ export default function App () {
       room: idLast,
       created_at: new Date().toISOString().slice(0, 19).replace('T', ' ')
     }
-
+    await socket.emit('send_message', newMessage)
+    const formData = {
+      collaboration_id: idLast,
+      user_name: user_name,
+      message_body: message
+    }
     // Add the message to the list when sending
     setMessageListe(list => [...list, newMessage])
-
-    await socket.emit('send_message', newMessage)
+    const headers = {
+      Authorization: `Bearer ${token}`
+    }
+    
+    axios
+      .post(`http://localhost:3001/api/createMessage`, formData, { headers })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
-  console.log(collaborations)
+  //console.log(collaborations)
   return (
     <MDBContainer fluid className='py-5' style={{ backgroundColor: '#eee' }}>
       <MDBRow>
@@ -195,7 +251,7 @@ export default function App () {
                       rounded
                       className='float-end'
                     >
-                    Send
+                      Send
                     </MDBBtn>
                   </MDBCol>
                 </MDBCardBody>
