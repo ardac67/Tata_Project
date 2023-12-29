@@ -104,8 +104,12 @@ export default function MyCollaborations () {
                       style={{ cursor: 'pointer' }}
                       className='hover-link'
                     >
-                      {data.proposed_user_id}
+                      {data.user.name}
+                      
                     </a>
+                    <p className="text-muted mb-0">
+                      {data.user.email}
+                    </p>
                       </div>
                     </div>
                   </td>

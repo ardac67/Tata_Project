@@ -46,12 +46,17 @@ export default function App () {
     return window.btoa(binary)
   }
   useEffect(() => {
-    socket.on('receive_message', data => {
-      // Ignore the echoed message if it's from the current user
+    const handleMessageReceive = data => {
       if (data.user !== user_name) {
         setMessageListe(list => [...list, data])
       }
-    })
+    }
+
+    socket.on('receive_message', handleMessageReceive)
+
+    return () => {
+      socket.off('receive_message', handleMessageReceive)
+    }
   }, [socket, user_name]) // Include user_name in the dependency array
 
   const result = useQuery(['collaboration', user_id, token], fetchCollaboration)
@@ -64,7 +69,7 @@ export default function App () {
   }
   const collaborations = result.data
   const joinRoom = async id => {
-    setMessageListe([]);
+    setMessageListe([])
     setID(id)
     await socket.emit('join_room', {
       user: user_id,
@@ -126,16 +131,12 @@ export default function App () {
                           />
                           <div className='pt-1'>
                             <p className='fw-bold mb-0'>
-                              {collab.proposed_user_id} -{' '}
+                              {collab.user.name} - {collab.user.email}
                             </p>
                             <p className='small text-muted'>
-                              Hello, Are you there?
+                              {collab.belongToCampaign.campaign_description}
                             </p>
                           </div>
-                        </div>
-                        <div className='pt-1'>
-                          <p className='small text-muted mb-1'>Just now</p>
-                          <span className='badge bg-danger float-end'>1</span>
                         </div>
                       </a>
                     </li>
@@ -176,23 +177,30 @@ export default function App () {
                 </MDBCol>
               </MDBRow>
             ))}
-            <li className='bg-white mb-3'>
-              <MDBTextArea
-                onChange={setMessageList}
-                label='Message'
-                id='textAreaExample'
-                rows={4}
-              />
-            </li>
-
-            <MDBBtn
-              onClick={sendMessage}
-              color='info'
-              rounded
-              className='float-end'
-            >
-              Send
-            </MDBBtn>
+            <MDBRow style={{ marginTop: '40px' }}>
+              <MDBCard style={{ marginRight: '20px' }}>
+                <MDBCardBody>
+                  <li className='bg-white mb-3'>
+                    <MDBTextArea
+                      onChange={setMessageList}
+                      label='Message'
+                      id='textAreaExample'
+                      rows={4}
+                    />
+                  </li>
+                  <MDBCol>
+                    <MDBBtn
+                      onClick={sendMessage}
+                      color='info'
+                      rounded
+                      className='float-end'
+                    >
+                    Send
+                    </MDBBtn>
+                  </MDBCol>
+                </MDBCardBody>
+              </MDBCard>
+            </MDBRow>
           </MDBTypography>
         </MDBCol>
       </MDBRow>

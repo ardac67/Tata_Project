@@ -3,7 +3,7 @@ export const getCollaborationInfluencer = async (req, res) => {
   try {
     const proposal = await prisma.collaboration.findMany({
       where: {
-        proposed_user_id: req.body.user_id
+        proposed_user_id: req.params.id
       },
       include: {
         belongToCampaign:{
@@ -11,7 +11,7 @@ export const getCollaborationInfluencer = async (req, res) => {
             user:true
           }
         },
-        belongToUser: true,
+        belongToUser: true
       }
     })
     res.json({ proposal })

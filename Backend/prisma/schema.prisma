@@ -11,6 +11,7 @@ datasource db {
 }
 
 model user {
+  user_image        Bytes?
   user_id             String                @id @default(uuid())
   user_name           String                @unique @db.VarChar(50)
   password            String
@@ -25,7 +26,7 @@ model user {
   audience_demography audience_demography[]
   campaign            campaign[]
   proposal            proposal[]
-  collaboration       collaboration[]
+  collaboration             collaboration[]
 }
 
 model contact {
@@ -122,7 +123,7 @@ model collaboration {
   campaign_id      String?
   belongToUser     user?     @relation(fields: [user_id], references: [user_id])
   user_id          String?
-  proposed_user_id String?
+  proposed_user_id     String?
   status           String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime?

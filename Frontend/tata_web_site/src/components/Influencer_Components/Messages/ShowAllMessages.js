@@ -46,14 +46,19 @@ export default function App () {
     return window.btoa(binary)
   }
   useEffect(() => {
-    socket.on('receive_message', data => {
-      // Ignore the echoed message if it's from the current user
+    const handleMessageReceive = data => {
       if (data.user !== user_name) {
         setMessageListe(list => [...list, data])
       }
-    })
-  }, [socket, user_name]) // Include user_name in the dependency array
+    }
 
+    socket.on('receive_message', handleMessageReceive)
+
+    return () => {
+      socket.off('receive_message', handleMessageReceive)
+    }
+  }, [socket, user_name]) // Include user_name in the dependency array
+  //console.log(messageList)
   const result = useQuery(['collaboration', user_id, token], fetchCollaboration)
   if (result.isLoading) {
     return (
@@ -64,7 +69,7 @@ export default function App () {
   }
   const collaborations = result.data
   const joinRoom = async id => {
-    setMessageListe([]);
+    setMessageListe([])
     setID(id)
     await socket.emit('join_room', {
       user: user_id,
@@ -86,7 +91,7 @@ export default function App () {
     await socket.emit('send_message', newMessage)
   }
 
-  console.log(collaborations)
+  //console.log(collaborations)
   return (
     <MDBContainer fluid className='py-5' style={{ backgroundColor: '#eee' }}>
       <MDBRow>
