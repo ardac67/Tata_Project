@@ -19,9 +19,9 @@ import axios from 'axios'
 import fetchCollaboration from '../Manage/fetchCollaboration'
 import io from 'socket.io-client'
 import { useState, useEffect } from 'react'
+import { create } from '@mui/material/styles/createTransitions'
 import getMessage from '../../Advertiser_Components/Message/getMessage'
 var socket = io.connect('http://localhost:3002')
-
 export default function App () {
   const navigate = useNavigate()
   const [messageList, setMessageListe] = useState([])
@@ -31,8 +31,8 @@ export default function App () {
   const user_id = cookies.get('user_id')
   const user_name = cookies.get('user_name')
   const [message, setMessage] = useState('')
-  const [shouldFetch, setShouldFetch] = useState(false)
   const [idLast, setID] = useState('')
+  const [shouldFetch, setShouldFetch] = useState(false)
   const setMessageList = e => {
     setMessage(e.target.value)
   }
@@ -42,7 +42,7 @@ export default function App () {
     staleTime: 0,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false
-  })
+  });
   useEffect(() => {
     if (messageData.isSuccess && messageData.data.messages) {
       const oldMessages = messageData.data.messages.map(msg => ({
@@ -63,6 +63,7 @@ export default function App () {
 
     return window.btoa(binary)
   }
+
   useEffect(() => {
     const handleMessageReceive = data => {
       if (data.user !== user_name) {
@@ -76,9 +77,8 @@ export default function App () {
       socket.off('receive_message', handleMessageReceive)
     }
   }, [socket, user_name]) // Include user_name in the dependency array
-  //console.log(messageList)
+
   const result = useQuery(['collaboration', user_id, token], fetchCollaboration)
-  console.log(result)
   if (result.isLoading) {
     return (
       <MDBSpinner role='status'>
@@ -98,6 +98,7 @@ export default function App () {
       user_name: user_name,
       room: id
     })
+    setID(id)
     if (messageData.isLoading) {
       return (
         <MDBSpinner role='status'>
@@ -106,7 +107,7 @@ export default function App () {
       )
     }
 
- 
+
     console.log('message', messageData.data.messages)
     const oldMessages = messageData.data.messages.map(msg => ({
       user: msg.user_name,
@@ -114,8 +115,9 @@ export default function App () {
     }))
     console.log('oldMessage', oldMessages)
     setMessageListe(list => [...list], oldMessages)
-    setID(id)
+    
   }
+
   const sendMessage = async () => {
     const newMessage = {
       user: user_name,
@@ -134,7 +136,7 @@ export default function App () {
     const headers = {
       Authorization: `Bearer ${token}`
     }
-   
+    
     axios
       .post(`http://localhost:3001/api/createMessage`, formData, { headers })
       .then(response => {
@@ -145,7 +147,7 @@ export default function App () {
       })
   }
 
-  console.log(collaborations)
+  //console.log(collaborations)
   return (
     <MDBContainer fluid className='py-5' style={{ backgroundColor: '#eee' }}>
       <MDBRow>
@@ -185,17 +187,12 @@ export default function App () {
                           />
                           <div className='pt-1'>
                             <p className='fw-bold mb-0'>
-                              {collab.belongToUser.name} -{' '}
-                              {collab.belongToCampaign.campaign_header}
+                              {collab.user.name} - {collab.user.email}
                             </p>
                             <p className='small text-muted'>
-                              Hello, Are you there?
+                              {collab.belongToCampaign.campaign_description}
                             </p>
                           </div>
-                        </div>
-                        <div className='pt-1'>
-                          <p className='small text-muted mb-1'>Just now</p>
-                          <span className='badge bg-danger float-end'>1</span>
                         </div>
                       </a>
                     </li>

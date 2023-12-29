@@ -98,7 +98,7 @@ export default function App () {
       user_name: user_name,
       room: id
     })
-   
+    setID(id)
     if (messageData.isLoading) {
       return (
         <MDBSpinner role='status'>
@@ -115,19 +115,19 @@ export default function App () {
     }))
     console.log('oldMessage', oldMessages)
     setMessageListe(list => [...list], oldMessages)
-    setID(id)
+    
   }
 
   const sendMessage = async () => {
     const newMessage = {
       user: user_name,
       message: message,
-      room: idLast,
+      room: room_idd,
       created_at: new Date().toISOString().slice(0, 19).replace('T', ' ')
     }
     await socket.emit('send_message', newMessage)
     const formData = {
-      collaboration_id: idLast,
+      collaboration_id: room_idd,
       user_name: user_name,
       message_body: message
     }
