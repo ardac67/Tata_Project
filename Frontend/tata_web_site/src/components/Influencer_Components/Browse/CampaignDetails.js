@@ -36,7 +36,7 @@ export default function CampaignDetails() {
   }
 
   var campaign = result.data.campaign[0];
-  console.log(result);
+  console.log(campaign);
   console.log(result.data.campaign[0].campaign_header);
 
   const redirect = (path) => {
@@ -239,7 +239,13 @@ export default function CampaignDetails() {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center d-flex flex-column align-items-center">
                 <MDBCardImage
-                  src={ardababa}
+                  src={
+                    campaign.user.user_image
+                      ? `data:image/jpeg;base64,${bufferToBase64(
+                          campaign.user.user_image.data
+                        )}`
+                      : "" // Provide a placeholder image
+                  }
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: "150px" }}
