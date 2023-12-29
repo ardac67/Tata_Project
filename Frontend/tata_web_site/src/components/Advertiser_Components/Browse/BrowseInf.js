@@ -16,7 +16,10 @@ import { useNavigate } from "react-router-dom";
 import fetchAllInf from "../Fetch/fetchAllInf";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
-
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+  return new Date(dateString).toLocaleDateString('en-US', options);
+}
 function BrowseInf({ searchTerm }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,7 +67,7 @@ function BrowseInf({ searchTerm }) {
         <h1>No Influencers Found</h1>
       ) : (
         currentInfluencers.map((influencer) => (
-          <MDBCard className="border rounded-3">
+          <MDBCard className="border rounded-3 mb-2">
             <MDBCardBody>
               <MDBRow>
                 <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">
@@ -111,7 +114,7 @@ function BrowseInf({ searchTerm }) {
                     <p className="ms-5 mb-5">
                       Join Date<br></br>
                     </p>
-                    <p className="ms-5 mb-5">{influencer.createdAt}</p>
+                    <p className="ms-5 mb-5">{formatDate(influencer.createdAt)}</p>
                   </div>
                   <div className="d-flex flex-column mt-4">
                     <MDBBtn color="primary" size="sm" className="mt-5">
@@ -158,7 +161,7 @@ function BrowseInf({ searchTerm }) {
           </MDBPaginationLink>
         </MDBPaginationItem>
       </MDBPagination>
-    </MDBCol>
+    </MDBCol >
   );
 }
 
