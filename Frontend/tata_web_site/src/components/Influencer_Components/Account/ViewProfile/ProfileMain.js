@@ -4,6 +4,7 @@ import { faStar, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import DataTable from 'react-data-table-component'
 import profileTest from './test.png'
 import { Link, useNavigate } from 'react-router-dom'
+import { bufferToBase64 } from '../../../../utils'
 
 const ProfileMain = ({user}) => {
   function parseDateString(dateString) {
@@ -20,7 +21,15 @@ const ProfileMain = ({user}) => {
         <MDBCol md='5'>
           {' '}
           <MDBRow>
-            <img src={profileTest} alt='' />
+          <img
+              src={
+                user.user_image
+                  ? `data:image/jpeg;base64,${bufferToBase64(
+                      user.user_image.data
+                    )}`
+                  : "" // Provide a placeholder image
+              }
+            />
           </MDBRow>
         </MDBCol>
         <MDBCol md='7'>
