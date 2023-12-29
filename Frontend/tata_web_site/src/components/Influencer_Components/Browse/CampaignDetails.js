@@ -18,7 +18,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import fetchCampaign from "./fetchCampaign";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
-import ardababa from "../../Advertiser_Components/test.png";
 import { bufferToBase64, formatDateAndHour } from "../../../utils";
 
 export default function CampaignDetails() {
@@ -39,9 +38,6 @@ export default function CampaignDetails() {
   console.log(campaign);
   console.log(result.data.campaign[0].campaign_header);
 
-  const redirect = (path) => {
-    navigate(path);
-  };
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5" key={campaign}>

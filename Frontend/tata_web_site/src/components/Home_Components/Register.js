@@ -14,7 +14,6 @@ import "./register.css";
 import { useState } from "react";
 import FooterUniversal from "../../FooterUniversal";
 import axios from "axios";
-import { handleImageChange } from "../../utils";
 
 const Register = () => {
   const navigate = useNavigate();

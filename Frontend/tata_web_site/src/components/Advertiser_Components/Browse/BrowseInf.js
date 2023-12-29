@@ -16,9 +16,18 @@ import { useNavigate } from "react-router-dom";
 import fetchAllInf from "../Fetch/fetchAllInf";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
+import { bufferToBase64 } from "../../../utils";
+import defaultImage from "../../Influencer_Components/default.jpg";
+
 function formatDate(dateString) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-  return new Date(dateString).toLocaleDateString('en-US', options);
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  return new Date(dateString).toLocaleDateString("en-US", options);
 }
 function BrowseInf({ searchTerm }) {
   const navigate = useNavigate();
@@ -77,7 +86,13 @@ function BrowseInf({ searchTerm }) {
                     className="bg-image rounded hover-zoom hover-overlay"
                   >
                     <MDBCardImage
-                      // src="https://yt3.googleusercontent.com/ytc/APkrFKaBA66UMsPD6mKXojVXoPMjn_Gltm3TaZUB87MLWg=s900-c-k-c0x00ffffff-no-rj"
+                      src={
+                        influencer.user_image
+                          ? `data:image/jpeg;base64,${bufferToBase64(
+                              influencer.user_image.data
+                            )}`
+                          : defaultImage // Provide a placeholder image
+                      }
                       fluid
                       className="w-100 square bg-primary rounded-circle"
                     />
@@ -114,7 +129,9 @@ function BrowseInf({ searchTerm }) {
                     <p className="ms-5 mb-5">
                       Join Date<br></br>
                     </p>
-                    <p className="ms-5 mb-5">{formatDate(influencer.createdAt)}</p>
+                    <p className="ms-5 mb-5">
+                      {formatDate(influencer.createdAt)}
+                    </p>
                   </div>
                   <div className="d-flex flex-column mt-4">
                     <MDBBtn color="primary" size="sm" className="mt-5">
@@ -161,7 +178,7 @@ function BrowseInf({ searchTerm }) {
           </MDBPaginationLink>
         </MDBPaginationItem>
       </MDBPagination>
-    </MDBCol >
+    </MDBCol>
   );
 }
 
