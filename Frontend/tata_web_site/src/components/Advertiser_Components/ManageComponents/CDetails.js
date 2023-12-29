@@ -130,9 +130,9 @@ const CDetails = () => {
                       </MDBCardText>
                       <MDBCardImage
                         src={
-                          c_data.campaign_image
+                          c_data.user.user_image
                             ? `data:image/jpeg;base64,${bufferToBase64(
-                                c_data.campaign_image.data
+                                c_data.user.user_image.data
                               )}`
                             : "" // Provide a placeholder image
                         }

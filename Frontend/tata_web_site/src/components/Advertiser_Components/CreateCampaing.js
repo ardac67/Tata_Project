@@ -87,12 +87,12 @@ const CreateCampaign = () => {
     Authorization: `Bearer ${token}`,
   };
   const pushToApi = () => {
-    setIsButtonClicked(true);
     console.log(formData);
 
     axios
       .post(`http://localhost:3001/api/createCampaign`, formData, { headers })
       .then((response) => {
+        setIsButtonClicked(true);
         toast.success("Succesfully Created Redirecting....", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 4000,
@@ -105,7 +105,7 @@ const CreateCampaign = () => {
       })
       .catch((error) => {
         if (error.response.status === 413) {
-          toast.error("Entity too large", {
+          toast.error("Image must be at most 20MB", {
             position: toast.POSITION.TOP_CENTER,
           });
         } else {

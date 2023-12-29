@@ -106,6 +106,11 @@ export const getAllCampaignInfluencer = async (req, res) => {
       where: {},
       include: {
         campaing_tags: true,
+        collaboration_preferences: {
+          include: {
+            preffered_platforms: true,
+          },
+        },
       },
     });
     res.json({

@@ -18,7 +18,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import fetchCampaign from "./fetchCampaign";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
-import ardababa from "../../Advertiser_Components/test.png";
 import { bufferToBase64, formatDateAndHour } from "../../../utils";
 
 export default function CampaignDetails() {
@@ -36,12 +35,9 @@ export default function CampaignDetails() {
   }
 
   var campaign = result.data.campaign[0];
-  console.log(result);
+  console.log(campaign);
   console.log(result.data.campaign[0].campaign_header);
 
-  const redirect = (path) => {
-    navigate(path);
-  };
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5" key={campaign}>
@@ -239,7 +235,13 @@ export default function CampaignDetails() {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center d-flex flex-column align-items-center">
                 <MDBCardImage
-                  src={ardababa}
+                  src={
+                    campaign.user.user_image
+                      ? `data:image/jpeg;base64,${bufferToBase64(
+                          campaign.user.user_image.data
+                        )}`
+                      : "" // Provide a placeholder image
+                  }
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: "150px" }}
