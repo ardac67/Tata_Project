@@ -84,6 +84,7 @@ function BrowseInf({ searchTerm }) {
                     rippleColor="light"
                     rippleTag="div"
                     className="bg-image rounded hover-zoom hover-overlay"
+                    onClick={() => navigate(`/ShowProfile/${influencer.user_id}`)}
                   >
                     <MDBCardImage
                       src={
@@ -105,7 +106,7 @@ function BrowseInf({ searchTerm }) {
                   </MDBRipple>
                 </MDBCol>
                 <MDBCol md="6">
-                  <h1>{influencer.name}</h1>
+                  <h1 style={{ cursor: 'pointer' }} onClick={() => navigate(`/ShowProfile/${influencer.user_id}`)}>{influencer.name}</h1>
                   <h5>{influencer.Type}</h5>
                   <div className="mt-3 mb-3 text-muted small">
                     <span className="">Collaboration Completed</span>
