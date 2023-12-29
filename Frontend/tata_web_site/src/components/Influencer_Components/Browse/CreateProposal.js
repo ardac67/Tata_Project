@@ -21,6 +21,7 @@ import Cookies from "universal-cookie";
 import { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify'
+import { bufferToBase64 } from "../../../utils";
 function formatDateAndHour(dateStr) {
   let date = new Date(dateStr);
   let year = date.getFullYear();
@@ -114,9 +115,15 @@ export default function CampaignDetails() {
                       Description
                     </MDBCardText>
                     <MDBCardImage
-                      src={campaign.image}
-                      fluid
-                      className="w-100"
+                     src={
+                      campaign.campaign_image
+                        ? `data:image/jpeg;base64,${bufferToBase64(
+                            campaign.campaign_image.data
+                          )}`
+                        : "" // Provide a placeholder image
+                    }
+                    fluid
+                    className="w-100"
                     />
                   </MDBCol>
                   <MDBCol sm="9">
@@ -297,9 +304,15 @@ export default function CampaignDetails() {
           </MDBCol>
           <MDBCol lg="4">
             <MDBCard className="mb-4">
-              <MDBCardBody className="text-center">
+              <MDBCardBody className="text-center d-flex flex-column align-items-center">
                 <MDBCardImage
-                  src="https://scontent.fsaw3-1.fna.fbcdn.net/v/t1.6435-9/123879012_2955516941347982_2950858687048705095_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=c2f564&_nc_ohc=lEaOmWCU41UAX8sR4Ch&_nc_oc=AQnGDYrWqm7iNXShCGmnCO4eNOjs-bYFiWwDU1X9YDA9BQTOnHdIy8R4PJt4UEYemp4&_nc_ht=scontent.fsaw3-1.fna&oh=00_AfAqrpIJ0u4KHmV_xy_HbBCUU8akReYjYH0bULkn8WW0-Q&oe=656C494F"
+                  src={
+                    campaign.user.user_image
+                      ? `data:image/jpeg;base64,${bufferToBase64(
+                          campaign.user.user_image.data
+                        )}`
+                      : "" // Provide a placeholder image
+                  }
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: "150px" }}

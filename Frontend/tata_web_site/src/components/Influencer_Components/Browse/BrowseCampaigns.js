@@ -104,8 +104,10 @@ function BrowseCampaigns({ searchTerm, filters }) {
                     rippleColor="light"
                     rippleTag="div"
                     className="bg-image rounded hover-zoom hover-overlay"
+                    onClick={() => navigate(`/CampaignDetails/${campaign.campaign_id}`)}
                   >
                     <MDBCardImage
+                   
                       src={
                         campaign.campaign_image
                           ? `data:image/jpeg;base64,${bufferToBase64(
@@ -113,12 +115,15 @@ function BrowseCampaigns({ searchTerm, filters }) {
                             )}`
                           : "" // Provide a placeholder image
                       }
+                      
                       className="w-100"
                       style={{
                         height: "200px",
                         width: "%100",
                         objectFit: "cover",
+                        
                       }}
+                     
                     />
                     <a href="#!">
                       <div
@@ -130,8 +135,8 @@ function BrowseCampaigns({ searchTerm, filters }) {
                     </a>
                   </MDBRipple>
                 </MDBCol>
-                <MDBCol md="6">
-                  <h5>{campaign.campaign_header}</h5>
+                <MDBCol md="6" >
+                  <h5 onClick={() => navigate(`/CampaignDetails/${campaign.campaign_id}`)}>{campaign.campaign_header}</h5>
                   <div className="mt-1 mb-2 text-muted small">
                     {campaign.campaing_tags[0].tag1 && (
                       <span>{campaign.campaing_tags[0].tag1}</span>
