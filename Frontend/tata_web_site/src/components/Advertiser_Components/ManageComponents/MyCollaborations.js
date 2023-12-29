@@ -15,6 +15,8 @@ import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import fetchCollaboration from './fetchCollaboration'
+import defaultimage from "../default.jpg"
+import { bufferToBase64 } from '../../../utils'
 
 export default function MyCollaborations () {
   const navigate = useNavigate()
@@ -92,24 +94,30 @@ export default function MyCollaborations () {
                   </td>
                   <td>
                     <div className='d-flex align-items-center'>
-                      <img
-                        src='https://upload.wikimedia.org/wikipedia/commons/2/20/Hepsiburada_logo_official.svg'
-                        alt=''
-                        style={{ width: '45px', height: '45px' }}
-                        className='rounded-circle'
+                    <img
+                        src={
+                          data.user.user_image
+                      ?` data:image/jpeg;base64,${bufferToBase64(
+                        data.user.user_image.data
+                        )}`
+                      : defaultimage // Provide a placeholder image
+                  }
+                  alt="avatar"
+                  className="rounded-circle"
+                  style={{ width: "60px" }}
+                  fluid
                       />
                       <div className='ms-3'>
                       <a
-                      onClick={() => navigate(`/details/${data.proposed_user_id}`)}
+                      onClick={() => navigate(`/ShowProfile/${data.proposed_user_id}`)}
                       style={{ cursor: 'pointer' }}
                       className='hover-link'
                     >
                       {data.user.name}
-                      
                     </a>
-                    <p className="text-muted mb-0">
-                      {data.user.email}
-                    </p>
+                    <p className='text-muted mb-0'>
+                          {data.user.email}
+                        </p>
                       </div>
                     </div>
                   </td>

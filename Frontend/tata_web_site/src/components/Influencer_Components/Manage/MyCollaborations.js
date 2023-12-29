@@ -15,8 +15,9 @@ import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import fetchCollaboration from './fetchCollaboration'
+import { bufferToBase64 } from '../../../utils'
 
-export default function MyCollaborations () {
+export default function MyCollaborations() {
   const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
@@ -29,7 +30,7 @@ export default function MyCollaborations () {
       </MDBSpinner>
     )
   }
-  function formatDateAndHour (dateStr) {
+  function formatDateAndHour(dateStr) {
     let date = new Date(dateStr)
     let year = date.getFullYear()
     let month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-indexed
@@ -91,14 +92,24 @@ export default function MyCollaborations () {
                   </td>
                   <td>
                     <div className='d-flex align-items-center'>
-                      <img
-                        src='https://upload.wikimedia.org/wikipedia/commons/2/20/Hepsiburada_logo_official.svg'
-                        alt=''
-                        style={{ width: '45px', height: '45px' }}
-                        className='rounded-circle'
+                    <img
+                        src={
+                          data.belongToUser.user_image
+                      ?` data:image/jpeg;base64,${bufferToBase64(
+                        data.belongToUser.user_image.data
+                        )}`
+                      : "" // Provide a placeholder image
+                  }
+                  alt="avatar"
+                  className="rounded-circle"
+                  style={{ width: "60px" }}
+                  fluid
                       />
                       <div className='ms-3'>
-                        <p className='fw-bold mb-1'>
+                        <p style={{ cursor: 'pointer' }} className='hover-link fw-bold'
+                          onClick={() => navigate(`/ShowProfile/${data.belongToCampaign.user_id}`)}
+                        >
+
                           {data.belongToCampaign.user.name}
                         </p>
                         <p className='text-muted mb-0'>
@@ -110,7 +121,7 @@ export default function MyCollaborations () {
                   <td>{formatDateAndHour(data.belongToCampaign.startedAt)} || {formatDateAndHour(data.belongToCampaign.endedAt)}</td>
                   <td>
                     <MDBBadge color='success' pill>
-                    {data.belongToCampaign.status}
+                      {data.belongToCampaign.status}
                     </MDBBadge>
                   </td>
                 </tr>

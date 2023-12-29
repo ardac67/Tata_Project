@@ -1,7 +1,7 @@
 import prisma from '../db'
 export const getCollaborationInfluencer = async (req, res) => {
   try {
-    const proposal = await prisma.collaboration.findMany({
+    var proposal = await prisma.collaboration.findMany({
       where: {
         proposed_user_id: req.params.id
       },
@@ -14,6 +14,21 @@ export const getCollaborationInfluencer = async (req, res) => {
         belongToUser: true
       }
     })
+    var users_array = [];
+    for(var i = 0; i < proposal.length; i++) {
+      const users = await prisma.user.findUnique({
+        where:{
+          user_id: proposal[i].proposed_user_id
+        }
+      })
+      users_array.push(users)
+    }
+      proposal = proposal.map((proposals) =>({
+        ...proposals,
+          user: users_array.find((user) => user.user_id === proposals.proposed_user_id)
+      }) 
+      
+    )
     res.json({ proposal })
     res.status(200)
   } catch (e) {
