@@ -17,6 +17,7 @@ import fetchProposal from '../../Advertiser_Components/Fetch/fetchIndividualProp
 import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
+import { bufferToBase64 } from '../../../utils'
 export default function MyProposals () {
   function formatDateAndHour (dateStr) {
     let date = new Date(dateStr)
@@ -100,10 +101,17 @@ export default function MyProposals () {
                   <td>
                     <div className='d-flex align-items-center'>
                       <img
-                        src='https://upload.wikimedia.org/wikipedia/commons/2/20/Hepsiburada_logo_official.svg'
-                        alt=''
-                        style={{ width: '45px', height: '45px' }}
-                        className='rounded-circle'
+                        src={
+                          data.belongsToCampaign.user.user_image.data
+                      ? `data:image/jpeg;base64,${bufferToBase64(
+                          data.belongsToCampaign.user.user_image.data
+                        )}`
+                      : "" // Provide a placeholder image
+                  }
+                  alt="avatar"
+                  className="rounded-circle"
+                  style={{ width: "80px" }}
+                  fluid
                       />
                       <div className='ms-3'>
                         <p className='fw-bold mb-1'>
