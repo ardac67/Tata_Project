@@ -8,7 +8,6 @@ import {
 } from 'mdb-react-ui-kit'
 import ProfileMain from './ViewProfileComponents/ProfileMain'
 import ContactMainProfile from './ViewProfileComponents/ContactViewProfile'
-import TopCategoreis from './ViewProfileComponents/TopCategories'
 import TopTags from './ViewProfileComponents/TopTags'
 import CampaingTable from './ViewProfileComponents/CampaignTable'
 import RatingComponent from './ViewProfileComponents/RatingComponent'
@@ -64,25 +63,16 @@ const ViewProfile = () => {
         }}
       >
         <MDBCol md='8'>
-          <MDBCard alignment='left' style={{ marginTop: '10px' }}>
+          <MDBCard alignment='left' style={{ marginTop: '10px'}}>
             <MDBCardHeader style={{ fontSize: '28px' }}>
               Campaings
             </MDBCardHeader>
-            <MDBCardBody>
+            <MDBCardBody style={{marginTop:"1px",marginLeft:"1px",marginRight:"1px",padding:0,backgroundColor: '#DFE7F6'}}>
               <CampaingTable></CampaingTable>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
-        <MDBCol md='4'>
-          <MDBCard alignment='left' style={{ marginTop: '10px' }}>
-          <MDBCard alignment='left' style={{ marginTop: '10px' }}>
-            <MDBCardHeader style={{ fontSize: '25px' }}>
-              Top Categories
-            </MDBCardHeader>
-            <TopCategoreis></TopCategoreis>
-          </MDBCard>
-          </MDBCard>
-        </MDBCol>
+        
         <MDBCol md='8'>
           <MDBCard alignment='left' style={{ marginTop: '10px' }}>
             <MDBCardHeader style={{ fontSize: '28px' }}>
