@@ -51,35 +51,35 @@ const TopTags = () => {
               color='primary'
               className='px-3 mb-2 rounded-3'
             >
-            {tags.tag1 || 'No Tag 1'}
+            {tags.tag1}
             </MDBListGroupItem>
             <MDBListGroupItem
               noBorders
               color='primary'
               className='px-3 mb-2 rounded-3'
             >
-              {tags.tag2 || 'No Tag 1'}
+              {tags.tag2}
             </MDBListGroupItem>
             <MDBListGroupItem
               noBorders
               color='primary'
               className='px-3 mb-2 rounded-3'
             >
-              {tags.tag3 || 'No Tag 1'}
+              {tags.tag3}
             </MDBListGroupItem>
             <MDBListGroupItem
               noBorders
               color='primary'
               className='px-3 mb-2 rounded-3'
             >
-             {tags.tag4 || 'No Tag 1'}
+             {tags.tag4}
             </MDBListGroupItem>
             <MDBListGroupItem
               noBorders
               color='primary'
               className='px-3 mb-2 rounded-3'
             >
-             {tags.tag5 || 'No Tag 1'}
+             {tags.tag5}
             </MDBListGroupItem>
           </MDBListGroup>
         </MDBCol>
