@@ -21,10 +21,14 @@ import io from 'socket.io-client'
 import { useState, useEffect } from 'react'
 import { create } from '@mui/material/styles/createTransitions'
 import getMessage from './getMessage'
+import { ToastContainer, toast } from 'react-toastify'
+import ScrollToBottom from 'react-scroll-to-bottom'
 var socket = io.connect('http://localhost:3002')
 export default function App () {
   const navigate = useNavigate()
   const [messageList, setMessageListe] = useState([])
+  const [selectedId, setSelectedId] = useState(null)
+  const [color, setColor] = useState('')
   const [room_idd, setRoom] = useState('')
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
@@ -42,7 +46,7 @@ export default function App () {
     staleTime: 0,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false
-  });
+  })
   useEffect(() => {
     if (messageData.isSuccess && messageData.data.messages) {
       const oldMessages = messageData.data.messages.map(msg => ({
@@ -88,10 +92,11 @@ export default function App () {
   }
   const collaborations = result.data
   const joinRoom = async id => {
+    var colorTest = 'red'
+    setColor(colorTest)
     setMessageListe([])
     setRoom(id)
-    //const messageData = useQuery(['message', token, id], getMessage)
-    //
+    setSelectedId(id)
     setShouldFetch(true)
     await socket.emit('join_room', {
       user: user_id,
@@ -107,7 +112,6 @@ export default function App () {
       )
     }
 
-
     console.log('message', messageData.data.messages)
     const oldMessages = messageData.data.messages.map(msg => ({
       user: msg.user_name,
@@ -115,7 +119,6 @@ export default function App () {
     }))
     console.log('oldMessage', oldMessages)
     setMessageListe(list => [...list], oldMessages)
-    
   }
 
   const sendMessage = async () => {
@@ -136,7 +139,7 @@ export default function App () {
     const headers = {
       Authorization: `Bearer ${token}`
     }
-    
+
     axios
       .post(`http://localhost:3001/api/createMessage`, formData, { headers })
       .then(response => {
@@ -150,6 +153,7 @@ export default function App () {
   //console.log(collaborations)
   return (
     <MDBContainer fluid className='py-5' style={{ backgroundColor: '#eee' }}>
+      <ToastContainer />
       <MDBRow>
         <MDBCol md='6' lg='5' xl='4' className='mb-4 mb-md-0'>
           <h5 className='font-weight-bold mb-3 text-center text-lg-start'>
@@ -168,8 +172,13 @@ export default function App () {
                 >
                   <MDBTypography listUnStyled className='mb-0'>
                     <li
+                      style={{
+                        backgroundColor:
+                          collab.collaboration_id === selectedId
+                            ? '#D0D0D0	'
+                            : 'white'
+                      }}
                       className='p-2 border-bottom'
-                      style={{ backgroundColor: '#eee' }}
                     >
                       <a href='#!' className='d-flex justify-content-between'>
                         <div className='d-flex flex-row'>
@@ -205,6 +214,7 @@ export default function App () {
 
         <MDBCol md='6' lg='7' xl='8'>
           <MDBTypography listUnStyled>
+          <ScrollToBottom className="chat-scroll">
             {messageList.map((val, index) => (
               <MDBRow key={index}>
                 {' '}
@@ -233,6 +243,7 @@ export default function App () {
                 </MDBCol>
               </MDBRow>
             ))}
+            </ScrollToBottom >
             <MDBRow style={{ marginTop: '40px' }}>
               <MDBCard style={{ marginRight: '20px' }}>
                 <MDBCardBody>
