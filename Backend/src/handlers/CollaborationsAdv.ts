@@ -8,7 +8,8 @@ export const getCollaborationAdvertiser = async (req, res) => {
       include: {
         belongToCampaign:{
           include:{
-            user:true
+            user:true,
+            campaing_tags:true
           }
         },
         belongToUser: true,
