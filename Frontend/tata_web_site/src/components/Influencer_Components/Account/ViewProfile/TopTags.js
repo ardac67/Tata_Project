@@ -29,7 +29,6 @@ const TopTags = () => {
 
  // Check if the necessary properties exist before accessing them
  const tags = data[index - 1]?.belongToCampaign?.campaing_tags[0];
-console.log(tags)
  if (!tags) {
    return  <MDBCardBody align="center">
    <MDBCardText style={{ fontSize: '20px' }}>

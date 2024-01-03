@@ -23,8 +23,7 @@ const CampaingTable = () => {
     )
   }
   var data = result.data.proposal
-  console.log(data)
-  console.log(data[0].belongToCampaign)
+
   function formatDateAndHour(dateStr) {
     let date = new Date(dateStr)
     let year = date.getFullYear()

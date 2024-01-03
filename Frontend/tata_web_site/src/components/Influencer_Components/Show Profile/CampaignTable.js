@@ -27,7 +27,6 @@ const CampaingTable = () => {
     return `${year}-${month}-${day} ${hour}:${minutes}`;
   }
   const campaigns = result.data.campaign
-  console.log(campaigns)
 
   const data = []
   for (var i = 0; i < campaigns.length; i++) {
