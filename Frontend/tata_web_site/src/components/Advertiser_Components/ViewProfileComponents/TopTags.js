@@ -50,11 +50,7 @@ const TopTags = () => {
     </MDBCardText>
   </MDBCardBody>;
   }
-  
-  console.log(index);
-  console.log(data)
-  console.log("sajldddddddddddddddd")
-  console.log(data[index-1].belongToCampaign.campaing_tags[0].tag1)
+
   return (
     <MDBCardBody align="center">
       <MDBCardText style={{ fontSize: '20px' }}>
