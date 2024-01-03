@@ -8,7 +8,6 @@ import {
   } from 'mdb-react-ui-kit'
   import ProfileMain from './ProfileMain'
   import ContactMainProfile from './ContactViewProfile'
-  import TopCategoreis from './TopCategories'
   import TopTags from './TopTags'
   import CampaingTable from './CampaignTable'
   import RatingComponent from './RatingComponent'
@@ -72,16 +71,6 @@ import {
               <MDBCardBody>
                 <CampaingTable></CampaingTable>
               </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-          <MDBCol md='4'>
-            <MDBCard alignment='left' style={{ marginTop: '10px' }}>
-            <MDBCard alignment='left' style={{ marginTop: '10px' }}>
-              <MDBCardHeader style={{ fontSize: '25px' }}>
-                Top Categories
-              </MDBCardHeader>
-              <TopCategoreis></TopCategoreis>
-            </MDBCard>
             </MDBCard>
           </MDBCol>
           <MDBCol md='8'>
