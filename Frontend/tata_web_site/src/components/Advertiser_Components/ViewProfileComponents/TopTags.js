@@ -30,8 +30,6 @@ const TopTags = () => {
 
 
 
-  var index = data.length;
-
   // Check if the necessary properties exist before accessing them
   const tags = data[index - 1]?.belongToCampaign?.campaing_tags[0];
 
