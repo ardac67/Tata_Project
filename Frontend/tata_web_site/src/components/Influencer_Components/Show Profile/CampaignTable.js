@@ -33,7 +33,6 @@ const CampaingTable = () => {
     data.push(campaigns[i])
   }
 
-console.log(data)
 
 
 const columns = [
