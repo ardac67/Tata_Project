@@ -19,6 +19,8 @@ import {
   MDBCardFooter,
 } from "mdb-react-ui-kit";
 import fetchProposal from "../Fetch/fetchProposal";
+import defaultImage from "../default.jpg"
+import defaultImage1 from "../default1.png"
 import Cookies from "universal-cookie";
 import { useQuery } from "@tanstack/react-query";
 import fetchCampaigns from "../Fetch/fetchCampaigns";
@@ -134,7 +136,7 @@ const CDetails = () => {
                               ? `data:image/jpeg;base64,${bufferToBase64(
                                   c_data.campaign_image.data
                                 )}`
-                              : "" // Provide a placeholder image
+                              : defaultImage1
                           }
                           
                         fluid
@@ -295,7 +297,7 @@ const CDetails = () => {
                         ? `data:image/jpeg;base64,${bufferToBase64(
                             c_data.user.user_image.data
                           )}`
-                        : "" // Provide a placeholder image
+                        : defaultImage // Provide a placeholder image
                     }
                     alt="avatar"
                     className="rounded-circle"
