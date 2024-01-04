@@ -10,6 +10,7 @@ import CampaignDetails from "./Browse/CampaignDetails";
 import CreateProposal from "./Browse/CreateProposal";
 import ShowAllMessages from "./Messages/ShowAllMessages";
 import ShowProfile from "./Show Profile/ShowProfile";
+import Rating from "./Show Profile/Rating";
 
 const InfluencerComponent = ({setIsAuth}) => {
     return (
@@ -27,6 +28,7 @@ const InfluencerComponent = ({setIsAuth}) => {
                 <Route path="/CreateProposal/:id" element={<CreateProposal></CreateProposal>}></Route>
                 <Route path="/ShowAllMessages" element={<ShowAllMessages></ShowAllMessages>}></Route>
                 <Route path="/ShowProfile/:id" element={<ShowProfile></ShowProfile>}></Route>
+                <Route path="/Rating" element={<Rating></Rating>}></Route>
             </Routes>   
             <div></div>
         </div>
