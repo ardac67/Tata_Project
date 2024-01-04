@@ -19,12 +19,12 @@ import axios from "axios";
 import fetchCollaboration from "../Manage/fetchCollaboration";
 import io from "socket.io-client";
 import defaultImage from "../../Advertiser_Components/default.jpg";
-import { useRef, useState, useEffect } from "react";
+import { memo, useRef, useState, useEffect } from "react";
 import getMessage from "../../Advertiser_Components/Message/getMessage";
 var socket = io.connect("http://localhost:3002");
 export default function App() {
   const hashMap = {
-    key1: 'value1'
+    key1: "value1",
   };
   const navigate = useNavigate();
   const [messageList, setMessageListe] = useState([]);
@@ -59,17 +59,6 @@ export default function App() {
       setMessageListe(oldMessages);
     }
   }, [messageData.isSuccess, messageData.data]);
-  function bufferToBase64(buffer) {
-    let binary = "";
-    const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-
-    return window.btoa(binary);
-  }
 
   useEffect(() => {
     // Ensure that scrollRef.current is not null before accessing properties
@@ -201,12 +190,11 @@ export default function App() {
                           <div className="d-flex flex-row">
                             <img
                               src={
-                                collab.belongToCampaign.campaign_image
+                                collab.belongToUser.user_image
                                   ? `data:image/jpeg;base64,${bufferToBase64(
-                                      collab.belongToCampaign.campaign_image
-                                        .data
+                                      collab.belongToUser.user_image.data
                                     )}`
-                                  : "" // Provide a placeholder image
+                                  : defaultImage // Provide a placeholder image
                               }
                               alt="avatar"
                               className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
@@ -214,10 +202,11 @@ export default function App() {
                             />
                             <div className="pt-1">
                               <p className="fw-bold mb-0">
-                                {collab.user.name} - {collab.user.email}
+                                {collab.belongToUser.user_name} -{" "}
+                                {collab.user.email}
                               </p>
                               <p className="small text-muted">
-                                {collab.belongToCampaign.campaign_description}
+                                {collab.belongToCampaign.campaign_header}
                               </p>
                             </div>
                           </div>
@@ -239,23 +228,18 @@ export default function App() {
               {messageList.map((val, index) => (
                 <MDBRow key={index}>
                   {" "}
-                  {val.user ===
-                  collaborations.proposal[0].belongToUser.user_name ? (
+                  {val.user === collaborations.proposal[0].user.user_name ? (
                     <MDBCol>
                       <li className="justify-content-between mb-4">
-                        <img
-                          src={
-                            hashMap[val.user]
-                              ? `data:image/jpeg;base64,${bufferToBase64(
-                                  hashMap[val.user].data
-                                )}`
-                              : "" // Provide a placeholder image
-                          }
-                          alt="avatar"
-                          className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                          width="60"
-                          style={{ marginBottom: "10px" }}
-                        />
+                        <div className="d-flex justify-content-end mb-0">
+                          <img
+                            src={myImage}
+                            alt="avatar"
+                            className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
+                            width="60"
+                            style={{ marginBottom: "10px" }}
+                          />
+                        </div>
                         <MDBCard>
                           <MDBCardHeader className="d-flex justify-content-between p-3">
                             <p className="fw-bold mb-0">{val.user}</p>
@@ -272,24 +256,15 @@ export default function App() {
                   ) : (
                     <MDBCol>
                       <li className="justify-content-between mb-4">
-                        <div className="d-flex justify-content-end mb-0">
-                          <img
-                            src={
-                              collaborations.proposal[0].user.user_image
-                                ? `data:image/jpeg;base64,${bufferToBase64(
-                                    collaborations.proposal[0].user.user_image
-                                      .data
-                                  )}`
-                                : defaultImage // Provide a placeholder image
-                            }
-                            alt="avatar"
-                            className="rounded-circle me-3 shadow-1-strong"
-                            width="60"
-                            style={{
-                              marginBottom: "5px",
-                            }}
-                          />
-                        </div>
+                        <img
+                          src={`data:image/jpeg;base64,${hashMap[val.user]}`}
+                          alt="avatar"
+                          className="rounded-circle me-3 shadow-1-strong"
+                          width="60"
+                          style={{
+                            marginBottom: "5px",
+                          }}
+                        />
                         <MDBCard>
                           <MDBCardHeader className="d-flex justify-content-between p-3">
                             <p className="fw-bold mb-0">{val.user}</p>
