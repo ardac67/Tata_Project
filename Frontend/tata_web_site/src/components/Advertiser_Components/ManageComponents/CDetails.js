@@ -129,13 +129,14 @@ const CDetails = () => {
                         Description
                       </MDBCardText>
                       <MDBCardImage
-                        src={
-                          c_data.user.user_image
-                            ? `data:image/jpeg;base64,${bufferToBase64(
-                                c_data.user.user_image.data
-                              )}`
-                            : "" // Provide a placeholder image
-                        }
+                           src={
+                            c_data.campaign_image
+                              ? `data:image/jpeg;base64,${bufferToBase64(
+                                  c_data.campaign_image.data
+                                )}`
+                              : "" // Provide a placeholder image
+                          }
+                          
                         fluid
                         className="w-100"
                       />
@@ -289,10 +290,16 @@ const CDetails = () => {
               <MDBCard className="mb-4">
                 <MDBCardBody className="text-center">
                   <MDBCardImage
-                    src="https://scontent.fsaw3-1.fna.fbcdn.net/v/t1.6435-9/123879012_2955516941347982_2950858687048705095_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=c2f564&_nc_ohc=lEaOmWCU41UAX8sR4Ch&_nc_oc=AQnGDYrWqm7iNXShCGmnCO4eNOjs-bYFiWwDU1X9YDA9BQTOnHdIy8R4PJt4UEYemp4&_nc_ht=scontent.fsaw3-1.fna&oh=00_AfAqrpIJ0u4KHmV_xy_HbBCUU8akReYjYH0bULkn8WW0-Q&oe=656C494F"
+                     src={
+                      c_data.user.user_image
+                        ? `data:image/jpeg;base64,${bufferToBase64(
+                            c_data.user.user_image.data
+                          )}`
+                        : "" // Provide a placeholder image
+                    }
                     alt="avatar"
                     className="rounded-circle"
-                    style={{ width: "150px" }}
+                    style={{ width: "150px", }}
                     fluid
                   />
                   <p className="mb-1 mt-2 fw-bold">{c_data.user.name}</p>
