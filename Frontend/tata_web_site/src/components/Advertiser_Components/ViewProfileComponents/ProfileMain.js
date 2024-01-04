@@ -63,14 +63,11 @@ const ProfileMain = ({ user }) => {
     if(campaignEndDate >= todayDate){
       ongoing_campaign_array.push(data1[i])
     }
-  }
-  for(var j=0;j<index1;j++){
-    var campaignEndDate = formatDate(data1[j].endedAt)
-    var todayDate = getDate();
     if(campaignEndDate < todayDate){
-      completed_campaign_array.push(data1[j])
+      completed_campaign_array.push(data1[i])
     }
   }
+
   var NumofOngoingCampaign = ongoing_campaign_array.length;
   var NumofCompletedCampaign = completed_campaign_array.length;
 
