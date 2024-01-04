@@ -63,7 +63,7 @@ export default function CampaignDetails() {
     axios
       .post(`http://localhost:3001/api/postProposal`, data, { headers })
       .then((response) => {
-        toast.success('Success message here', {
+        toast.success('Succesfully Proposed', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 4000
         });

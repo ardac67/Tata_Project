@@ -53,10 +53,7 @@ const CreateCampaign = () => {
 
     // Optionally, you can add additional logic after the form submission
     setIsButtonClicked(true);
-    toast.success("Succesfully Created Redirecting....", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 4000,
-    });
+   
     setButtonState(true);
     const delayInMilliseconds = 5000;
     setTimeout(() => {
@@ -129,7 +126,7 @@ const CreateCampaign = () => {
       .post(`http://localhost:3001/api/createCampaign`, formData, { headers })
       .then((response) => {
         setIsButtonClicked(true);
-        toast.success("Succesfully Created Redirecting....", {
+        toast.success("Succesfully Created Campaign Redirecting....", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 4000,
         });
