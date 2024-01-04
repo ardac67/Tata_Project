@@ -21,7 +21,6 @@ import {
   MDBCardHeader,
   MDBSpinner
 } from 'mdb-react-ui-kit'
-import profileTest from '../test.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faSquarePlus } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
