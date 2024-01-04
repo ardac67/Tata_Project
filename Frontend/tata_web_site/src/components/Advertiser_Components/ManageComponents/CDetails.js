@@ -288,7 +288,7 @@ const CDetails = () => {
             </MDBCol>
             <MDBCol lg="4">
               <MDBCard className="mb-4">
-                <MDBCardBody className="text-center">
+                <MDBCardBody className="text-center d-flex flex-column align-items-center">
                   <MDBCardImage
                      src={
                       c_data.user.user_image
