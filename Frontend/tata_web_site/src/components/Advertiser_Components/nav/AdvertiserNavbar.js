@@ -32,14 +32,10 @@ import { useQuery } from '@tanstack/react-query'
 import Cookies from 'universal-cookie'
 import fetchCampaigns from '../Fetch/fetchCampaigns'
 var socket = io.connect('http://localhost:3002')
-export const AdvertiserNavbar = ({campData}) => {
+export const AdvertiserNavbar = () => {
   const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
   const [notList, setNotList] = useState([])
-  var camp= campData.data
-  useEffect(() => {
-    console.log('camp data:', campData);
-  }, [campData]);
   const [showNav, setShowNav] = useState(false)
   const token = cookies.get('token')
   const user_id = cookies.get('user_id')
