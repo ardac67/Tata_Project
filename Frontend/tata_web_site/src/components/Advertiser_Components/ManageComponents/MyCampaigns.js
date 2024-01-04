@@ -6,6 +6,16 @@ import Cookies from 'universal-cookie'
 import DataTable from 'react-data-table-component'
 import fetchCampaigns from '../Fetch/fetchCampaigns'
 import { Link, useNavigate } from 'react-router-dom'
+function formatDateAndHour(dateStr) {
+  let date = new Date(dateStr);
+  let year = date.getFullYear();
+  let month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  let day = String(date.getDate()).padStart(2, "0");
+  let hour = date.getHours();
+  let minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${year}-${month}-${day} ${hour}:${minutes}`;
+}
+
 const MyCampaigns = () => {
   const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
@@ -62,15 +72,15 @@ const MyCampaigns = () => {
     },
     {
       name: 'Start Date',
-      selector: row => row.startedAt
+      selector: row => formatDateAndHour(row.startedAt)
     },
     {
       name: 'End Date',
-      selector: row => row.endedAt
+      selector: row => formatDateAndHour(row.endedAt)
     },
     {
       name: 'Applications',
-      select: row => row.createdAt
+      select: row => formatDateAndHour(row.createdAt)
     },
     {
       name: 'Actions',
@@ -81,7 +91,7 @@ const MyCampaigns = () => {
               <MDBBtn size='md'>
                 <FontAwesomeIcon
                   onClick={() => {
-                    navigate(`/details/:${row.campaign_id}`)
+                    navigate(`/details/${row.campaign_id}`)
                   }}
                   icon={faEye}
                 />

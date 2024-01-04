@@ -48,7 +48,15 @@ const CDetails = () => {
   const { id } = useParams();
   const result = useQuery(["proposal", id, token], fetchProposal);
   const c_result = useQuery(["xx", id, token], getAllCampaignsBYid);
-
+  function formatDateAndHour (dateStr) {
+    let date = new Date(dateStr)
+    let year = date.getFullYear()
+    let month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-indexed
+    let day = String(date.getDate()).padStart(2, '0')
+    let hour = date.getHours()
+    let minutes = String(date.getMinutes()).padStart(2, '0')
+    return `${year}-${month}-${day} ${hour}:${minutes}`
+  }
   const join_not = async (newData) => {
     await socket.emit('join_not', {
       user: user_id,
@@ -423,7 +431,7 @@ const CDetails = () => {
                       <MDBCardText style={{ marginTop: "10px" }}>
                         {data.belongsToUser.name} @
                         {data.belongsToUser.user_name} Created At:{" "}
-                        {data.createdAt}
+                        {formatDateAndHour(data.createdAt)}
                       </MDBCardText>
                     </MDBCardBody>
                     <MDBRow
