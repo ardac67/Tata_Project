@@ -205,9 +205,10 @@ export default function App() {
                           <div className="d-flex flex-row">
                             <img
                               src={
-                                collab.user.user_image
+                                collab.belongToCampaign.campaign_image
                                   ? `data:image/jpeg;base64,${bufferToBase64(
-                                      collab.user.user_image.data
+                                      collab.belongToCampaign.campaign_image
+                                        .data
                                     )}`
                                   : defaultImage // Provide a placeholder image
                               }
@@ -276,7 +277,7 @@ export default function App() {
                     <MDBCol>
                       <li className="justify-content-between mb-4">
                         <img
-                          src={hashMap[val.user]}
+                          src={`data:image/jpeg;base64,${hashMap[val.user]}`}
                           alt="avatar"
                           className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
                           width="60"

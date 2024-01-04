@@ -98,17 +98,23 @@ export default function App() {
   const collaborations = result.data;
   console.log(collaborations);
   for (var i = 0; i < collaborations.proposal.length; i++) {
-    hashMap[collaborations.proposal[i].belongToUser.user_name] = collaborations
-      .proposal[i].belongToUser.user_image
-      ? bufferToBase64(collaborations.proposal[i].belongToUser.user_image.data)
-      : defaultImage;
+    if (
+      hashMap[collaborations.proposal[i].belongToUser.user_name] === undefined
+    ) {
+      hashMap[collaborations.proposal[i].belongToUser.user_name] =
+        collaborations.proposal[i].belongToUser.user_image
+          ? bufferToBase64(
+              collaborations.proposal[i].belongToUser.user_image.data
+            )
+          : defaultImage;
+    }
   }
+
   const myImage = collaborations.proposal[0].user.user_image
     ? `data:image/jpeg;base64,${bufferToBase64(
         collaborations.proposal[0].user.user_image.data
       )}`
     : defaultImage;
-  console.log("arda", hashMap);
   const joinRoom = async (id) => {
     var colorTest = "red";
     setColor(colorTest);
@@ -271,11 +277,7 @@ export default function App() {
                     <MDBCol>
                       <li className="justify-content-between mb-4">
                         <img
-                          src={
-                            hashMap[val.user]
-                              ? `data:image/jpeg;base64,${hashMap[val.user]}`
-                              : defaultImage // Provide a placeholder image
-                          }
+                          src={`data:image/jpeg;base64,${hashMap[val.user]}`}
                           alt="avatar"
                           className="rounded-circle me-3 shadow-1-strong"
                           width="60"
