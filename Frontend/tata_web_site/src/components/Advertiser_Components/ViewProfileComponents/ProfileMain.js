@@ -60,10 +60,10 @@ const ProfileMain = ({ user }) => {
   for(var i=0;i<index1;i++){
     var campaignEndDate = formatDate(data1[i].endedAt)
     var todayDate = getDate();
-    if(campaignEndDate >= todayDate){
+    if(campaignEndDate >= todayDate && data1[i].status !== "Ended"){
       ongoing_campaign_array.push(data1[i])
     }
-    if(campaignEndDate < todayDate){
+    if(campaignEndDate < todayDate || data1[i].status === "Ended"){
       completed_campaign_array.push(data1[i])
     }
   }
