@@ -37,8 +37,41 @@ const CreateCampaign = () => {
     tag2: "",
     tag3: "",
     tag4: "",
+    campaign_header: "", // Add these lines
+    campaign_description: "",   // Add these lines
   });
+  const handleCreateCampaign = (e) => {
+    // First, perform form validation
+    if (!formData.campaign_header.trim() || !formData.campaign_description.trim()) {
+      alert("Please fill Campaign Header and Campaign Description");
+      return;
+    }
 
+    // If validation passes, call both handleSubmit and pushToApi
+    handleSubmit(e); // This will log the form data to the console (you can customize it)
+    pushToApi();    // This will make the API request
+
+    // Optionally, you can add additional logic after the form submission
+    setIsButtonClicked(true);
+   
+    setButtonState(true);
+    const delayInMilliseconds = 5000;
+    setTimeout(() => {
+      navigate("/");
+    }, delayInMilliseconds);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Check if any of the required fields are empty
+    if (!formData.campaign_header.trim() || !formData.campaign_description.trim()) {
+      alert("Please fill Campaign Header and Campaign Description");
+      return;
+    }
+
+    // Perform your form submission logic here
+    console.log("Form submitted with data:", formData);
+  };
   const tagsOptions = [
     "Wellness",
     "Beauty",
@@ -93,7 +126,7 @@ const CreateCampaign = () => {
       .post(`http://localhost:3001/api/createCampaign`, formData, { headers })
       .then((response) => {
         setIsButtonClicked(true);
-        toast.success("Succesfully Created Redirecting....", {
+        toast.success("Succesfully Created Campaign Redirecting....", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 4000,
         });
@@ -260,48 +293,53 @@ const CreateCampaign = () => {
                 </MDBCol>
               </MDBRow>
               <MDBRow style={{ marginTop: "25px" }}>
-                <MDBCol md="2">
-                  <h6
-                    style={{
-                      marginTop: "5px",
-                      color: "#7d8fb1",
-                      fontWeight: "400",
-                    }}
-                  >
-                    Campaing Header
-                  </h6>
-                </MDBCol>
-                <MDBCol md="10" className="justify-content-start">
-                  <MDBInput
-                    label="Campaign Header"
-                    id="formControlDefault"
-                    type="text"
-                    name="campaign_header"
-                    onChange={setData}
-                  />
-                </MDBCol>
-              </MDBRow>
-              <MDBRow className="mb-5" style={{ marginTop: "25px" }}>
-                <MDBCol md="2">
-                  <h6
-                    style={{
-                      marginTop: "5px",
-                      color: "#7d8fb1",
-                      fontWeight: "400",
-                    }}
-                  >
-                    Description
-                  </h6>
-                </MDBCol>
-                <MDBCol md="10" className="justify-content-start">
-                  <MDBTextArea
-                    name="campaign_description"
-                    id="textAreaExample"
-                    rows={4}
-                    onChange={setData}
-                  />
-                </MDBCol>
-              </MDBRow>
+        <MDBCol md="2">
+          <h6
+            style={{
+              marginTop: "5px",
+              color: "#7d8fb1",
+              fontWeight: "400",
+            }}
+          >
+            Campaign Header
+          </h6>
+        </MDBCol>
+        <MDBCol md="10" className="justify-content-start">
+          <MDBInput
+            label="Campaign Header"
+            id="formControlDefault1"
+            type="text"
+            name="campaign_header"
+            value={formData.campaign_header}
+            onChange={setData}
+          />
+        </MDBCol>
+      </MDBRow>
+
+      <MDBRow className="mb-5" style={{ marginTop: "25px" }}>
+        <MDBCol md="2">
+          <h6
+            style={{
+              marginTop: "5px",
+              color: "#7d8fb1",
+              fontWeight: "400",
+            }}
+          >
+            Campaign Description
+          </h6>
+        </MDBCol>
+        <MDBCol md="10" className="justify-content-start">
+          <MDBInput
+            label="Campaign Description"
+            id="formControlDefault2"
+            type="text"
+            name="campaign_description"
+            value={formData.campaign_description}
+            onChange={setData}
+          />
+        </MDBCol>
+      </MDBRow>
+
             </MDBCardBody>
           </MDBCard>
           <MDBCard alignment="left" style={{ marginTop: "20px" }}>
@@ -488,7 +526,7 @@ const CreateCampaign = () => {
               }}
               size="lg"
               color="primary"
-              onClick={pushToApi}
+              onClick={(e) => handleCreateCampaign(e)} // Pass the event here
               enabled={buttonState}
               disabled={isButtonClicked}
             >

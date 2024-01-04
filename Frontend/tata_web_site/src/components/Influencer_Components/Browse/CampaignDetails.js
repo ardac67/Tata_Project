@@ -19,7 +19,8 @@ import fetchCampaign from "./fetchCampaign";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
 import { bufferToBase64, formatDateAndHour } from "../../../utils";
-
+import defaultImage from "../default1.png";
+import defaultImage1 from "../default.jpg";
 export default function CampaignDetails() {
   const navigate = useNavigate();
   const cookies = new Cookies(null, { path: "/" });
@@ -70,7 +71,7 @@ export default function CampaignDetails() {
                           ? `data:image/jpeg;base64,${bufferToBase64(
                               campaign.campaign_image.data
                             )}`
-                          : "" // Provide a placeholder image
+                          : defaultImage // Provide a placeholder image
                       }
                       fluid
                       className="w-100"
@@ -240,7 +241,7 @@ export default function CampaignDetails() {
                       ? `data:image/jpeg;base64,${bufferToBase64(
                           campaign.user.user_image.data
                         )}`
-                      : "" // Provide a placeholder image
+                      : defaultImage1 // Provide a placeholder image
                   }
                   alt="avatar"
                   className="rounded-circle"

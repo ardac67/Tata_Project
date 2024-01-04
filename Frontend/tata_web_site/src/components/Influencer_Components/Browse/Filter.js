@@ -47,7 +47,91 @@ const FilterBar = ({ onFilterChange }) => {
                 )
               }
             />
-            {/* Add similar checkboxes for other platform filters */}
+            <MDBCheckbox
+              id="tiktok"
+              label={
+                <div>
+                  <MDBIcon fab icon="tiktok" />
+                  <span className="filter-label1"> Tiktok</span>
+                </div>
+              }
+              checked={platformFilters.includes("tiktok")}
+              onChange={() =>
+                setPlatformFilters((prevFilters) =>
+                  prevFilters.includes("tiktok")
+                    ? prevFilters.filter((filter) => filter !== "tiktok")
+                    : [...prevFilters, "tiktok"]
+                )
+              }
+            />
+            <MDBCheckbox
+              id="instagram"
+              label={
+                <div>
+                  <MDBIcon fab icon="instagram" />
+                  <span className="filter-label1"> Instagram</span>
+                </div>
+              }
+              checked={platformFilters.includes("instagram")}
+              onChange={() =>
+                setPlatformFilters((prevFilters) =>
+                  prevFilters.includes("instagram")
+                    ? prevFilters.filter((filter) => filter !== "instagram")
+                    : [...prevFilters, "instagram"]
+                )
+              }
+            />
+             <MDBCheckbox
+              id="facebook"
+              label={
+                <div>
+                  <MDBIcon fab icon="facebook" />
+                  <span className="filter-label1"> Facebook</span>
+                </div>
+              }
+              checked={platformFilters.includes("facebook")}
+              onChange={() =>
+                setPlatformFilters((prevFilters) =>
+                  prevFilters.includes("facebook")
+                    ? prevFilters.filter((filter) => filter !== "facebook")
+                    : [...prevFilters, "facebook"]
+                )
+              }
+            />
+             <MDBCheckbox
+              id="twitter"
+              label={
+                <div>
+                  <MDBIcon fab icon="twitter" />
+                  <span className="filter-label1"> Twitter</span>
+                </div>
+              }
+              checked={platformFilters.includes("twitter")}
+              onChange={() =>
+                setPlatformFilters((prevFilters) =>
+                  prevFilters.includes("twitter")
+                    ? prevFilters.filter((filter) => filter !== "twitter")
+                    : [...prevFilters, "twitter"]
+                )
+              }
+            />
+              <MDBCheckbox
+              id="twitch"
+              label={
+                <div>
+                  <MDBIcon fab icon="twitch" />
+                  <span className="filter-label1"> Twitch</span>
+                </div>
+              }
+              checked={platformFilters.includes("twitch")}
+              onChange={() =>
+                setPlatformFilters((prevFilters) =>
+                  prevFilters.includes("twitch")
+                    ? prevFilters.filter((filter) => filter !== "twitch")
+                    : [...prevFilters, "twitch"]
+                )
+              }
+            />
           </div>
 
           {/* Industry Filters */}
