@@ -1,37 +1,105 @@
-import { MDBRow, MDBCol, MDBCardBody, MDBBtn } from "mdb-react-ui-kit";
+import { MDBRow, MDBCol, MDBCardBody, MDBBtn,MDBSpinner } from "mdb-react-ui-kit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
-import profileTest from "../test.png";
-import { useNavigate } from "react-router-dom";
+import fetchCollaboration from './fetchCollaboration'
+import { useNavigate,useParams } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query'
+import fetchCampaigns from '../Fetch/fetchCampaigns'
+import defaultImage from "../default.jpg";
+import Cookies from 'universal-cookie'
 import { bufferToBase64 } from "../../../utils";
+function formatDate(dateStr) {
+  let date = new Date(dateStr);
+  let year = date.getFullYear();
+  let month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  let day = String(date.getDate()).padStart(2, "0");
+  let hour = date.getHours();
+  let minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 
+function getDate(){
+// Create a new Date object
+var currentDate = new Date();
+
+// Get the current date components
+var year = currentDate.getFullYear();
+var month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+var day = currentDate.getDate();
+
+// Format the date as a string (you can customize the format as needed)
+var formattedDate = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+return formattedDate;
+}
 const ProfileMain = ({ user }) => {
+  const navigate = useNavigate();
+  const editButton = () => {
+    navigate("/AccountSettings");
+  }
+
+  const cookies = new Cookies(null, { path: '/' })
+  const token = cookies.get('token')
+  const user_id = cookies.get('user_id')
+  const result1 = useQuery(['campaign', user_id, token], fetchCampaigns)
+  const result = useQuery(['collaboration', user_id, token], fetchCollaboration)
+  if (result.isLoading) {
+    return (
+      <MDBSpinner role='status'>
+        <span className='visually-hidden'>Loading...</span>
+      </MDBSpinner>
+    )
+  }
+  var data = result.data.proposal
+  var index =data.length;
+  
+  var data1 = result1.data.campaign
+  var index1 = data1.length;
+  var ongoing_campaign_array = [];
+  var completed_campaign_array = [];
+  
+  for(var i=0;i<index1;i++){
+    var campaignEndDate = formatDate(data1[i].endedAt)
+    var todayDate = getDate();
+    if(campaignEndDate >= todayDate){
+      ongoing_campaign_array.push(data1[i])
+    }
+  }
+  for(var j=0;j<index1;j++){
+    var campaignEndDate = formatDate(data1[j].endedAt)
+    var todayDate = getDate();
+    if(campaignEndDate < todayDate){
+      completed_campaign_array.push(data1[j])
+    }
+  }
+  var NumofOngoingCampaign = ongoing_campaign_array.length;
+  var NumofCompletedCampaign = completed_campaign_array.length;
+
+
   function parseDateString(dateString) {
     const parsedDate = new Date(dateString);
     return parsedDate;
   }
-  const navigate = useNavigate();
-  const editButton = () => {
-    navigate("/Settings");
-  };
+
   return (
     <MDBCardBody>
       <MDBRow>
         <MDBCol md="5">
           {" "}
           <MDBRow>
-          <img
-        src={
-          user.user_image
-            ? `data:image/jpeg;base64,${bufferToBase64(user.user_image.data)}`
-            : "path/to/your/placeholder/image.jpg" // Replace with your placeholder image path
-        }
-        style={{
-          width: '300px', // Adjust as needed
-          height: '300px', // Adjust as needed
-          objectFit: 'cover',
-        }}
-      />
+            <img
+              src={
+                user.user_image
+                  ? `data:image/jpeg;base64,${bufferToBase64(
+                      user.user_image.data
+                    )}`
+                  : defaultImage // Provide a placeholder image
+              }
+              style={{
+                width: "300px", // Adjust as needed
+                height: "300px", // Adjust as needed
+                objectFit: "cover",
+              }}
+            />
           </MDBRow>
         </MDBCol>
         <MDBCol md="7">
@@ -40,9 +108,6 @@ const ProfileMain = ({ user }) => {
               {user.name} @{user.user_name}
             </MDBCol>
             <MDBCol md="4" className="d-flex justify-content-end">
-              <MDBBtn style={{ marginRight: "0px" }} onClick={editButton}>
-                Edit Profile
-              </MDBBtn>
             </MDBCol>
           </MDBRow>
           <MDBRow
@@ -89,12 +154,12 @@ const ProfileMain = ({ user }) => {
             }}
           >
             <MDBCol md="6">
-              <MDBRow>N/A Collaboration Completed</MDBRow>
-              <MDBRow>N/A Ongoing Campaign</MDBRow>
+              <MDBRow style={{color:"#008000"}}>{index} Collaboration Completed</MDBRow>
+              <MDBRow style={{color:"#008000"}}>{NumofOngoingCampaign} Ongoing Campaign</MDBRow>
             </MDBCol>
             <MDBCol md="6">
               <MDBRow>
-                <MDBCol>N/A Collaboration Completed</MDBCol>
+                <MDBCol>{NumofCompletedCampaign} Campaigns Completed</MDBCol>
               </MDBRow>
               <MDBCol>
                 <FontAwesomeIcon
