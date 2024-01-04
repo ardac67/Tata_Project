@@ -11,7 +11,7 @@ import getTags from './handlers/campaign_tags';
 import getCollaborationAdvertiser from './handlers/CollaborationsAdv';
 import { createMessage, returnBasedMessages } from './handlers/message';
 import { updateCampaignStatus } from './handlers/updateCampaignStatus';
-import { commentExists, postRating } from './handlers/rating';
+import { commentExists, getRating, postRating } from './handlers/rating';
 const router = Router();
 
 router.get('/getUser/:id', getUser);

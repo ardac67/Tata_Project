@@ -12,7 +12,7 @@ import {
   MDBCardHeader,
   MDBSpinner,
 } from "mdb-react-ui-kit";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -21,6 +21,8 @@ import io from "socket.io-client";
 import defaultImage from "../../Advertiser_Components/default.jpg";
 import { memo, useRef, useState, useEffect } from "react";
 import getMessage from "../../Advertiser_Components/Message/getMessage";
+import ScrollToBottom from "react-scroll-to-bottom";
+import { bufferToBase64 } from "../../../utils";
 var socket = io.connect("http://localhost:3002");
 export default function App() {
   const hashMap = {
@@ -94,14 +96,29 @@ export default function App() {
     );
   }
   const collaborations = result.data;
-
-  for(var i=0;i<collaborations.proposal.length;i++){
-    hashMap[collaborations.proposal[i].belongToUser.user_name] = collaborations.proposal[i].belongToUser.user_image
+  console.log(collaborations);
+  for (var i = 0; i < collaborations.proposal.length; i++) {
+    if (
+      hashMap[collaborations.proposal[i].belongToUser.user_name] === undefined
+    ) {
+      hashMap[collaborations.proposal[i].belongToUser.user_name] =
+        collaborations.proposal[i].belongToUser.user_image
+          ? bufferToBase64(
+              collaborations.proposal[i].belongToUser.user_image.data
+            )
+          : defaultImage;
+    }
   }
 
+  const myImage = collaborations.proposal[0].user.user_image
+    ? `data:image/jpeg;base64,${bufferToBase64(
+        collaborations.proposal[0].user.user_image.data
+      )}`
+    : defaultImage;
   const joinRoom = async (id) => {
     var colorTest = "red";
     setColor(colorTest);
+    setMessageListe([]);
     setRoom(id);
     setSelectedId(id);
     setShouldFetch(true);
@@ -119,13 +136,13 @@ export default function App() {
       );
     }
 
-
+    console.log("message", messageData.data.messages);
     const oldMessages = messageData.data.messages.map((msg) => ({
       user: msg.user_name,
       message: msg.message_body,
     }));
-
-    setMessageListe((list) => [...list], oldMessages);
+    console.log("oldMessage", oldMessages);
+    setMessageListe((list) => [...list, ...oldMessages]);
   };
 
   const sendMessage = async () => {
@@ -157,6 +174,9 @@ export default function App() {
       });
   };
 
+  console.log("messageList", messageList);
+  console.log(collaborations);
+  console.log(messageList);
   return (
     <MDBContainer fluid className="py-5" style={{ backgroundColor: "#eee" }}>
       <MDBRow>
