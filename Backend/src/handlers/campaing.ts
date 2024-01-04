@@ -60,6 +60,9 @@ export const getAllCampaign = async (req, res) => {
       where: {
         user_id: req.params.id,
       },
+      include:{
+        proposal:true
+      }
     });
     res.json({
       campaign: campaign,
