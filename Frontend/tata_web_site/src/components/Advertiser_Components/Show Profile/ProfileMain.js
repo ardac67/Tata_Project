@@ -61,17 +61,12 @@ const ProfileMain = ({ user }) => {
     if(campaignEndDate < todayDate){
       completed_collaborations.push(data[i])
     }
-  }
-
-  var num_of_completed_collaborations = completed_collaborations.length;
-
-  for(var i=0;i<index;i++){
-    var campaignEndDate = formatDate(data[i].belongToCampaign.endedAt)
-    var todayDate = getDate();
     if(campaignEndDate >= todayDate){
       ongoing_collaborations.push(data[i])
     }
   }
+
+  var num_of_completed_collaborations = completed_collaborations.length;
 
   var num_of_ongoing_collaborations = ongoing_collaborations.length;
 
