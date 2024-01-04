@@ -205,10 +205,9 @@ export default function App() {
                           <div className="d-flex flex-row">
                             <img
                               src={
-                                collab.belongToCampaign.campaign_image
+                                collab.user.user_image
                                   ? `data:image/jpeg;base64,${bufferToBase64(
-                                      collab.belongToCampaign.campaign_image
-                                        .data
+                                      collab.user.user_image.data
                                     )}`
                                   : defaultImage // Provide a placeholder image
                               }

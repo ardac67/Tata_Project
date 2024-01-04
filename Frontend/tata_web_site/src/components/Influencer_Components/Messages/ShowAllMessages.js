@@ -98,23 +98,17 @@ export default function App() {
   const collaborations = result.data;
   console.log(collaborations);
   for (var i = 0; i < collaborations.proposal.length; i++) {
-    if (
-      hashMap[collaborations.proposal[i].belongToUser.user_name] === undefined
-    ) {
-      hashMap[collaborations.proposal[i].belongToUser.user_name] =
-        collaborations.proposal[i].belongToUser.user_image
-          ? bufferToBase64(
-              collaborations.proposal[i].belongToUser.user_image.data
-            )
-          : defaultImage;
-    }
+    hashMap[collaborations.proposal[i].belongToUser.user_name] = collaborations
+      .proposal[i].belongToUser.user_image
+      ? bufferToBase64(collaborations.proposal[i].belongToUser.user_image.data)
+      : defaultImage;
   }
-
   const myImage = collaborations.proposal[0].user.user_image
     ? `data:image/jpeg;base64,${bufferToBase64(
         collaborations.proposal[0].user.user_image.data
       )}`
     : defaultImage;
+  console.log("arda", hashMap);
   const joinRoom = async (id) => {
     var colorTest = "red";
     setColor(colorTest);
