@@ -60,6 +60,9 @@ export const getAllCampaign = async (req, res) => {
       where: {
         user_id: req.params.id,
       },
+      include:{
+        proposal:true
+      }
     });
     res.json({
       campaign: campaign,
@@ -103,7 +106,11 @@ export const getAllCampaign_byCampaign_id = async (req, res) => {
 export const getAllCampaignInfluencer = async (req, res) => {
   try {
     const campaign = await prisma.campaign.findMany({
-      where: {},
+      where: {
+        status: {
+          in: ['Active', 'pending'],
+        }
+      },
       include: {
         campaing_tags: true,
         collaboration_preferences: {

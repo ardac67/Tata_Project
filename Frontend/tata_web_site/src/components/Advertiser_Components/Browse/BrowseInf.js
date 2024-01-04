@@ -37,6 +37,9 @@ function BrowseInf({ searchTerm }) {
   const cookies = new Cookies(null, { path: "/" });
   const token = cookies.get("token");
   const result = useQuery(["InfluencerAll", token], fetchAllInf);
+  const hashMap = {
+    key1: 'value1'
+  };
 
   if (result.isLoading) {
     return (
@@ -49,10 +52,16 @@ function BrowseInf({ searchTerm }) {
   }
 
   const influencers = result.data.influencer;
+  const collabs = result.data;
+  console.log("collabs: ",collabs)
   // Filter campaigns based on the search term
   const filteredInfluencers = influencers.filter((influencer) =>
     influencer.user_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
+  for(var i=0;i<collabs.influencer.length;i++){
+    hashMap[collabs.influencer[i].user_id] = collabs.influencer[i].proposal.length
+  }
 
   // Reset current page when searchTerm changes
   if (currentPage !== 1 && searchTerm) {
@@ -109,8 +118,8 @@ function BrowseInf({ searchTerm }) {
                   <h1 style={{ cursor: 'pointer' }} onClick={() => navigate(`/ShowProfile/${influencer.user_id}`)}>{influencer.name}</h1>
                   <h5>{influencer.Type}</h5>
                   <div className="mt-3 mb-3 text-muted small">
-                    <span className="">Collaboration Completed</span>
-                    <span className="text-success ms-2 me-2"> N/A </span>
+                    <span className="">Total Proposals</span>
+                    <span className="text-success ms-2 me-2">{hashMap[influencer.user_id]}</span>
                     <span className="ms-2">Selection Rate</span>
                     <span className="text-success ms-2 me-2"> N/A </span>
                   </div>

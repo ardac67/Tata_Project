@@ -44,6 +44,7 @@ export default function MyProposals() {
     );
   }
   var data = result.data.proposal;
+  console.log(data)
   const redirect = (path) => {
     navigate(path);
   };
@@ -115,7 +116,8 @@ export default function MyProposals() {
                         fluid
                       />
                       <div className="ms-3">
-                        <p className="fw-bold mb-1">
+                        <p  style={{ cursor: 'pointer' }} className='hover-link fw-bold'
+                          onClick={() => navigate(`/ShowProfile/${data.belongsToCampaign.user_id}`)}>
                           {data.belongsToCampaign.user.name}
                         </p>
                         <p className="text-muted mb-0">
