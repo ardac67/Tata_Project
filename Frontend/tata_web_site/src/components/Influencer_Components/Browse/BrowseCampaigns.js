@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
 import "./BrowseCampaigns.css";
 import { ProgressBar } from "react-loader-spinner";
+import defaultImage from "../default1.png";
 import { bufferToBase64 } from "../../../utils";
 
 function BrowseCampaigns({ searchTerm, filters }) {
@@ -113,7 +114,7 @@ function BrowseCampaigns({ searchTerm, filters }) {
                           ? `data:image/jpeg;base64,${bufferToBase64(
                               campaign.campaign_image.data
                             )}`
-                          : "" // Provide a placeholder image
+                          : defaultImage // Provide a placeholder image
                       }
                       
                       className="w-100"
