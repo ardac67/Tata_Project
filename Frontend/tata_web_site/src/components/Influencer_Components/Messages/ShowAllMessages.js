@@ -24,6 +24,9 @@ import getMessage from "../../Advertiser_Components/Message/getMessage";
 import ScrollToBottom from "react-scroll-to-bottom";
 var socket = io.connect("http://localhost:3002");
 export default function App() {
+  const hashMap = {
+    key1: 'value1'
+  };
   const navigate = useNavigate();
   const [messageList, setMessageListe] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
@@ -103,6 +106,11 @@ export default function App() {
     );
   }
   const collaborations = result.data;
+  console.log(collaborations)
+  for(var i=0;i<collaborations.proposal.length;i++){
+    hashMap[collaborations.proposal[i].belongToUser.user_name] = collaborations.proposal[i].belongToUser.user_image
+  }
+  console.log("arda",hashMap)
   const joinRoom = async (id) => {
     var colorTest = "red";
     setColor(colorTest);
@@ -240,7 +248,13 @@ export default function App() {
                     <MDBCol>
                       <li className="justify-content-between mb-4">
                         <img
-                          //src=
+                          src={
+                            hashMap[val.user]
+                              ? `data:image/jpeg;base64,${bufferToBase64(
+                                  hashMap[val.user].data
+                                )}`
+                              : "" // Provide a placeholder image
+                          }
                           alt="avatar"
                           className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
                           width="60"
