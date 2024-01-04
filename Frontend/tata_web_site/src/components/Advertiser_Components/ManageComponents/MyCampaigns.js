@@ -22,6 +22,9 @@ const MyCampaigns = () => {
   const id = cookies.get('user_id')
   const token = cookies.get('token')
   const result = useQuery(['campaign', id, token], fetchCampaigns)
+  const hashMap = {
+    key1: 'value1'
+  };
   if (result.isLoading) {
     return (
       <MDBSpinner role='status'>
@@ -30,6 +33,12 @@ const MyCampaigns = () => {
     )
   }
   const campaigns = result.data.campaign
+  const prop = result.data
+  for(var i=0;i<prop.campaign.length;i++){
+    hashMap[prop.campaign[i].campaign_id] = prop.campaign[i].proposal.length
+  }
+  console.log("arda",hashMap)
+  console.log(campaigns)
   const columns = [
     {
       name: 'Campaign ID',
@@ -80,7 +89,7 @@ const MyCampaigns = () => {
     },
     {
       name: 'Applications',
-      select: row => formatDateAndHour(row.createdAt)
+      selector: row => hashMap[row.campaign_id] 
     },
     {
       name: 'Actions',
@@ -100,7 +109,7 @@ const MyCampaigns = () => {
             <MDBCol md='6'>
               <MDBBtn size='md'>
                 <FontAwesomeIcon onClick={() => {
-                  navigate(`/details/:${row.campaign_id}`)
+                  navigate(`/details/${row.campaign_id}`)
                 }} icon={faPenToSquare} />
               </MDBBtn>
             </MDBCol>
