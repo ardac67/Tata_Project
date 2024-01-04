@@ -123,6 +123,9 @@ export const getInfluencer = async (req, res) => {
       where: {
         Type: "Influencer",
       },
+      include:{
+        proposal:true
+      }
     });
     res.json({ influencer });
     res.status(200);
