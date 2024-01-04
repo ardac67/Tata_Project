@@ -135,3 +135,11 @@ model messages {
   message_body     String? @db.Text
   user_name        String?
 }
+model rating {
+  rating_id        String  @id @default(uuid())
+  rating           Int?
+  rating_text     String? @db.Text
+  user_id          String?
+  toUser_id        String?
+  createdAt        DateTime @default(now())
+}
