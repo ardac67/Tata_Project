@@ -74,7 +74,7 @@ export default function CampaignDetails () {
     axios
       .post(`http://localhost:3001/api/postProposal`, data, { headers })
       .then(response => {
-        toast.success('Successfly created proposal', {
+        toast.success('Successfully created proposal', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 4000
         })
