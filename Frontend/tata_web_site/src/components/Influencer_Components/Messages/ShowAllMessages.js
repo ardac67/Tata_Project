@@ -12,7 +12,7 @@ import {
   MDBCardHeader,
   MDBSpinner,
 } from "mdb-react-ui-kit";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -21,7 +21,6 @@ import io from "socket.io-client";
 import defaultImage from "../../Advertiser_Components/default.jpg";
 import { useRef, useState, useEffect } from "react";
 import getMessage from "../../Advertiser_Components/Message/getMessage";
-import ScrollToBottom from "react-scroll-to-bottom";
 var socket = io.connect("http://localhost:3002");
 export default function App() {
   const hashMap = {
@@ -106,15 +105,14 @@ export default function App() {
     );
   }
   const collaborations = result.data;
-  console.log(collaborations)
+
   for(var i=0;i<collaborations.proposal.length;i++){
     hashMap[collaborations.proposal[i].belongToUser.user_name] = collaborations.proposal[i].belongToUser.user_image
   }
-  console.log("arda",hashMap)
+
   const joinRoom = async (id) => {
     var colorTest = "red";
     setColor(colorTest);
-    setMessageListe([]);
     setRoom(id);
     setSelectedId(id);
     setShouldFetch(true);
@@ -132,12 +130,12 @@ export default function App() {
       );
     }
 
-    console.log("message", messageData.data.messages);
+
     const oldMessages = messageData.data.messages.map((msg) => ({
       user: msg.user_name,
       message: msg.message_body,
     }));
-    console.log("oldMessage", oldMessages);
+
     setMessageListe((list) => [...list], oldMessages);
   };
 
@@ -170,8 +168,6 @@ export default function App() {
       });
   };
 
-  console.log(collaborations);
-  console.log(messageList);
   return (
     <MDBContainer fluid className="py-5" style={{ backgroundColor: "#eee" }}>
       <MDBRow>
