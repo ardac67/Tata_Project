@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import React from "react";
 import { MDBTextArea } from "mdb-react-ui-kit";
+import io from 'socket.io-client'
 import { MDBBtn } from "mdb-react-ui-kit";
 import {
   MDBCol,
@@ -25,9 +26,7 @@ import fetchCampaigns from "../Fetch/fetchCampaigns";
 import axios from "axios";
 import getAllCampaignsBYid from "../Fetch/getAllCampaignsBYid";
 import { bufferToBase64 } from "../../../utils";
-
-import RatingComponent from "../ViewProfileComponents/RatingComponent";
-
+var socket = io.connect('http://localhost:3002')
 function formatDateAndHour(dateStr) {
   let date = new Date(dateStr);
   let year = date.getFullYear();
@@ -39,13 +38,23 @@ function formatDateAndHour(dateStr) {
 }
 
 const CDetails = () => {
+  
   const cookies = new Cookies(null, { path: "/" });
   const token = cookies.get("token");
   const user_id = cookies.get("user_id");
+  const user_name = cookies.get("user_name");
   const { id } = useParams();
   const result = useQuery(["proposal", id, token], fetchProposal);
   const c_result = useQuery(["xx", id, token], getAllCampaignsBYid);
-  console.log(c_result);
+
+  const join_not = async (newData) => {
+    await socket.emit('join_not', {
+      user: user_id,
+      user_name: user_name,
+      notification: newData
+    })
+  }
+  
   if (result.isLoading) {
     return (
       <MDBSpinner role="status">
@@ -61,15 +70,16 @@ const CDetails = () => {
     );
   }
   var data = result.data.proposal;
+
   const c_data = c_result.data.campaign[0];
-  console.log(c_data);
-  //console.log(data.proposal_id)
-  //console.log(data)
+
+  console.log("sdata:",data)
   const headers = {
     Authorization: `Bearer ${token}`,
   };
   var newData;
-  const acceptOrReject = (type, id_proposal, user_id1) => {
+
+  const acceptOrReject = async (type, id_proposal, user_id1,header) => {
     if (type == 0) {
       /*
         campaign_id: req.body.campaign_id,
@@ -85,8 +95,16 @@ const CDetails = () => {
         createdAt: new Date(),
       };
     } else {
-      newData = { status: "Rejected" };
+      newData = { status: "Rejected", proposed_user_id: user_id1 };
     }
+    join_not(newData)
+    const notification = {
+      user: newData.user_id,
+      status: newData.status,
+      proposed_user_id: newData.proposed_user_id,
+      campaign_header: header
+    }
+    await socket.emit('send_notification', notification)
     axios
       .put(
         `http://localhost:3001/api//acceptOrRejectProposal/${id_proposal}`,
@@ -416,7 +434,8 @@ const CDetails = () => {
                           acceptOrReject(
                             0,
                             data.proposal_id,
-                            data.belongsToUser.user_id
+                            data.belongsToUser.user_id,
+                            data.belongsToCampaign.campaign_header
                           );
                         }}
                         color="success"
@@ -426,7 +445,8 @@ const CDetails = () => {
                       </MDBBtn>
                       <MDBBtn
                         onClick={() => {
-                          acceptOrReject(1, data.proposal_id);
+                          console.log(data.belongsToCampaign.campaign_header)
+                          acceptOrReject(1, data.proposal_id,data.belongsToUser.user_id,data.belongsToCampaign.campaign_header);
                         }}
                         color="danger"
                       >

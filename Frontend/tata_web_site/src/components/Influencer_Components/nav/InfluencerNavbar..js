@@ -1,4 +1,4 @@
-import "./InfluencerNavbar.css";
+import './InfluencerNavbar.css'
 import {
   MDBContainer,
   MDBNavbar,
@@ -14,24 +14,63 @@ import {
   MDBDropdown,
   MDBIcon,
   MDBBadge,
-} from "mdb-react-ui-kit";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+  MDBCard,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardBody,
+  MDBCardHeader
+} from 'mdb-react-ui-kit'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser,faSquarePlus } from '@fortawesome/free-solid-svg-icons'
-
-
-
+import { faUser, faSquarePlus } from '@fortawesome/free-solid-svg-icons'
+import io from 'socket.io-client'
+import { useEffect } from 'react'
+var socket = io.connect('http://localhost:3002')
 
 export const InfluencerNavbar = () => {
-  const navigate = useNavigate();
+  const [notList, setNotList] = useState([])
+  const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
-  const redirect = (path) => {
-    navigate(path);
-  };
+  const token = cookies.get('token')
+  const user_id = cookies.get('user_id')
+  const user_name = cookies.get('user_name')
+  const redirect = path => {
+    navigate(path)
+  }
+  var newData = {
+    status: 'Approved',
+    proposed_user_id: user_id,
+    user_id: user_id,
+    campaign_id: ''
+  }
+  const join_not = async () => {
+    await socket.emit('join_not', {
+      user: user_id,
+      user_name: user_name,
+      notification: newData
+    })
+  }
+  join_not()
+  useEffect(() => {
+    const handleMessageReceive = data => {
+      setNotList(list => {
+        // Example condition: only add data if someProperty meets a certain condition
+        if (data.proposed_user_id === user_id) {
+          return [...list, data]
+        } else {
+          return list
+        }
+      })
+    }
+    socket.on('receive_notification', handleMessageReceive)
+    return () => {
+      socket.off('receive_notification', handleMessageReceive)
+    }
+  }, [socket])
 
-  const [showNav, setShowNav] = useState(false);
+  const [showNav, setShowNav] = useState(false)
   const logOut = () => {
     cookies.set('token', null, { path: '/' })
     cookies.set('full_name', null, { path: '/' })
@@ -39,23 +78,22 @@ export const InfluencerNavbar = () => {
     cookies.set('type', null, { path: '/' })
     navigate('/Home')
     window.location.reload()
-    
   }
 
   return (
-    <MDBNavbar expand="lg" light bgColor="white" id="homeNavBar">
+    <MDBNavbar expand='lg' light bgColor='white' id='homeNavBar'>
       <MDBContainer fluid>
         <MDBNavbarBrand
-          style={{ marginLeft: "50px" }}
-          onMouseEnter={(e) => (e.target.style.fontWeight = "bold")}
-          onMouseLeave={(e) => (e.target.style.fontWeight = "normal")}
+          style={{ marginLeft: '50px' }}
+          onMouseEnter={e => (e.target.style.fontWeight = 'bold')}
+          onMouseLeave={e => (e.target.style.fontWeight = 'normal')}
         >
-          <Link to="/">TATA</Link>
+          <Link to='/'>TATA</Link>
         </MDBNavbarBrand>
         <MDBNavbarToggler
-          type="button"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          type='button'
+          aria-expanded='false'
+          aria-label='Toggle navigation'
           onClick={() => setShowNav(!showNav)}
         ></MDBNavbarToggler>
 
@@ -63,10 +101,10 @@ export const InfluencerNavbar = () => {
           <MDBNavbarNav fullWidth={false}>
             <MDBNavbarItem>
               <MDBBtn
-                style={{ width: "150px" }}
-                onMouseEnter={(e) => (e.target.style.color = "black")}
-                onMouseLeave={(e) => (e.target.style.color = "white")}
-                onClick={() => redirect("/Browse")}
+                style={{ width: '150px' }}
+                onMouseEnter={e => (e.target.style.color = 'black')}
+                onMouseLeave={e => (e.target.style.color = 'white')}
+                onClick={() => redirect('/Browse')}
               >
                 Browse
               </MDBBtn>
@@ -75,18 +113,25 @@ export const InfluencerNavbar = () => {
             <MDBNavbarItem>
               <MDBDropdown>
                 <MDBDropdownToggle
-                  style={{ width: "150px" }}
-                  onMouseEnter={(e) => (e.target.style.color = "black")}
-                  onMouseLeave={(e) => (e.target.style.color = "white")}
+                  style={{ width: '150px' }}
+                  onMouseEnter={e => (e.target.style.color = 'black')}
+                  onMouseLeave={e => (e.target.style.color = 'white')}
                 >
                   Manage
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
-                  <MDBDropdownItem 
+                  <MDBDropdownItem
                     link
-                    onClick={() => redirect("/MyProposals")}>My Proposals</MDBDropdownItem>
-                  <MDBDropdownItem  link
-                    onClick={() => redirect("/MyCollaborations")}>My Colloborations</MDBDropdownItem>
+                    onClick={() => redirect('/MyProposals')}
+                  >
+                    My Proposals
+                  </MDBDropdownItem>
+                  <MDBDropdownItem
+                    link
+                    onClick={() => redirect('/MyCollaborations')}
+                  >
+                    My Colloborations
+                  </MDBDropdownItem>
                   <MDBDropdownItem link>Campaign Milesones</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
@@ -96,72 +141,111 @@ export const InfluencerNavbar = () => {
           <MDBNavbarNav
             right
             fullWidth={false}
-            className="mb-2 mb-lg-0 mr-2"
-            style={{ marginRight: "50px" }}
+            className='mb-2 mb-lg-0 mr-2'
+            style={{ marginRight: '50px' }}
           >
             <MDBNavbarItem>
               <MDBBtn
-                style={{ width: "160px" }}
-                onMouseEnter={(e) => (e.target.style.color = "black")}
-                onMouseLeave={(e) => (e.target.style.color = "white")}
-                onClick={() => redirect("/Browse")}
+                style={{ width: '160px' }}
+                onMouseEnter={e => (e.target.style.color = 'black')}
+                onMouseLeave={e => (e.target.style.color = 'white')}
+                onClick={() => redirect('/Browse')}
               >
                 Create Proposal
               </MDBBtn>
             </MDBNavbarItem>
             <MDBNavbarItem>
               <MDBDropdown>
-                <MDBDropdownToggle tag="a" id="notification">
-                  <MDBBadge pill color="danger">
-                    !
-                  </MDBBadge>
+                <MDBDropdownToggle tag='a' id='notification'>
+                  {notList.length === 0 ? (
+                    <MDBBadge pill color='success'>
+                      0
+                    </MDBBadge>
+                  ) : (
+                    
+                      <MDBBadge pill color='danger' >
+                        {notList.length}
+                      </MDBBadge>
+                   
+                  )}
+
                   <span>
                     <MDBIcon
-                      icon="bell"
+                      icon='bell'
                       far
                       style={{
-                        fontSize: "1.5rem",
-                        background: "none",
-                        color: "inherit",
-                        border: "none",
-                        marginTop: "5px",
-                        transition: "color 0.3s ease",
-                        cursor: "pointer",
+                        fontSize: '1.5rem',
+                        background: 'none',
+                        color: 'inherit',
+                        border: 'none',
+                        marginTop: '5px',
+                        transition: 'color 0.3s ease',
+                        cursor: 'pointer'
                       }}
-                      onMouseEnter={(e) => (e.target.style.color = "black")}
-                      onMouseLeave={(e) => (e.target.style.color = "inherit")}
+                      onMouseEnter={e => (e.target.style.color = 'black')}
+                      onMouseLeave={e => (e.target.style.color = 'inherit')}
                     />
                   </span>
                 </MDBDropdownToggle>
-                <MDBDropdownMenu>
-                  <MDBDropdownItem link>not1</MDBDropdownItem>
-                  <MDBDropdownItem link>not2</MDBDropdownItem>
-                  <MDBDropdownItem link>not2</MDBDropdownItem>
+                <MDBDropdownMenu className='notification-dropdown-menu'>
+                  {notList.length === 0 ? (
+                    <MDBDropdownItem className='text-center text-muted'>
+                      <MDBCard background='success' className='text-white mb-3'>
+                        <MDBCardHeader>Nothing New</MDBCardHeader>
+                      </MDBCard>
+                    </MDBDropdownItem>
+                  ) : (
+                    notList.map((val, index) => (
+                      <MDBDropdownItem
+                        link
+                        key={val.id}
+                        className='notification-item'
+                      >
+                        <MDBCard
+                          background={
+                            val.status === 'Rejected' ? 'danger' : 'success'
+                          }
+                          className='text-white mb-3'
+                        >
+                          <MDBCardHeader>
+                            {val.campaign_header.toUpperCase()}
+                          </MDBCardHeader>
+                          <MDBCardBody>
+                            <MDBCardTitle>{val.status}</MDBCardTitle>
+                            <MDBCardText>
+                              Campaign proposal on {val.campaign_header} has
+                              been {val.status}
+                            </MDBCardText>
+                          </MDBCardBody>
+                        </MDBCard>
+                      </MDBDropdownItem>
+                    ))
+                  )}
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavbarItem>
 
             <MDBNavbarItem>
               <MDBDropdown>
-                <MDBDropdownToggle tag="a" id="messages">
-                  <MDBBadge pill color="danger">
+                <MDBDropdownToggle tag='a' id='messages'>
+                  <MDBBadge pill color='danger'>
                     !
                   </MDBBadge>
                   <span>
                     <MDBIcon
                       far
-                      icon="envelope"
+                      icon='envelope'
                       style={{
-                        fontSize: "1.5rem",
-                        background: "none",
-                        color: "inherit",
-                        border: "none",
-                        marginTop: "5px",
-                        transition: "color 0.3s ease",
-                        cursor: "pointer",
+                        fontSize: '1.5rem',
+                        background: 'none',
+                        color: 'inherit',
+                        border: 'none',
+                        marginTop: '5px',
+                        transition: 'color 0.3s ease',
+                        cursor: 'pointer'
                       }}
-                      onMouseEnter={(e) => (e.target.style.color = "black")}
-                      onMouseLeave={(e) => (e.target.style.color = "inherit")}
+                      onMouseEnter={e => (e.target.style.color = 'black')}
+                      onMouseLeave={e => (e.target.style.color = 'inherit')}
                     />
                   </span>
                 </MDBDropdownToggle>
@@ -169,45 +253,49 @@ export const InfluencerNavbar = () => {
                   <MDBDropdownItem link>Message 1</MDBDropdownItem>
                   <MDBDropdownItem link>Message 2</MDBDropdownItem>
                   <MDBDropdownItem link>Message 3</MDBDropdownItem>
-                  <MDBDropdownItem link
-                    onClick={() => redirect("/ShowAllMessages")}>Show all Messages</MDBDropdownItem>
+                  <MDBDropdownItem
+                    link
+                    onClick={() => redirect('/ShowAllMessages')}
+                  >
+                    Show all Messages
+                  </MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavbarItem>
 
             <MDBNavbarItem>
               <MDBDropdown>
-              
                 <MDBDropdownToggle
-                  tag="a"
-                  className="nav-link d-flex align-items-center"
-                  href="#"
+                  tag='a'
+                  className='nav-link d-flex align-items-center'
+                  href='#'
                 >
-                  <FontAwesomeIcon icon={faUser} style={{ marginRight: '5px' }} />
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    style={{ marginRight: '5px' }}
+                  />
                   {cookies.get('full_name')}
                   <img
-                    className="rounded-circle"
-                    height="22"
-                    alt=""
-                    loading="lazy"
+                    className='rounded-circle'
+                    height='22'
+                    alt=''
+                    loading='lazy'
                   />
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
                   <MDBDropdownItem
                     link
-                    onClick={() => redirect("/ViewProfile")}
+                    onClick={() => redirect('/ViewProfile')}
                   >
                     View Profile
                   </MDBDropdownItem>
                   <MDBDropdownItem
                     link
-                    onClick={() => redirect("/AccountSettings")}
+                    onClick={() => redirect('/AccountSettings')}
                   >
                     Account Settings
                   </MDBDropdownItem>
-                  <MDBDropdownItem
-                  link onClick={logOut} 
-                  >
+                  <MDBDropdownItem link onClick={logOut}>
                     Logout
                   </MDBDropdownItem>
                 </MDBDropdownMenu>
@@ -217,7 +305,7 @@ export const InfluencerNavbar = () => {
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>
-  );
-};
+  )
+}
 
-export default InfluencerNavbar;
+export default InfluencerNavbar

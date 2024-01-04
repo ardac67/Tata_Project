@@ -37,7 +37,8 @@ export const getProposal = async (req, res) => {
   try {
     const proposal = await prisma.proposal.findMany({
       include: {
-        belongsToUser: true
+        belongsToUser: true,
+        belongsToCampaign:true
       },
       where: {
         campaign_id: req.params.id,

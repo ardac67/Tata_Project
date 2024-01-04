@@ -9,11 +9,18 @@ import MyCollaborations from "./ManageComponents/MyCollaborations";
 import Browse from "./Browse/Browse";
 import ShowAllMessages from "./Message/ShowAllMessages";
 import ShowProfile from "./Show Profile/ShowProfile";
-
+import fetchCampaigns from "./Fetch/fetchCampaigns";
+import io from 'socket.io-client'
+import { useQuery } from '@tanstack/react-query'
+import Cookies from 'universal-cookie'
+import {
+    MDBSpinner
+  } from 'mdb-react-ui-kit'
 const Advertiser = () =>{
+
     return (
         <div>
-            <AdvertiserNavbar></AdvertiserNavbar>
+            <AdvertiserNavbar ></AdvertiserNavbar>
             <Routes>
                 <Route path="/Settings" element={<AcountSettings></AcountSettings>}></Route>
                 <Route path="/ViewProfile" element={<ViewProfile></ViewProfile>}></Route>
