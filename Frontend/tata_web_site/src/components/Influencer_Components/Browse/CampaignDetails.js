@@ -26,8 +26,8 @@ import defaultImage1 from '../default.jpg'
 import { useState } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
-export default function CampaignDetails () {
-  const [message,setMessage] = useState('')
+export default function CampaignDetails() {
+  const [message, setMessage] = useState('')
   const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
@@ -43,7 +43,7 @@ export default function CampaignDetails () {
     Authorization: `Bearer ${token}`
   }
   const [isHovered, setIsHovered] = useState(false);
-  
+
 
   const result = useQuery(['abcd', id, token], fetchCampaign)
   if (result.isLoading) {
@@ -53,9 +53,9 @@ export default function CampaignDetails () {
       </MDBSpinner>
     )
   }
-  
+
   var campaign = result.data.campaign[0]
-  console.log("camppp: ",campaign)
+  console.log("camppp: ", campaign)
   console.log(result.data.campaign[0].campaign_header)
   const createRating = () => {
     var data = {
@@ -111,8 +111,8 @@ export default function CampaignDetails () {
                       src={
                         campaign.campaign_image
                           ? `data:image/jpeg;base64,${bufferToBase64(
-                              campaign.campaign_image.data
-                            )}`
+                            campaign.campaign_image.data
+                          )}`
                           : defaultImage // Provide a placeholder image
                       }
                       fluid
@@ -281,8 +281,8 @@ export default function CampaignDetails () {
                   src={
                     campaign.user.user_image
                       ? `data:image/jpeg;base64,${bufferToBase64(
-                          campaign.user.user_image.data
-                        )}`
+                        campaign.user.user_image.data
+                      )}`
                       : defaultImage1 // Provide a placeholder image
                   }
                   alt='avatar'
@@ -290,18 +290,18 @@ export default function CampaignDetails () {
                   style={{ width: '150px' }}
                   fluid
                 />
-                    <p
-      className='mb-1 mt-2 fw-bold'
-      style={{
-        color: isHovered ? 'blue' : 'black', // Change color on hover
-        cursor: 'pointer',
-      }}
-      onClick={() => navigate(`/ShowProfile/${campaign.user_id}`)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {campaign.user.name}
-    </p>
+                <p
+                  className='mb-1 mt-2 fw-bold'
+                  style={{
+                    color: isHovered ? 'blue' : 'black', // Change color on hover
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => navigate(`/ShowProfile/${campaign.user_id}`)}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  {campaign.user.name}
+                </p>
 
                 <p className='text-muted mb-4'>@{campaign.user.user_name}</p>
                 <p className='text-muted mb-4'>
@@ -373,7 +373,7 @@ export default function CampaignDetails () {
         <MDBRow
           style={{ marginTop: '50px', marginLeft: '20px', marginRight: '20px' }}
         >
-          { (campaign.status === 'Ended')  && (
+          {(campaign.status === 'Ended') && (
             <MDBRow
               style={{
                 marginTop: '50px',
@@ -388,9 +388,8 @@ export default function CampaignDetails () {
                     {[1, 2, 3, 4, 5].map(index => (
                       <i
                         key={index}
-                        className={`fa-solid fa-star${
-                          index <= selectedRating ? ' active' : ''
-                        }`}
+                        className={`fa-solid fa-star${index <= selectedRating ? ' active' : ''
+                          }`}
                         onClick={() => handleStarClick(index)}
                       ></i>
                     ))}

@@ -29,7 +29,7 @@ export default function MyProposals() {
     let minutes = String(date.getMinutes()).padStart(2, "0");
     return `${year}-${month}-${day} ${hour}:${minutes}`;
   }
-
+  const [hoveredUser, setHoveredUser] = useState(null);
   const navigate = useNavigate();
   const cookies = new Cookies(null, { path: "/" });
   const token = cookies.get("token");
@@ -106,8 +106,8 @@ export default function MyProposals() {
                         src={
                           data.belongsToCampaign.user.user_image
                             ? `data:image/jpeg;base64,${bufferToBase64(
-                                data.belongsToCampaign.user.user_image.data
-                              )}`
+                              data.belongsToCampaign.user.user_image.data
+                            )}`
                             : defaultImage // Provide a placeholder image
                         }
                         alt="avatar"
@@ -116,8 +116,15 @@ export default function MyProposals() {
                         fluid
                       />
                       <div className="ms-3">
-                        <p  style={{ cursor: 'pointer' }} className='hover-link fw-bold'
-                          onClick={() => navigate(`/ShowProfile/${data.belongsToCampaign.user_id}`)}>
+                        <p
+                          className='mb-1 mt-2 fw-bold'
+                          style={{
+                            color: hoveredUser === data.proposal_id ? 'blue' : 'black',
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => navigate(`/ShowProfile/${data.belongsToCampaign.user_id}`)}
+                          onMouseEnter={() => setHoveredUser(data.proposal_id)}
+                          onMouseLeave={() => setHoveredUser(null)}>
                           {data.belongsToCampaign.user.name}
                         </p>
                         <p className="text-muted mb-0">
