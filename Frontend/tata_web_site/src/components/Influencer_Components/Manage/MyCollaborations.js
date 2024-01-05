@@ -121,7 +121,7 @@ export default function MyCollaborations() {
                   </td>
                   <td>{formatDateAndHour(data.belongToCampaign.startedAt)} || {formatDateAndHour(data.belongToCampaign.endedAt)}</td>
                   <td>
-                    <MDBBadge color='success' pill>
+                  <MDBBadge color={data.belongToCampaign.status === 'Ended' ? 'danger' : 'success'} pill>
                       {data.belongToCampaign.status}
                     </MDBBadge>
                   </td>
