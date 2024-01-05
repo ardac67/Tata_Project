@@ -22,35 +22,42 @@ export const postRating = async (req, res) => {
 
 export const commentExists = async (req, res) => {
   try {
-    const exists = await prisma.rating.findMany({
-      where : {
-        user_id: req.body.user_id,
-        toUser_id: req.body.toUser_id,
+    var exists2 = await prisma.campaign.findUnique({
+      where: {
+        campaign_id: req.params.toUser_id // Use req.params for route parameters
       }
     })
-    res.json({ exists })
-    res.status(200)
+    var user_id = exists2.user_id
+    console.log(user_id)
+    const exists = await prisma.rating.count({
+      where: {
+        user_id: req.params.user_id, // Use req.params here as well
+        toUser_id: user_id,
+        campaign_id:req.params.toUser_id
+      }
+    })
+    res.status(200).json({ exists }) // Combine status and json into one call
   } catch (e) {
-    console.log(e)
-    res.status(500)
-    res.json({ error: e })
+    console.log(e.message)
+    res.status(500).json({ error: e.message }) // Combine status and json into one call
   }
 }
+
 export const getRating = async (req, res) => {
   try {
     const rating = await prisma.rating.findMany({
       where: {
         toUser_id: req.params.toUser_id
       },
-      include :{
+      include: {
         belongToUser: true,
-        belongToCampaign:{
-          include:{
+        belongToCampaign: {
+          include: {
             campaing_tags: true
           }
         }
       }
-    })  
+    })
     res.json({ rating })
     res.status(200)
   } catch (e) {

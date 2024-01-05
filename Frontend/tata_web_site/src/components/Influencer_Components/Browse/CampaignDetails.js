@@ -26,12 +26,14 @@ import defaultImage1 from '../default.jpg'
 import { useState } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
+import fetchComments from './fetchComments'
 export default function CampaignDetails() {
   const [message, setMessage] = useState('')
   const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
   const user_id = cookies.get('user_id')
+ 
   const { id } = useParams()
   const [selectedRating, setSelectedRating] = useState(0)
   const handleStarClick = index => {
@@ -43,40 +45,41 @@ export default function CampaignDetails() {
     Authorization: `Bearer ${token}`
   }
   const [isHovered, setIsHovered] = useState(false);
-
-
+  
+  
+ 
+  
+  var provide = {
+    user_id:user_id,
+    toUser_id:id,
+  }
+  const result2 = useQuery(['abcd', id, token,provide], fetchComments)
   const result = useQuery(['abcd', id, token], fetchCampaign)
-  if (result.isLoading) {
+  if (result.isLoading || result2.isLoading) {
     return (
       <MDBSpinner role='status'>
         <span className='visually-hidden'>Loading...</span>
       </MDBSpinner>
     )
   }
-
+  
   var campaign = result.data.campaign[0]
   console.log("camppp: ", campaign)
   console.log(result.data.campaign[0].campaign_header)
-  const CreateRating = ({ user_id, campaign }) => {
-    const [selectedRating, setSelectedRating] = useState(0);
-    const [message, setMessage] = useState('');
-  
-    const handleStarClick = (index) => {
-      setSelectedRating(index);
-    };
-  }
+  console.log("bum",result2.data)
   const createRating = () => {
-    if (message.length >= 100) var data = {
+    var data = {
       rating: selectedRating,
       rating_text: message,
       user_id: user_id,
       toUser_id: campaign.user.user_id,
+      campaign_id: campaign.campaign_id
     }
     console.log(data)
     axios
       .post(`http://localhost:3001/api/postRating`, data, { headers })
       .then(response => {
-        toast.success('Rating succesfully created', {
+        toast.success('Success message here', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 4000
         })
@@ -141,7 +144,7 @@ export default function CampaignDetails() {
                     </MDBCardText>
                   </MDBCol>
                   <MDBCol sm='9'>
-                  <MDBBadge color={campaign.status === 'Ended' ? 'danger' : 'success'} pill>
+                    <MDBBadge color='success' pill>
                       {campaign.status}
                     </MDBBadge>
                   </MDBCol>
@@ -381,7 +384,7 @@ export default function CampaignDetails() {
         <MDBRow
           style={{ marginTop: '50px', marginLeft: '20px', marginRight: '20px' }}
         >
-          {(campaign.status === 'Ended') && (
+          {(campaign.status === 'Ended' && result2.data.exists===0) && (
             <MDBRow
               style={{
                 marginTop: '50px',
@@ -404,7 +407,7 @@ export default function CampaignDetails() {
                   </div>
                   <MDBInput
                     style={{ marginTop: '25px' }}
-                    label='Comments (min. 50 characters)'
+                    label='Comments'
                     id='typeText'
                     type='text'
                     onChange={e => setMessage(e.target.value)}
@@ -413,7 +416,7 @@ export default function CampaignDetails() {
               </MDBCol>
               <MDBRow style={{ marginTop: '20px' }}>
                 <MDBCol>
-                <MDBBtn disabled={message.length < 50} onClick={createRating}>Apply</MDBBtn>
+                  <MDBBtn onClick={createRating}>Apply</MDBBtn>
                 </MDBCol>
               </MDBRow>
             </MDBRow>

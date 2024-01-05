@@ -124,8 +124,10 @@ export const getInfluencer = async (req, res) => {
         Type: "Influencer",
       },
       include:{
-        proposal:true
+        proposal:true,
+        collaboration:true
       }
+      
     });
     res.json({ influencer });
     res.status(200);

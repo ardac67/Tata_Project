@@ -36,6 +36,6 @@ router.post('/createMessage',createMessage)
 router.get('/returnBasedMessages/:id',returnBasedMessages)
 router.put('/updateCampaignStatus/:campaign_id', updateCampaignStatus);
 router.post('/postRating',postRating)
-router.get('/commentExists',commentExists)
+router.get('/commentExists/:user_id/:toUser_id',commentExists)
 router.get('/getRating/:toUser_id',getRating)
 export default router;

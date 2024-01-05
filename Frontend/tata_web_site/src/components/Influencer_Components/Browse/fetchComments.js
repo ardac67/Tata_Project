@@ -5,8 +5,7 @@ const fetchComments = async ({ queryKey }) => {
 
   // Making an HTTP request with a body
   const response = await axios.get(
-    `http://localhost:3001/api/commentExists/${id}`,
-    data,
+    `http://localhost:3001/api/commentExists/${data.user_id}/${data.toUser_id}`,
     {
       headers: { Authorization: `Bearer ${token}` }
     }
