@@ -136,11 +136,7 @@ function BrowseInf({ searchTerm }) {
                       {hashMap[influencer.user_id]}
                     </span>
                     <span className="ms-2">Rating </span>
-                    <span className="text-success ms-2 me-2"> <FetchRatingsComponent user_id={influencer.user_id} /></span>
-                  </div>
-                  <div className="mt-3 mb-0 text-muted small">
-                    <span>Ongoing Campaign</span>
-                    <span className="text-success ms-2 me-2"> N/A </span>
+                    <span className="text-success ms-2 me-2"> <FetchRatingsComponent user_id={ influencer.user_id}/></span>
                   </div>
                 </MDBCol>
                 <MDBCol
