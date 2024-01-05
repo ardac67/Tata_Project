@@ -43,7 +43,7 @@ const FilterBar = ({ onFilterChange }) => {
               id="tp_gt0"
               label={
                 <div>
-                  <span className="filter-label1"> More than 0</span>
+                  <span className="filter-label0"> More than 0</span>
                 </div>
               }
               checked={totalProposalsFilter === 0}
@@ -66,7 +66,7 @@ const FilterBar = ({ onFilterChange }) => {
                   <span className="filter-label2"> More than 10</span>
                 </div>
               }
-              checked={totalProposalsFilter === 100}
+              checked={totalProposalsFilter === 10}
               onChange={() => setTotalProposalsFilter(10)}
             />
             <MDBRadio
@@ -83,7 +83,7 @@ const FilterBar = ({ onFilterChange }) => {
               id="tp_gt1000"
               label={
                 <div>
-                  <span className="filter-label3"> More than 50</span>
+                  <span className="filter-label4"> More than 50</span>
                 </div>
               }
               checked={totalProposalsFilter === 50}
