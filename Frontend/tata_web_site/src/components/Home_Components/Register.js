@@ -321,8 +321,8 @@ const Register = () => {
                   ></MDBCol>
                 </MDBRow>
                 {getType === "Influencer" ? (
-                  <MDBRow>
-                    <MDBRow className="d-flex justify-content-between">
+                  <MDBRow className="d-flex justify-content-center">
+                    <MDBRow>
                       <MDBCol
                         style={{
                           textAlign: "right",
@@ -335,63 +335,52 @@ const Register = () => {
                     </MDBRow>
                     <MDBRow>
                       <MDBCol
-                        md="6"
                         style={{
                           paddingLeft: "0px",
                         }}
                       >
-                        <MDBInput
-                          wrapperClass="mb-4"
-                          label="Age Interval"
-                          size="lg"
-                          id="platform"
-                          type="email"
-                        />
+                        <label className="mb-4" htmlFor="ageInterval">
+                          Age Interval
+                        </label>
+                        <select
+                          className="form-select form-select-lg"
+                          id="ageInterval"
+                          name="ageInterval"
+                          onChange={updateData}
+                        >
+                          <option value="">Select Age Interval</option>
+                          <option value="18-24">18-24</option>
+                          <option value="25-34">25-34</option>
+                          <option value="35-44">35-44</option>
+                        </select>
                       </MDBCol>
                       <MDBCol
-                        md="6"
                         style={{
                           paddingRight: "0px",
                         }}
                       >
-                        <MDBInput
-                          className="mb-4"
-                          label="Gender"
-                          size="lg"
-                          id="textAreaExample"
-                        />
+                        <label className="mb-4" htmlFor="ageInterval">
+                          Gender
+                        </label>
+                        <MDBCol
+                          style={{
+                            paddingRight: "0px",
+                          }}
+                        >
+                          <select
+                            className="form-select form-select-lg"
+                            id="gender"
+                            name="gender"
+                            onChange={updateData}
+                          >
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                          </select>
+                        </MDBCol>
                       </MDBCol>
                     </MDBRow>
-                    <MDBRow>
-                      <MDBCol
-                        md="6"
-                        style={{
-                          paddingLeft: "0px",
-                        }}
-                      >
-                        <MDBInput
-                          wrapperClass="mb-4"
-                          label="Location"
-                          size="lg"
-                          id="platform"
-                          type="email"
-                        />
-                      </MDBCol>
-                      <MDBCol
-                        md="6"
-                        style={{
-                          paddingRight: "0px",
-                        }}
-                      >
-                        <MDBInput
-                          className="mb-4"
-                          label="Social Economic Status"
-                          size="lg"
-                          id="textAreaExample"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-
                     <MDBCol
                       className="mr-0"
                       style={{
