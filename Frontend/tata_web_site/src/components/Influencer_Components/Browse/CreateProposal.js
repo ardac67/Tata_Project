@@ -23,6 +23,8 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import { bufferToBase64 } from '../../../utils'
 import io from 'socket.io-client'
+import defaultImage from '../default.jpg'
+import defaultImage1 from '../default1.png'
 var socket = io.connect('http://localhost:3002')
 function formatDateAndHour (dateStr) {
   let date = new Date(dateStr)
@@ -139,7 +141,7 @@ export default function CampaignDetails () {
                           ? `data:image/jpeg;base64,${bufferToBase64(
                               campaign.campaign_image.data
                             )}`
-                          : '' // Provide a placeholder image
+                          : defaultImage1 // Provide a placeholder image
                       }
                       fluid
                       className='w-100'
@@ -330,7 +332,7 @@ export default function CampaignDetails () {
                       ? `data:image/jpeg;base64,${bufferToBase64(
                           campaign.user.user_image.data
                         )}`
-                      : '' // Provide a placeholder image
+                      : defaultImage // Provide a placeholder image
                   }
                   alt='avatar'
                   className='rounded-circle'
