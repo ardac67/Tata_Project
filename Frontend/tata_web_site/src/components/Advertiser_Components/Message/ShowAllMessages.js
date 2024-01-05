@@ -107,7 +107,7 @@ export default function App() {
     hashMap[collaborations.proposal[i].user.user_name] = collaborations
       .proposal[i].user.user_image
       ? bufferToBase64(collaborations.proposal[i].user.user_image.data)
-      : defaultImage;
+      : null;
   }
   const joinRoom = async (id) => {
     var colorTest = "red";
@@ -280,7 +280,11 @@ export default function App() {
                     <MDBCol>
                       <li className="justify-content-between mb-4">
                         <img
-                          src={`data:image/jpeg;base64,${hashMap[val.user]}`}
+                          src={
+                            hashMap[val.user]
+                              ? `data:image/jpeg;base64,${hashMap[val.user]}`
+                              : defaultImage
+                          }
                           alt="avatar"
                           className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
                           width="60"
@@ -330,7 +334,7 @@ export default function App() {
                 </MDBCard>
               </MDBRow>
             ) : (
-              <h1>No collaborations yet</h1>
+              <h1></h1>
             )}
           </MDBTypography>
         </MDBCol>

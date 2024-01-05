@@ -102,7 +102,7 @@ export default function App() {
     hashMap[collaborations.proposal[i].belongToUser.user_name] = collaborations
       .proposal[i].belongToUser.user_image
       ? bufferToBase64(collaborations.proposal[i].belongToUser.user_image.data)
-      : defaultImage;
+      : null;
   }
   if (collaborations.proposal.length) {
     myImage = collaborations.proposal[0].user.user_image
@@ -274,7 +274,11 @@ export default function App() {
                     <MDBCol>
                       <li className="justify-content-between mb-4">
                         <img
-                          src={`data:image/jpeg;base64,${hashMap[val.user]}`}
+                          src={
+                            hashMap[val.user]
+                              ? `data:image/jpeg;base64,${hashMap[val.user]}`
+                              : defaultImage
+                          }
                           alt="avatar"
                           className="rounded-circle me-3 shadow-1-strong"
                           width="60"
