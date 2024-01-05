@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
 import { bufferToBase64 } from "../../../utils";
 import defaultImage from "../../Influencer_Components/default.jpg";
+import FetchRatingsComponent from "./fetchRatingsComponent";
 
 function formatDate(dateString) {
   const options = {
@@ -29,6 +30,7 @@ function formatDate(dateString) {
   };
   return new Date(dateString).toLocaleDateString("en-UK", options);
 }
+
 function BrowseInf({ searchTerm }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,6 +55,7 @@ function BrowseInf({ searchTerm }) {
 
   const influencers = result.data.influencer;
   const collabs = result.data;
+  console.log("influencers: ", influencers);
   console.log("collabs: ", collabs);
   // Filter campaigns based on the search term
   const filteredInfluencers = influencers.filter((influencer) =>
@@ -132,8 +135,8 @@ function BrowseInf({ searchTerm }) {
                     <span className="text-success ms-2 me-2">
                       {hashMap[influencer.user_id]}
                     </span>
-                    <span className="ms-2">Collaboration Completed</span>
-                    <span className="text-success ms-2 me-2"> N/A </span>
+                    <span className="ms-2">Rating </span>
+                    <span className="text-success ms-2 me-2"> <FetchRatingsComponent user_id={influencer.user_id} /></span>
                   </div>
                   <div className="mt-3 mb-0 text-muted small">
                     <span>Ongoing Campaign</span>
