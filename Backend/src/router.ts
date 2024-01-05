@@ -11,7 +11,7 @@ import getTags from './handlers/campaign_tags';
 import getCollaborationAdvertiser from './handlers/CollaborationsAdv';
 import { createMessage, returnBasedMessages } from './handlers/message';
 import { updateCampaignStatus } from './handlers/updateCampaignStatus';
-import { commentExists, getRating, postRating } from './handlers/rating';
+import { commentExists, commentExistsForAdvertiser, getRating, postRating } from './handlers/rating';
 const router = Router();
 
 router.get('/getUser/:id', getUser);
@@ -38,4 +38,5 @@ router.put('/updateCampaignStatus/:campaign_id', updateCampaignStatus);
 router.post('/postRating',postRating)
 router.get('/commentExists/:user_id/:toUser_id',commentExists)
 router.get('/getRating/:toUser_id',getRating)
+router.get('/commentExists1/:user_id/:toUser_id/:campaign_id',commentExistsForAdvertiser)
 export default router;

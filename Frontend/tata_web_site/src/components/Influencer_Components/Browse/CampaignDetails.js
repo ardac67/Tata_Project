@@ -384,7 +384,7 @@ export default function CampaignDetails() {
         <MDBRow
           style={{ marginTop: '50px', marginLeft: '20px', marginRight: '20px' }}
         >
-          {(campaign.status === 'Ended' && result2.data.exists===0) && (
+          {(campaign.status === 'Ended' && result2.data.exists===0 ) && (
             <MDBRow
               style={{
                 marginTop: '50px',

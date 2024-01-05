@@ -12,6 +12,7 @@ import { faStar, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
 import fetchRatings from '../ViewProfileComponents/fetchRatings'
+import { useParams } from 'react-router-dom'
 function formatDateAndHour (dateStr) {
   let date = new Date(dateStr)
   let year = date.getFullYear()
@@ -48,19 +49,13 @@ const subDate = date1 => {
   const differenceInDays = 1 + Math.floor(result / (1000 * 60 * 60 * 24))
   return differenceInDays
 }
-const RatingComponent = () => {
+const RatingComponent = ({result}) => {
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
-  const user_id = cookies.get('user_id') 
-  const result = useQuery(['rating', user_id, token], fetchRatings)
-  if (result.isLoading) {
-    return (
-      <MDBSpinner role='status'>
-        <span className='visually-hidden'>Loading...</span>
-      </MDBSpinner>
-    )
-  }
+  const user_id = useParams() 
+
   console.log('asdsadsad', result.data)
+  console.log("idmm",user_id)
   return (
     <div>
       Showing 1 - {result.data.rating.length} out of {result.data.rating.length}{' '}

@@ -16,6 +16,7 @@ import Cookies from 'universal-cookie'
 import {
     MDBSpinner
   } from 'mdb-react-ui-kit'
+import NewProfile from "./Show Profile/NewProfile";
 const Advertiser = () =>{
 
     return (
@@ -32,7 +33,8 @@ const Advertiser = () =>{
                 <Route path="/details/:id" element={<CDetails></CDetails>} />
                 <Route path="/MyCollaborations" element={<MyCollaborations></MyCollaborations>} />
                 <Route path="/ShowAllMessages" element={<ShowAllMessages></ShowAllMessages>}></Route>
-                <Route path="/ShowProfile/:id/:camp_id" element={<ShowProfile></ShowProfile>}></Route>
+                <Route path="/ShowProfile/:id" element={<ShowProfile></ShowProfile>}></Route>
+                <Route path="/NewProfile/:id/:camp_id" element={<NewProfile></NewProfile>}></Route>
             </Routes>   
         </div>
     )
