@@ -299,30 +299,34 @@ export default function App() {
                 </MDBRow>
               ))}
             </div>
-            <MDBRow style={{ marginTop: "40px" }}>
-              <MDBCard style={{ marginRight: "20px" }}>
-                <MDBCardBody>
-                  <li className="bg-white mb-3">
-                    <MDBTextArea
-                      onChange={setMessageList}
-                      label="Message"
-                      id="textAreaExample"
-                      rows={4}
-                    />
-                  </li>
-                  <MDBCol>
-                    <MDBBtn
-                      onClick={sendMessage}
-                      color="info"
-                      rounded
-                      className="float-end"
-                    >
-                      Send
-                    </MDBBtn>
-                  </MDBCol>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBRow>
+            {collaborations.proposal.length ? (
+              <MDBRow style={{ marginTop: "40px" }}>
+                <MDBCard style={{ marginRight: "20px" }}>
+                  <MDBCardBody>
+                    <li className="bg-white mb-3">
+                      <MDBTextArea
+                        onChange={setMessageList}
+                        label="Message"
+                        id="textAreaExample"
+                        rows={4}
+                      />
+                    </li>
+                    <MDBCol>
+                      <MDBBtn
+                        onClick={sendMessage}
+                        color="info"
+                        rounded
+                        className="float-end"
+                      >
+                        Send
+                      </MDBBtn>
+                    </MDBCol>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBRow>
+            ) : (
+              <h1></h1>
+            )}
           </MDBTypography>
         </MDBCol>
       </MDBRow>
