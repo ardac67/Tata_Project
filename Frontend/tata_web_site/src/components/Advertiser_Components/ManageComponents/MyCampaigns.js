@@ -57,7 +57,7 @@ const MyCampaigns = () => {
         })
       })
       .catch(error => {
-        toast.warning('Succesfully ERRER', {
+        toast.warning('Succesfully ERROR', {
           position: toast.POSITION.TOP_LEFT
         })
       })
@@ -131,11 +131,11 @@ const MyCampaigns = () => {
     },
     {
       name: 'Start Date',
-      selector: row => formatDateAndHour(row.startedAt)
+      selector: row => row.startedAt ? formatDateAndHour(row.startedAt) : ''
     },
     {
       name: 'End Date',
-      selector: row => formatDateAndHour(row.endedAt)
+      selector: row => row.endedAt ? formatDateAndHour(row.endedAt) : ''
     },
     {
       name: 'Applications',
@@ -145,45 +145,47 @@ const MyCampaigns = () => {
       name: 'Actions',
       cell: row => (
         <>
-          <MDBRow>
-            <ToastContainer></ToastContainer>
-            <MDBCol md='6'>
-              <MDBBtn size='md'>
-                <FontAwesomeIcon
-                  onClick={() => {
-                    navigate(`/details/${row.campaign_id}`)
-                  }}
-                  icon={faEye}
-                />
-              </MDBBtn>
-            </MDBCol>
-            <MDBCol md='6'>
-              <MDBDropdown>
-                <MDBDropdownToggle size='md' color='primary'>
-                  <FontAwesomeIcon icon={faPenToSquare}></FontAwesomeIcon>
-                </MDBDropdownToggle>
-                <MDBDropdownMenu>
-                  <MDBDropdownItem
-                    link
-                    onClick={() => pushStatus(row.campaign_id, 'Active')}
-                  >
-                    <i
-                      style={{ color: 'green' }}
-                      class='fas fa-circle-check'
-                    ></i>{' '}
-                    Ongoing
-                  </MDBDropdownItem>
-                  <MDBDropdownItem
-                    link
-                    onClick={() => pushStatus(row.campaign_id, 'Ended')}
-                  >
-                    <i style={{ color: 'red' }} class='fas fa-circle-xmark'></i>{' '}
-                    End
-                  </MDBDropdownItem>
-                </MDBDropdownMenu>
-              </MDBDropdown>
-            </MDBCol>
-          </MDBRow>
+          {row.startedAt && (
+            <MDBRow>
+              <ToastContainer></ToastContainer>
+              <MDBCol md='6'>
+                <MDBBtn size='md'>
+                  <FontAwesomeIcon
+                    onClick={() => {
+                      navigate(`/details/${row.campaign_id}`)
+                    }}
+                    icon={faEye}
+                  />
+                </MDBBtn>
+              </MDBCol>
+              <MDBCol md='6'>
+                <MDBDropdown>
+                  <MDBDropdownToggle size='md' color='primary'>
+                    <FontAwesomeIcon icon={faPenToSquare}></FontAwesomeIcon>
+                  </MDBDropdownToggle>
+                  <MDBDropdownMenu>
+                    <MDBDropdownItem
+                      link
+                      onClick={() => pushStatus(row.campaign_id, 'Active')}
+                    >
+                      <i
+                        style={{ color: 'green' }}
+                        className='fas fa-circle-check'
+                      ></i>{' '}
+                      Ongoing
+                    </MDBDropdownItem>
+                    <MDBDropdownItem
+                      link
+                      onClick={() => pushStatus(row.campaign_id, 'Ended')}
+                    >
+                      <i style={{ color: 'red' }} className='fas fa-circle-xmark'></i>{' '}
+                      End
+                    </MDBDropdownItem>
+                  </MDBDropdownMenu>
+                </MDBDropdown>
+              </MDBCol>
+            </MDBRow>
+          )}
         </>
       )
     }
@@ -191,9 +193,11 @@ const MyCampaigns = () => {
   const data = []
   for (var i = 0; i < campaigns.length; i++) {
     data.push(campaigns[i])
-    data.push([])
+    
   }
-
+  let lastIndex = campaigns.length;
+  console.log(lastIndex)
+  data.push([])
   return (
     <div
       style={{
