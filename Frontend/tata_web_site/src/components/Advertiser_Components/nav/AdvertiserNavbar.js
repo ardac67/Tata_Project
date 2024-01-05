@@ -222,7 +222,7 @@ export const AdvertiserNavbar = () => {
                     }}
                     onClick={() => redirect("/ShowAllMessages")}
                     onMouseEnter={(e) => (e.target.style.color = "black")}
-                    onMouseLeave={(e) => (e.target.style.color = "inherit")}
+                    onMouseLeave={(e) => (e.target.style.color = "#3b71ca")}
                   />
                 </span>
               </MDBDropdown>
