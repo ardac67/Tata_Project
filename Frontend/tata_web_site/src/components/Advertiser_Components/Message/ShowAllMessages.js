@@ -29,6 +29,7 @@ export default function App() {
   const hashMap = {
     key1: "value1",
   };
+  let myImage;
   const scrollRef = useRef(null);
   const navigate = useNavigate();
   const [messageList, setMessageListe] = useState([]);
@@ -94,11 +95,14 @@ export default function App() {
     );
   }
   const collaborations = result.data;
-  const myImage = collaborations.proposal[0].belongToUser.user_image
-    ? `data:image/jpeg;base64,${bufferToBase64(
-        collaborations.proposal[0].belongToUser.user_image.data
-      )}`
-    : defaultImage; // Provide a placeholder image
+  if (collaborations.proposal.length) {
+    myImage = collaborations.proposal[0].belongToUser.user_image
+      ? `data:image/jpeg;base64,${bufferToBase64(
+          collaborations.proposal[0].belongToUser.user_image.data
+        )}`
+      : defaultImage; // Provide a placeholder image
+  }
+  console.log("IMAGE", myImage);
   for (var i = 0; i < collaborations.proposal.length; i++) {
     hashMap[collaborations.proposal[i].user.user_name] = collaborations
       .proposal[i].user.user_image

@@ -28,6 +28,7 @@ export default function App() {
   const hashMap = {
     key1: "value1",
   };
+  let myImage;
   const navigate = useNavigate();
   const [messageList, setMessageListe] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
@@ -103,11 +104,13 @@ export default function App() {
       ? bufferToBase64(collaborations.proposal[i].belongToUser.user_image.data)
       : defaultImage;
   }
-  const myImage = collaborations.proposal[0].user.user_image
-    ? `data:image/jpeg;base64,${bufferToBase64(
-        collaborations.proposal[0].user.user_image.data
-      )}`
-    : defaultImage;
+  if (collaborations.proposal.length) {
+    myImage = collaborations.proposal[0].user.user_image
+      ? `data:image/jpeg;base64,${bufferToBase64(
+          collaborations.proposal[0].user.user_image.data
+        )}`
+      : defaultImage;
+  }
   console.log("arda", hashMap);
   const joinRoom = async (id) => {
     var colorTest = "red";
