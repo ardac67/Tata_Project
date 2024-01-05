@@ -70,7 +70,6 @@ export default function MyProposals() {
               <th scope="col">Campaign Owner</th>
               <th scope="col">Proposal Status</th>
               <th scope="col">Created Date</th>
-              <th scope="col">Actions</th>
             </tr>
           </MDBTableHead>
           <MDBTableBody>
@@ -150,19 +149,7 @@ export default function MyProposals() {
                   </td>
 
                   <td>{formatDateAndHour(data.createdAt)}</td>
-                  <td>
-                    <MDBBtn
-                      onClick={console.log("arda")}
-                      color="light"
-                      rounded
-                      size="md"
-                    >
-                      <i class="far fa-pen-to-square fa-lg text-primary"></i>
-                    </MDBBtn>
-                    <MDBBtn color="light" rounded size="md">
-                      <i class="far fa-trash-can fa-lg text-danger"></i>
-                    </MDBBtn>
-                  </td>
+
                 </tr>
               ))
             )}
