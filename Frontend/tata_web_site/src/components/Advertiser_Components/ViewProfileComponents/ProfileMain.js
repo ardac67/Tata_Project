@@ -61,7 +61,7 @@ const ProfileMain = ({ user }) => {
   const result1 = useQuery(['campaign', user_id, token], fetchCampaigns)
   const result2 = useQuery(['rating1', user_id, token], fetchRatings)
   const result = useQuery(['collaboration', user_id, token], fetchCollaboration)
-  if (result.isLoading) {
+  if (result.isLoading && result1.isLoading && result2.isLoading) {
     return (
       <MDBSpinner role='status'>
         <span className='visually-hidden'>Loading...</span>
@@ -133,6 +133,11 @@ const ProfileMain = ({ user }) => {
           <MDBRow style={{ marginLeft: '10px', fontSize: '28px' }}>
             <MDBCol md='8'>
               {user.name} @{user.user_name}
+            </MDBCol>
+            <MDBCol md="4" className="d-flex justify-content-end">
+              <MDBBtn style={{ marginRight: "0px" }} onClick={editButton}>
+                Edit Profile
+              </MDBBtn>
             </MDBCol>
             <MDBCol md='4' className='d-flex justify-content-end'></MDBCol>
           </MDBRow>

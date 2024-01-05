@@ -1,8 +1,9 @@
 import { MDBRow, MDBCol, MDBCardBody, MDBBtn,MDBSpinner } from "mdb-react-ui-kit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faThumbsUp,faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import fetchCollaboration from './fetchCollaboration'
+import fetchRatings from "../ViewProfileComponents/fetchRatings";
 import { useQuery } from '@tanstack/react-query'
 import defaultImage from "../default.jpg";
 import Cookies from 'universal-cookie'
@@ -40,18 +41,32 @@ const ProfileMain = ({ user }) => {
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
   const {id} = useParams()
-  const result = useQuery(['collaboration',id, token], fetchCollaboration)
-  if (result.isLoading) {
+  const result2 = useQuery(['rating1', id, token], fetchRatings)
+  const result = useQuery(['collaboration', id, token], fetchCollaboration)
+  if (result.isLoading && result2.isLoading) {
     return (
       <MDBSpinner role='status'>
         <span className='visually-hidden'>Loading...</span>
       </MDBSpinner>
     )
   }
+
+  console.log('asdsadsad', result2)
+  var rating_sum = 0
+  var rating_average = 0
+  var counter = 0
+  for (var i = 0; i < result2.data.rating.length; i++) {
+    rating_sum += result2.data.rating[i].rating
+    if (result2.data.rating[i].rating === 5) {
+      counter++
+    }
+  }
+  rating_average = rating_sum / result2.data.rating.length
+ console.log("sssssssssss")
+  console.log(result)
   var data = result.data.proposal
-  
-  console.log(data)
   var index =data.length;
+  console.log("sayıııı : " + index)
   var ongoing_collaborations = [];
   var completed_collaborations = [];
 
@@ -119,30 +134,39 @@ const ProfileMain = ({ user }) => {
             <MDBCol md="6" className="d-flex justify-content-end">
               {parseDateString(user.createdAt).toDateString()}
             </MDBCol>
-          </MDBRow>
+            </MDBRow>
           <MDBRow
             style={{
-              marginLeft: "19px",
-              fontSize: "20px",
-              marginTop: "10px",
+              marginLeft: '19px',
+              fontSize: '20px',
+              marginTop: '10px'
             }}
           >
-            <MDBCol md="1">
-              <FontAwesomeIcon icon={faStar} />
+            {(() => {
+              const stars = []
+              for (var i = 0; i < Math.floor(rating_average); i++) {
+                stars.push(
+                  <MDBCol md='1' key={i}>
+                    <FontAwesomeIcon icon={faStar} />
+                  </MDBCol>
+                )
+              }
+
+              // Check if there's a half star to add
+              if (rating_average % 1 >= 0.5) {
+                stars.push(
+                  <MDBCol md='1' key={'half'}>
+                    <FontAwesomeIcon icon={faStarHalfAlt} />
+                  </MDBCol>
+                )
+              }
+
+              return stars
+            })()}
+
+            <MDBCol md='7'>
+              ({rating_average.toFixed(1)}) {result2.data.rating.length} Reviews
             </MDBCol>
-            <MDBCol md="1">
-              <FontAwesomeIcon icon={faStar} />
-            </MDBCol>
-            <MDBCol md="1">
-              <FontAwesomeIcon icon={faStar} />
-            </MDBCol>
-            <MDBCol md="1">
-              <FontAwesomeIcon icon={faStar} />
-            </MDBCol>
-            <MDBCol md="1">
-              <FontAwesomeIcon icon={faStar} />
-            </MDBCol>
-            <MDBCol md="7">(0.0) 0 Reviews</MDBCol>
           </MDBRow>
           <MDBRow
             style={{
@@ -157,14 +181,13 @@ const ProfileMain = ({ user }) => {
             </MDBCol>
             <MDBCol md="6">
               <MDBRow>
-                <MDBCol>N/A Collaboration Completed</MDBCol>
               </MDBRow>
               <MDBCol>
                 <FontAwesomeIcon
                   icon={faThumbsUp}
-                  style={{ marginRight: "10px" }}
-                />{" "}
-                123 Recommendations
+                  style={{ marginRight: '10px' }}
+                />{' '}
+                {counter} Recommendations
               </MDBCol>
             </MDBCol>
           </MDBRow>
