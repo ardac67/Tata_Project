@@ -129,6 +129,30 @@ export const getAllCampaignInfluencer = async (req, res) => {
     res.json({ error: e });
   }
 };
+export const deleteCampaign = async (req, res) => {
+  try {
+    const campaign = await prisma.campaign.delete({
+      where: {
+        campaign_id: req.params.id,
+      },
+      include: {
+        campaing_tags: true,
+        collaboration_preferences: {
+          include: {
+            preffered_platforms: true,
+          },
+        },
+      },
+    });
+    res.json({
+      campaign: campaign,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+    res.json({ error: e });
+  }
+};
 
 function parseAndFormatDate(dateString) {
   // Parse the date string to a JavaScript Date object
