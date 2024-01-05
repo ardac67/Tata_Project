@@ -14,12 +14,14 @@ import RatingComponent from './ViewProfileComponents/RatingComponent'
 import { useQuery } from '@tanstack/react-query'
 import Cookies from 'universal-cookie'
 import fetchUser from './Fetch/fetchUser'
+import fetchRating from './ViewProfileComponents/fetchRatings'
 const ViewProfile = () => {
   const cookies = new Cookies(null, { path: '/' })
   const id = cookies.get('user_id')
   const token = cookies.get('token')
+  const ratings = useQuery(['ratings', id,token], fetchRating)
   const result = useQuery(['user', id,token], fetchUser)
-  if (result.isLoading) {
+  if (result.isLoading || ratings.isLoading) {
     return (
       <MDBSpinner role='status'>
         <span className='visually-hidden'>Loading...</span>
@@ -79,7 +81,7 @@ const ViewProfile = () => {
               Ratings & Reviews
             </MDBCardHeader>
             <MDBCardBody>
-              <RatingComponent></RatingComponent>
+              <RatingComponent rating={ratings}></RatingComponent>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>

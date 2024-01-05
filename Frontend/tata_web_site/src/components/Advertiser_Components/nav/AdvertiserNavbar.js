@@ -66,7 +66,6 @@ export const AdvertiserNavbar = () => {
     cookies.set("full_name", null, { path: "/" });
     cookies.set("user_id", null, { path: "/" });
     cookies.set("type", null, { path: "/" });
-    navigate("/Home");
     window.location.reload();
   };
 

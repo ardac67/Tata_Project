@@ -21,8 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
 import { bufferToBase64 } from "../../../utils";
 import defaultImage from "../../Influencer_Components/default.jpg";
-import FetchRatingsComponent from "./fetchRatingsComponent";
-import fetchUser from "./fetchUser";
+
 
 function formatDate(dateString) {
   const options = {
