@@ -166,7 +166,7 @@ const NewProfile = () => {
               </div>
               <MDBInput
                 style={{ marginTop: '25px' }}
-                label='Comments'
+                label='Comments (Min 50 characters)'
                 id='typeText'
                 type='text'
                 onChange={e => setMessage(e.target.value)}
@@ -175,7 +175,7 @@ const NewProfile = () => {
           </MDBCol>
           <MDBRow style={{ marginTop: '20px' }}>
             <MDBCol>
-              <MDBBtn onClick={createRating}>Apply</MDBBtn>
+              <MDBBtn disabled={message.length < 50} onClick={createRating}>Apply</MDBBtn>
             </MDBCol>
           </MDBRow>
         </MDBRow>
