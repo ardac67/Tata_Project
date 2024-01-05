@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import { checkSchema } from "express-validator";
 import { protect } from "./modules/aut";
-import { createNewUser, signin } from "./handlers/user";
+import { createNewUser, getUser, getUserEmail, signin, updateUser2 } from "./handlers/user";
 import { handleInputError } from "./modules/middleware";
 import { validatorForUser, validatorSign } from "./modules/validationSchemas";
 import cors from "cors";
@@ -89,5 +89,6 @@ app.get("/", (req, res) => {
 app.post("/createUser", createNewUser);
 app.post("/signin", checkSchema(validatorSign), handleInputError, signin);
 app.use("/api", protect, router);
-
+app.put('/updateUser2/:id', updateUser2);
+app.get('/getUserEmail/:id', getUserEmail);
 export default app;

@@ -140,7 +140,7 @@ const Login = ({ setIsAuth }) => {
                 {passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
 
                 <p className='small mb-3 pb-lg-2'>
-                  <a className='text-dark-50' href='#!'>
+                  <a className='text-dark-50' href='/ForgotPassword'>
                     Forgot password?
                   </a>
                 </p>
