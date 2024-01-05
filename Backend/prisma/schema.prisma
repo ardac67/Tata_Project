@@ -53,8 +53,6 @@ model audience_demography {
   demograph_id       String  @id @default(uuid())
   age_interval       String?
   gender_information String? @db.Text
-  location           String?
-  so_status          String? @db.Text
   belongsToUser      user?   @relation(fields: [user_id], references: [user_id])
   user_id            String?
 }
