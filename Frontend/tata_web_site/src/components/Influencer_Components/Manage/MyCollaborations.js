@@ -10,6 +10,7 @@ import {
   MDBIcon,
   MDBInputGroup
 } from 'mdb-react-ui-kit'
+import defaultImage from '../default.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
@@ -98,7 +99,7 @@ export default function MyCollaborations() {
                       ?` data:image/jpeg;base64,${bufferToBase64(
                         data.belongToUser.user_image.data
                         )}`
-                      : "" // Provide a placeholder image
+                      : defaultImage // Provide a placeholder image
                   }
                   alt="avatar"
                   className="rounded-circle"
