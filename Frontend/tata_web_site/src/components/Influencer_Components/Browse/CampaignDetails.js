@@ -42,6 +42,7 @@ export default function CampaignDetails () {
   const headers = {
     Authorization: `Bearer ${token}`
   }
+  const [isHovered, setIsHovered] = useState(false);
   
 
   const result = useQuery(['abcd', id, token], fetchCampaign)
@@ -54,7 +55,7 @@ export default function CampaignDetails () {
   }
   
   var campaign = result.data.campaign[0]
-  console.log(campaign)
+  console.log("camppp: ",campaign)
   console.log(result.data.campaign[0].campaign_header)
   const createRating = () => {
     var data = {
@@ -289,7 +290,19 @@ export default function CampaignDetails () {
                   style={{ width: '150px' }}
                   fluid
                 />
-                <p className='mb-1 mt-2 fw-bold'>{campaign.user.name}</p>
+                    <p
+      className='mb-1 mt-2 fw-bold'
+      style={{
+        color: isHovered ? 'blue' : 'black', // Change color on hover
+        cursor: 'pointer',
+      }}
+      onClick={() => navigate(`/ShowProfile/${campaign.user_id}`)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {campaign.user.name}
+    </p>
+
                 <p className='text-muted mb-4'>@{campaign.user.user_name}</p>
                 <p className='text-muted mb-4'>
                   <MDBIcon>
