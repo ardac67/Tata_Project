@@ -61,7 +61,7 @@ const ProfileMain = ({ user }) => {
   const result1 = useQuery(['campaign', user_id, token], fetchCampaigns)
   const result2 = useQuery(['rating1', user_id, token], fetchRatings)
   const result = useQuery(['collaboration', user_id, token], fetchCollaboration)
-  if (result.isLoading && result1.isLoading && result2.isLoading) {
+  if (result.isLoading) {
     return (
       <MDBSpinner role='status'>
         <span className='visually-hidden'>Loading...</span>
@@ -73,6 +73,7 @@ const ProfileMain = ({ user }) => {
   var rating_sum = 0
   var rating_average = 0
   var counter = 0
+  if(result2 != undefined){
   for (var i = 0; i < result2.data.rating.length; i++) {
     rating_sum += result2.data.rating[i].rating
     if (result2.data.rating[i].rating === 5) {
@@ -80,6 +81,8 @@ const ProfileMain = ({ user }) => {
     }
   }
   rating_average = rating_sum / result2.data.rating.length
+}
+
   var data = result.data.proposal
   var index = data.length
 
