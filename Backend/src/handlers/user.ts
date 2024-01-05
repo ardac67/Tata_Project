@@ -1,6 +1,6 @@
 import prisma from "../db";
 import { hashPassword, createJWT, comparePasswords } from "../modules/aut";
-
+const {google} = require('googleapis');
 export const createNewUser = async (req, res) => {
   try {
     const hash = await hashPassword(req.body.password);
@@ -125,10 +125,12 @@ export const getInfluencer = async (req, res) => {
       },
       include:{
         proposal:true,
-        collaboration:true
+        collaboration:true,
+        rating:true
       }
       
     });
+    
     res.json({ influencer });
     res.status(200);
   } catch (e) {

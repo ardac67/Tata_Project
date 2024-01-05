@@ -17,6 +17,7 @@ import {
     MDBSpinner
   } from 'mdb-react-ui-kit'
 import NewProfile from "./Show Profile/NewProfile";
+import SelectCampaign from "./Browse/SelectCampaign";
 const Advertiser = () =>{
 
     return (
@@ -35,6 +36,7 @@ const Advertiser = () =>{
                 <Route path="/ShowAllMessages" element={<ShowAllMessages></ShowAllMessages>}></Route>
                 <Route path="/ShowProfile/:id" element={<ShowProfile></ShowProfile>}></Route>
                 <Route path="/NewProfile/:id/:camp_id" element={<NewProfile></NewProfile>}></Route>
+                <Route path='/SelectCampaign/:id_to_user' element={<SelectCampaign></SelectCampaign>}></Route>
             </Routes>   
         </div>
     )
