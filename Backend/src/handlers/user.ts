@@ -93,6 +93,21 @@ export const getUser = async (req, res) => {
     res.json({ error: e });
   }
 };
+export const getUserEmail = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: req.params.id,
+      },
+    });
+    res.json({ user });
+    res.status(200);
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+    res.json({ error: e });
+  }
+};
 export const updateUser = async (req, res) => {
   try {
     const user = await prisma.user.update({
@@ -116,7 +131,31 @@ export const updateUser = async (req, res) => {
     res.json({ error: e });
   }
 };
-
+export const updateUser2 = async (req, res) => {
+  try {
+    const hash = await hashPassword(req.body.password);
+    const user = await prisma.user.update({
+      where: {
+        user_id: req.params.id,
+      },
+      data: {
+        user_image: req.body.user_image,
+        user_name: req.body.user_name,
+        email: req.body.email,
+        name: req.body.full_name,
+        description: req.body.description,
+        updatedAt: new Date(),
+        password: hash
+      },
+    });
+    res.json({ user });
+    res.status(200);
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+    res.json({ error: e });
+  }
+};
 export const getInfluencer = async (req, res) => {
   try {
     const influencer = await prisma.user.findMany({
@@ -130,7 +169,7 @@ export const getInfluencer = async (req, res) => {
       }
       
     });
-    
+
     res.json({ influencer });
     res.status(200);
   } catch (e) {

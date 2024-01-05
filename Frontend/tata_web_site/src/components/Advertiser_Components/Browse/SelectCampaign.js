@@ -107,6 +107,8 @@ const SelectCampaign = () => {
   for (var i = 0; i < prop.campaign.length; i++) {
     hashMap[prop.campaign[i].campaign_id] = prop.campaign[i].proposal.length
   }
+  const filteredData = campaigns.filter(row => row.status !== 'Ended');
+
   console.log('arda', hashMap)
   console.log(campaigns)
   console.log("arda",   result_user.data)
@@ -178,7 +180,7 @@ const SelectCampaign = () => {
       name: 'Actions',
       cell: row => (
         <>
-          {row.startedAt && (
+          {row.startedAt && row.status !== 'Ended' &&(
             <MDBRow>
               <ToastContainer></ToastContainer>
               <MDBCol md='6'>
@@ -231,7 +233,7 @@ const SelectCampaign = () => {
       <MDBRow style={{ border: '1px solid rgb(222 231 249)' }}>
         <DataTable
           columns={columns}
-          data={data}
+          data={filteredData}
           pagination
           highlightOnHover
           pointerOnHover

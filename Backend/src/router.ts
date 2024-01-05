@@ -3,7 +3,7 @@ import { body, oneOf } from 'express-validator';
 import { createContact, deleteContact, editContact, getContact } from './handlers/contact';
 import { handleInputError } from './modules/middleware';
 import { getMediaLinks ,updateMedia} from './handlers/mediaLinks';
-import {getInfluencer, getUser,updateUser} from './handlers/user'
+import {getInfluencer, getUser,updateUser, updateUser2} from './handlers/user'
 import { createCampagin, getAllCampaign, getAllCampaignInfluencer, getAllCampaign_byCampaign_id } from './handlers/campaing';
 import { changeStatusOfProposal, getIndividualProposal, getProposal, postProposal } from './handlers/proposal';
 import { getCollaborationInfluencer } from './handlers/collaboration';

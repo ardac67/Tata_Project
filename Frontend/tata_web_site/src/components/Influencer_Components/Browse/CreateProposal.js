@@ -307,16 +307,18 @@ export default function CampaignDetails () {
                 <MDBCardBody>
                   <MDBRow>
                     <MDBCol className='d-flex justify-content-end'>
-                      <MDBRow className='justify-content-end'>
-                        <MDBBtn
-                          color='success'
-                          size='sm'
-                          onClick={postProposal}
-                          disabled={isButtonClicked}
-                        >
-                          Propose
-                        </MDBBtn>
-                      </MDBRow>
+                    <MDBRow className='justify-content-end'>
+  {campaign.status !== 'Ended' && (
+    <MDBBtn
+      color='success'
+      size='sm'
+      onClick={postProposal}
+      disabled={isButtonClicked}
+    >
+      Propose
+    </MDBBtn>
+  )}
+</MDBRow>
                     </MDBCol>
                   </MDBRow>
                 </MDBCardBody>
