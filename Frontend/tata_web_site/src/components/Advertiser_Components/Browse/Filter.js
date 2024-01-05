@@ -1,153 +1,124 @@
+import React, { useState, useEffect } from "react";
 import {
   MDBCard,
   MDBCardBody,
   MDBCol,
-  MDBIcon,
-  MDBCheckbox,
+  MDBRadio,
+  MDBBtn,
 } from "mdb-react-ui-kit";
 
-const FilterBar = () => {
+const FilterBar = ({ onFilterChange }) => {
+  const [collaborationsCompletedFilters, setCollaborationsCompletedFilters] =
+    useState("");
+  const [subscribersFilters, setSubscribersFilters] = useState("");
+
+  useEffect(() => {
+    // Combine selected filters and pass them to the parent component
+    const selectedFilters = {
+      collaborationsCompleted: collaborationsCompletedFilters,
+      subscribers: subscribersFilters,
+    };
+
+    // Apply filters immediately upon change
+    onFilterChange(selectedFilters);
+  }, [collaborationsCompletedFilters, subscribersFilters]);
+
+  const handleClearFilters = () => {
+    // Clear all filters
+    setCollaborationsCompletedFilters("");
+    setSubscribersFilters("");
+  };
+
   return (
     <MDBCol md="2">
       <MDBCard className="filter-bar">
         <MDBCardBody>
           <h2 className="mt-1 mb-5">Filters</h2>
 
-          <h4 className="mb-3">Platform</h4>
+          {/* Collaborations Completed Filters */}
+          <h4 className="mb-3 mt-5">Collaborations Completed</h4>
           <div className="radio-buttons">
-            <MDBCheckbox
-              id="youtube"
+            <MDBRadio
+              id="cc_gt0"
               label={
                 <div>
-                  <MDBIcon fab icon="youtube" />
-                  <span className="filter-label1"> Youtube</span>
+                  <span className="filter-label1"> More than 0</span>
                 </div>
               }
+              checked={collaborationsCompletedFilters === 0}
+              onChange={() => setCollaborationsCompletedFilters(0)}
             />
-            <MDBCheckbox
-              id="instagram"
+            <MDBRadio
+              id="cc_gt10"
               label={
                 <div>
-                  <MDBIcon fab icon="instagram" />
-                  <span className="filter-label2"> Instagram</span>
+                  <span className="filter-label1"> More than 10</span>
                 </div>
               }
+              checked={collaborationsCompletedFilters === 10}
+              onChange={() => setCollaborationsCompletedFilters(10)}
             />
-            <MDBCheckbox
-              id="Tiktok"
+            <MDBRadio
+              id="cc_gt100"
               label={
                 <div>
-                  <span className="filter-label3"> Tiktok</span>
+                  <span className="filter-label2"> More than 100</span>
                 </div>
               }
+              checked={collaborationsCompletedFilters === 100}
+              onChange={() => setCollaborationsCompletedFilters(100)}
             />
+            <MDBRadio
+              id="cc_gt1000"
+              label={
+                <div>
+                  <span className="filter-label3"> Less than 1000</span>
+                </div>
+              }
+              checked={collaborationsCompletedFilters === 1000}
+              onChange={() => setCollaborationsCompletedFilters(1000)}
+            />
+          </div>
 
-            {/* Add more filter options as needed */}
-          </div>
-          <h4 className="mt-5 mb-3">Industry</h4>
-          <div className="radio-buttons">
-            <MDBCheckbox
-              id="sport"
-              label={
-                <div>
-                  <MDBIcon fas icon="futbol" />
-                  <span className="filter-label4"> Sports</span>
-                </div>
-              }
-            />
-            <MDBCheckbox
-              id="fashion"
-              label={
-                <div>
-                  <MDBIcon fas icon="tshirt" />
-                  <span className="filter-label5"> Fashion</span>
-                </div>
-              }
-            />
-            <MDBCheckbox
-              id="Gaming"
-              label={
-                <div>
-                  <MDBIcon fas icon="gamepad" />
-                  <span className="filter-label6"> Gaming</span>
-                </div>
-              }
-            ></MDBCheckbox>
-              <MDBCheckbox
-              id="Gaming"
-              label={
-                <div>
-                  <MDBIcon fas icon="cut" />
-                  <span className="filter-label6"> Make-up</span>
-                </div>
-              }
-            ></MDBCheckbox>
-            {/* Add more filter options as needed */}
-          </div>
-          <h4 className="mt-5 mb-3">Age Interval</h4>
-          <div className="radio-buttons ">
-            <MDBCheckbox
-              id="kids"
-              label={
-                <div>
-                  <MDBIcon fas icon="baby" />
-                  <span className="filter-label7"> Kids</span>
-                </div>
-              }
-            />
-            <MDBCheckbox
-              id="young"
-              label={
-                <div>
-                  <MDBIcon fas icon="tshirt" />
-                  <span className="filter-label8"> Man</span>
-                </div>
-              }
-            />
-            <MDBCheckbox
-              id="Elder"
-              label={
-                <div>
-                  <MDBIcon fas icon="blind" />
-                  <span className="filter-label9"> Women</span>
-                </div>
-              }
-            ></MDBCheckbox>
-
-            {/* Add more filter options as needed */}
-          </div>
+          {/* Subscribers Filters */}
           <h4 className="mb-3 mt-5">Subscribers</h4>
           <div className="radio-buttons">
-            <MDBCheckbox
-              id="youtube"
+            <MDBRadio
+              id="lt10k"
               label={
                 <div>
-                  
-                  <span className="filter-label1"> Less than 10.000</span>
+                  <span className="filter-label1"> Less than 10,000</span>
                 </div>
               }
+              checked={subscribersFilters === 10000}
+              onChange={() => setSubscribersFilters(10000)}
             />
-            <MDBCheckbox
-              id="instagram"
+            <MDBRadio
+              id="lt100k"
               label={
                 <div>
-                 
-                  <span className="filter-label2"> Less than 100.000</span>
+                  <span className="filter-label2"> Less than 100,000</span>
                 </div>
               }
+              checked={subscribersFilters === 100000}
+              onChange={() => setSubscribersFilters(100000)}
             />
-            <MDBCheckbox
-              id="Tiktok"
+            <MDBRadio
+              id="lt1m"
               label={
                 <div>
-                  <span className="filter-label3"> Less than 1.000.000</span>
+                  <span className="filter-label3"> Less than 1,000,000</span>
                 </div>
               }
+              checked={subscribersFilters === 1000000}
+              onChange={() => setSubscribersFilters(1000000)}
             />
-
-            {/* Add more filter options as needed */}
           </div>
-          
+          <div className="mt-3">
+            <MDBBtn color="danger" onClick={handleClearFilters}>
+              Clear Filters
+            </MDBBtn>
+          </div>
         </MDBCardBody>
       </MDBCard>
     </MDBCol>

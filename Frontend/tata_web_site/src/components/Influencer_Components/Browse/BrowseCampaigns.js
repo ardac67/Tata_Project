@@ -56,8 +56,10 @@ function BrowseCampaigns({ searchTerm, filters }) {
     // Check if platform, industry, and tags filters match
     const matchesFilters =
       (filters.platform.length === 0 ||
-        filters.platform.includes(
+        filters.platform.some((platform) =>
           campaign.collaboration_preferences[0].preffered_platforms[0].platform
+            .toLowerCase()
+            .includes(platform)
         )) &&
       // (filters.industry.length === 0 ||
       //   filters.industry.includes(campaign.industry)) &&
@@ -78,7 +80,7 @@ function BrowseCampaigns({ searchTerm, filters }) {
 
   console.log("uzunluksafasfas:", filters.tags.length);
   console.log("searchTerm:", searchTerm);
-  console.log("filters:", filters);
+  console.log("filters:", filters.platform);
 
   // Calculate the indexes of the campaigns to be displayed on the current page
   const indexOfLastCampaign = currentPage * campaignsPerPage;
@@ -105,10 +107,11 @@ function BrowseCampaigns({ searchTerm, filters }) {
                     rippleColor="light"
                     rippleTag="div"
                     className="bg-image rounded hover-zoom hover-overlay"
-                    onClick={() => navigate(`/CampaignDetails/${campaign.campaign_id}`)}
+                    onClick={() =>
+                      navigate(`/CampaignDetails/${campaign.campaign_id}`)
+                    }
                   >
                     <MDBCardImage
-                   
                       src={
                         campaign.campaign_image
                           ? `data:image/jpeg;base64,${bufferToBase64(
@@ -116,15 +119,12 @@ function BrowseCampaigns({ searchTerm, filters }) {
                             )}`
                           : defaultImage // Provide a placeholder image
                       }
-                      
                       className="w-100"
                       style={{
                         height: "200px",
                         width: "%100",
                         objectFit: "cover",
-                        
                       }}
-                     
                     />
                     <a href="#!">
                       <div
@@ -136,8 +136,14 @@ function BrowseCampaigns({ searchTerm, filters }) {
                     </a>
                   </MDBRipple>
                 </MDBCol>
-                <MDBCol md="6" >
-                  <h5 onClick={() => navigate(`/CampaignDetails/${campaign.campaign_id}`)}>{campaign.campaign_header}</h5>
+                <MDBCol md="6">
+                  <h5
+                    onClick={() =>
+                      navigate(`/CampaignDetails/${campaign.campaign_id}`)
+                    }
+                  >
+                    {campaign.campaign_header}
+                  </h5>
                   <div className="mt-1 mb-2 text-muted small">
                     {campaign.campaing_tags[0].tag1 && (
                       <span>{campaign.campaing_tags[0].tag1}</span>

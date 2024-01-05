@@ -1,7 +1,6 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import {
   MDBInput,
-  // MDBIcon,
   MDBInputGroup,
   MDBRow,
   MDBContainer,
@@ -11,6 +10,14 @@ import FilterBar from "./Filter";
 
 export default function Browse() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState({
+    collaborationsCompleted: null, // Set an initial value, or you can set it to null
+    subscribers: null, // Set an initial value, or you can set it to null
+  });
+
+  const handleFilterChange = (filters) => {
+    setSelectedFilters(filters);
+  };
 
   return (
     <>
@@ -29,8 +36,8 @@ export default function Browse() {
 
       <MDBContainer fluid>
         <MDBRow className="justify-content-center mt-5">
-          <FilterBar />
-          <BrowseInf searchTerm={searchTerm} />
+          <FilterBar onFilterChange={handleFilterChange} />
+          <BrowseInf searchTerm={searchTerm} filters={selectedFilters} />
         </MDBRow>
       </MDBContainer>
     </>
