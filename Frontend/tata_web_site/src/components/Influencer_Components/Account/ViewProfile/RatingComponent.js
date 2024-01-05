@@ -48,7 +48,7 @@ const subDate = date1 => {
   const differenceInDays = 1 + Math.floor(result / (1000 * 60 * 60 * 24))
   return differenceInDays
 }
-const RatingComponent = (rating) => {
+const RatingComponent = ({rating}) => {
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
   const user_id = cookies.get('user_id') 

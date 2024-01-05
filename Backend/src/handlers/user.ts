@@ -169,6 +169,13 @@ export const getInfluencer = async (req, res) => {
       }
       
     });
+    var array_arda = [];
+    for(var i = 0 ; i < influencer.length ; i++){
+      array_arda.push(influencer[i].user_id)
+    }
+    for(var i = 0 ; i < array_arda.length ; i++){
+      
+    }
 
     res.json({ influencer });
     res.status(200);

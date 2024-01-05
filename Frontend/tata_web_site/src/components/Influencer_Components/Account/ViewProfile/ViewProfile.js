@@ -22,7 +22,7 @@ const ViewProfile = () => {
   console.log("dogan",id)
   const ratings = useQuery(['ratings', id,token], fetchRating)
   const result = useQuery(['user', id,token], fetchUser)
-  if (result.isLoading) {
+  if (result.isLoading || ratings.isLoading ) {
     return (
       <MDBSpinner role='status'>
         <span className='visually-hidden'>Loading...</span>

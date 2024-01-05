@@ -142,7 +142,7 @@ const NewProfile = () => {
           </MDBCard>
         </MDBCol>
       </MDBRow>
-      {result3.data.campaign[0].status === 'Ended' && result2.data === 0 && (
+      {result3.data.campaign[0].status === 'Ended' && result2.data.exists2 === 0 && (
         <MDBRow
           style={{
             marginTop: '50px',
