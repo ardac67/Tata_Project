@@ -27,6 +27,7 @@ model user {
   campaign            campaign[]
   proposal            proposal[]
   collaboration       collaboration[]
+  rating              rating[]
 }
 
 model contact {
@@ -74,6 +75,7 @@ model campaign {
   campaing_tags             campaing_tags[]
   proposal                  proposal[]
   collaboration             collaboration[]
+  rating                    rating[]
 }
 
 model collaboration_preferences {
@@ -135,11 +137,15 @@ model messages {
   message_body     String? @db.Text
   user_name        String?
 }
+
 model rating {
-  rating_id        String  @id @default(uuid())
+  rating_id        String    @id @default(uuid())
   rating           Int?
-  rating_text     String? @db.Text
+  rating_text      String?   @db.Text
   user_id          String?
+  belongToUser     user?     @relation(fields: [user_id], references: [user_id])
+  campaign_id      String?
+  belongToCampaign campaign? @relation(fields: [campaign_id], references: [campaign_id])
   toUser_id        String?
-  createdAt        DateTime @default(now())
+  createdAt        DateTime  @default(now())
 }

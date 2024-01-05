@@ -8,6 +8,7 @@ export const postRating = async (req, res) => {
         rating_text: req.body.rating_text,
         user_id: req.body.user_id,
         toUser_id: req.body.toUser_id,
+        campaign_id: req.body.campaign_id
       }
     })
     res.json({ rating })
@@ -24,7 +25,7 @@ export const commentExists = async (req, res) => {
     const exists = await prisma.rating.findMany({
       where : {
         user_id: req.body.user_id,
-        toUser_id: req.body.toUser_id
+        toUser_id: req.body.toUser_id,
       }
     })
     res.json({ exists })
@@ -40,8 +41,16 @@ export const getRating = async (req, res) => {
     const rating = await prisma.rating.findMany({
       where: {
         toUser_id: req.params.toUser_id
+      },
+      include :{
+        belongToUser: true,
+        belongToCampaign:{
+          include:{
+            campaing_tags: true
+          }
+        }
       }
-    })
+    })  
     res.json({ rating })
     res.status(200)
   } catch (e) {

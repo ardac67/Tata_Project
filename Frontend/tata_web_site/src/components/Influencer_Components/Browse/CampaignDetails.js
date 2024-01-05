@@ -63,6 +63,7 @@ export default function CampaignDetails() {
       rating_text: message,
       user_id: user_id,
       toUser_id: campaign.user.user_id,
+      campaign_id: campaign.campaign_id
     }
     console.log(data)
     axios
