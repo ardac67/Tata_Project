@@ -30,6 +30,7 @@ export default function App() {
     key1: "value1",
   };
   let myImage;
+  const [clear,setClear]=useState(false)
   const scrollRef = useRef(null);
   const navigate = useNavigate();
   const [messageList, setMessageListe] = useState([]);
@@ -137,9 +138,10 @@ export default function App() {
     }));
     console.log("oldMessage", oldMessages);
     setMessageListe((list) => [...list], oldMessages);
+    setMessage("");
   };
 
-  const sendMessage = async () => {
+  const sendMessage = async (e) => {
     const newMessage = {
       user: user_name,
       message: message,
@@ -166,6 +168,7 @@ export default function App() {
       .catch((error) => {
         console.log(error);
       });
+    
   };
 
   // console.log(collaborations);

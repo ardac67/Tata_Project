@@ -49,27 +49,19 @@ const subDate = date1 => {
   const differenceInDays = 1 + Math.floor(result / (1000 * 60 * 60 * 24))
   return differenceInDays
 }
-const RatingComponent = () => {
+const RatingComponent = ({rating}) => {
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
   const user_id = cookies.get('user_id')
-  const result = useQuery(['rating', user_id, token], fetchRatings)
-  if (result.isLoading) {
-    return (
-      <MDBSpinner role='status'>
-        <span className='visually-hidden'>Loading...</span>
-      </MDBSpinner>
-    )
-  }
-  console.log('asdsadsad', result.data)
+  console.log("ratingss",rating)
   return (
     <div>
-      Showing 1 - {result.data.rating.length} out of {result.data.rating.length}{' '}
+      Showing 1 - {rating.data.rating.length} out of {rating.data.rating.length}{' '}
       reviews
-      {!result.data.rating.length ? (
+      {!rating.data.rating.length ? (
         <h1>No collaborations yet</h1>
       ) : (
-        result.data.rating.map(rating => (
+        rating.data.rating.map(rating => (
           <MDBCardBody className='square border border-3'>
             <MDBRow>
               <MDBCardHeader style={{ fontSize: '15px' }}>

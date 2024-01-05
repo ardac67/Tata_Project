@@ -9,7 +9,6 @@ import {
   MDBInput,
   MDBSpinner
 } from 'mdb-react-ui-kit'
-import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import FooterUniversal from '../../FooterUniversal'
 import Cookies from 'universal-cookie'
@@ -20,7 +19,9 @@ import { set } from 'date-fns'
 import { useParams } from 'react-router-dom'
 import {useQuery} from '@tanstack/react-query'
 import fetchUserEmail from './fetchUserEmail'
+import {useNavigate } from 'react-router-dom'
 const ForgotPassword = () => {
+  const navigate = useNavigate()
     var token =31
   const { id } = useParams()
   const {id2}=useParams()
@@ -42,7 +43,8 @@ const ForgotPassword = () => {
   axios
   .put(`http://localhost:3001/updateUser2/${result.data.user.user_id}`, data)
   .then(response => {
-    window.alert('success')
+    window.alert('Password Change')
+    navigate('/Login')
   })
   .catch(error => {
     window.alert('error')
