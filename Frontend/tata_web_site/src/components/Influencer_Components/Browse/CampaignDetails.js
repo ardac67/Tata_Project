@@ -325,7 +325,7 @@ export default function CampaignDetails() {
                   333 Reviews
                 </p>
                 <div className='d-flex justify-content-center mb-2'>
-                  <MDBBtn outline className='ms-1'>
+                  <MDBBtn outline className='ms-1' onClick={() => navigate("/ShowAllMessages")}>
                     Message
                   </MDBBtn>
                 </div>
