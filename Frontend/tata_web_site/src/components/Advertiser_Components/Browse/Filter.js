@@ -8,25 +8,27 @@ import {
 } from "mdb-react-ui-kit";
 
 const FilterBar = ({ onFilterChange }) => {
-  const [collaborationsCompletedFilters, setCollaborationsCompletedFilters] =
-    useState("");
+  const [totalProposalsFilter, setTotalProposalsFilter] = useState("");
   const [subscribersFilters, setSubscribersFilters] = useState("");
+  const [ratingFilters, setRatingFilters] = useState("");
 
   useEffect(() => {
     // Combine selected filters and pass them to the parent component
     const selectedFilters = {
-      collaborationsCompleted: collaborationsCompletedFilters,
+      totalProposals: totalProposalsFilter,
       subscribers: subscribersFilters,
+      rating: ratingFilters,
+      // Add more filters as needed
     };
 
     // Apply filters immediately upon change
     onFilterChange(selectedFilters);
-  }, [collaborationsCompletedFilters, subscribersFilters]);
+  }, [totalProposalsFilter, subscribersFilters, ratingFilters]);
 
   const handleClearFilters = () => {
-    // Clear all filters
-    setCollaborationsCompletedFilters("");
+    setTotalProposalsFilter("");
     setSubscribersFilters("");
+    setRatingFilters("");
   };
 
   return (
@@ -35,48 +37,91 @@ const FilterBar = ({ onFilterChange }) => {
         <MDBCardBody>
           <h2 className="mt-1 mb-5">Filters</h2>
 
-          {/* Collaborations Completed Filters */}
-          <h4 className="mb-3 mt-5">Collaborations Completed</h4>
+          <h4 className="mb-3 mt-5">Total Proposals</h4>
           <div className="radio-buttons">
             <MDBRadio
-              id="cc_gt0"
+              id="tp_gt0"
               label={
                 <div>
                   <span className="filter-label1"> More than 0</span>
                 </div>
               }
-              checked={collaborationsCompletedFilters === 0}
-              onChange={() => setCollaborationsCompletedFilters(0)}
+              checked={totalProposalsFilter === 0}
+              onChange={() => setTotalProposalsFilter(0)}
             />
             <MDBRadio
-              id="cc_gt10"
+              id="tp_gt5"
               label={
                 <div>
-                  <span className="filter-label1"> More than 10</span>
+                  <span className="filter-label1"> More than 5</span>
                 </div>
               }
-              checked={collaborationsCompletedFilters === 10}
-              onChange={() => setCollaborationsCompletedFilters(10)}
+              checked={totalProposalsFilter === 5}
+              onChange={() => setTotalProposalsFilter(5)}
             />
             <MDBRadio
-              id="cc_gt100"
+              id="tp_gt100"
               label={
                 <div>
-                  <span className="filter-label2"> More than 100</span>
+                  <span className="filter-label2"> More than 10</span>
                 </div>
               }
-              checked={collaborationsCompletedFilters === 100}
-              onChange={() => setCollaborationsCompletedFilters(100)}
+              checked={totalProposalsFilter === 100}
+              onChange={() => setTotalProposalsFilter(10)}
             />
             <MDBRadio
-              id="cc_gt1000"
+              id="tp_gt1000"
               label={
                 <div>
-                  <span className="filter-label3"> Less than 1000</span>
+                  <span className="filter-label3"> More than 20</span>
                 </div>
               }
-              checked={collaborationsCompletedFilters === 1000}
-              onChange={() => setCollaborationsCompletedFilters(1000)}
+              checked={totalProposalsFilter === 20}
+              onChange={() => setTotalProposalsFilter(20)}
+            />
+            <MDBRadio
+              id="tp_gt1000"
+              label={
+                <div>
+                  <span className="filter-label3"> More than 50</span>
+                </div>
+              }
+              checked={totalProposalsFilter === 50}
+              onChange={() => setTotalProposalsFilter(50)}
+            />
+          </div>
+
+          <h4 className="mb-3 mt-5">Rating</h4>
+          <div className="radio-buttons">
+            <MDBRadio
+              id="rating_gt4"
+              label={
+                <div>
+                  <span className="filter-label1"> Rating greater than 4</span>
+                </div>
+              }
+              checked={ratingFilters === 4}
+              onChange={() => setRatingFilters(4)}
+            />
+            <MDBRadio
+              id="rating_gt3"
+              label={
+                <div>
+                  <span className="filter-label2"> Rating greater than 3</span>
+                </div>
+              }
+              checked={ratingFilters === 3}
+              onChange={() => setRatingFilters(3)}
+            />
+            <MDBRadio
+              id="rating_gt2"
+              label={
+                <div>
+                  <span className="filter-label3"> Rating greater than 2</span>
+                </div>
+              }
+              checked={ratingFilters === 2}
+              onChange={() => setRatingFilters(2)}
             />
           </div>
 
@@ -114,7 +159,7 @@ const FilterBar = ({ onFilterChange }) => {
               onChange={() => setSubscribersFilters(1000000)}
             />
           </div>
-          <div className="mt-3">
+          <div className="mt-5">
             <MDBBtn color="danger" onClick={handleClearFilters}>
               Clear Filters
             </MDBBtn>

@@ -314,6 +314,12 @@ export default function App() {
                   <MDBCardBody>
                     <li className="bg-white mb-3">
                       <MDBTextArea
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            sendMessage();
+                          }
+                        }}
                         onChange={setMessageList}
                         label="Message"
                         id="textAreaExample"

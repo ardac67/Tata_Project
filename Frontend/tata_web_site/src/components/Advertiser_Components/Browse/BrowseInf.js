@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MDBRow,
   MDBCol,
@@ -15,7 +15,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import fetchAllInf from "../Fetch/fetchAllInf";
 import { useQuery } from "@tanstack/react-query";
-import { faStar, faThumbsUp, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStar,
+  faThumbsUp,
+  faStarHalfAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "universal-cookie";
 import { bufferToBase64 } from "../../../utils";
@@ -33,7 +37,7 @@ function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString("en-UK", options);
 }
 
-function BrowseInf({ searchTerm }) {
+function BrowseInf({ searchTerm, filters }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const InfluencersPerPage = 5; // Adjust this according to your needs
@@ -45,6 +49,10 @@ function BrowseInf({ searchTerm }) {
     key1: "value1",
   };
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters, searchTerm]);
+
   if (result.isLoading) {
     return (
       <MDBCol md="7">
@@ -55,22 +63,33 @@ function BrowseInf({ searchTerm }) {
     );
   }
 
+  console.log("filters", filters);
   const influencers = result.data.influencer;
   const collabs = result.data;
-  // Filter campaigns based on the search term
-  const filteredInfluencers = influencers.filter((influencer) =>
-    influencer.user_name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   for (var i = 0; i < collabs.influencer.length; i++) {
     hashMap[collabs.influencer[i].user_id] =
       collabs.influencer[i].proposal.length;
   }
 
-  // Reset current page when searchTerm changes
-  if (currentPage !== 1 && searchTerm) {
-    setCurrentPage(1);
-  }
+  // Filter campaigns based on the search term
+  // Filter influencers based on the search term, collaborations completed, subscribers, and rating
+  // Filter influencers based on the search term and filters
+  const filteredInfluencers = influencers.filter((influencer) => {
+    const matchesSearchTerm = influencer.user_name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    // Apply filters based on the selected filters object
+    const matchesTotalProposals =
+      !filters.totalProposals ||
+      hashMap[influencer.user_id] >= filters.totalProposals;
+
+    const matchesSubscribers =
+      !filters.subscribers || influencer.subscribers <= filters.subscribers;
+
+    return matchesSearchTerm && matchesTotalProposals && matchesSubscribers;
+  });
 
   // Calculate the indexes of the campaigns to be displayed on the current page
   const indexOfLastInfluencer = currentPage * InfluencersPerPage;
@@ -81,6 +100,7 @@ function BrowseInf({ searchTerm }) {
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  let ratingNumber = 0;
 
   return (
     <MDBCol md="7">
@@ -104,8 +124,8 @@ function BrowseInf({ searchTerm }) {
                       src={
                         influencer.user_image
                           ? `data:image/jpeg;base64,${bufferToBase64(
-                            influencer.user_image.data
-                          )}`
+                              influencer.user_image.data
+                            )}`
                           : defaultImage // Provide a placeholder image
                       }
                       fluid
@@ -132,39 +152,62 @@ function BrowseInf({ searchTerm }) {
                   <div className="mt-3 mb-3 text-muted small">
                     <MDBRow>
                       <MDBCol>
-                        <span className="ms-2 text-muted" style={{ fontSize: "20px" }}>Total Proposals</span>
-                        <span className="ms-2 font" style={{ fontSize: "20px" }}>
+                        <span
+                          className="ms-2 text-muted"
+                          style={{ fontSize: "20px" }}
+                        >
+                          Total Proposals
+                        </span>
+                        <span
+                          className="ms-2 font"
+                          style={{ fontSize: "20px" }}
+                        >
                           {hashMap[influencer.user_id]}
                         </span>
                       </MDBCol>
                     </MDBRow>
-                    <MDBRow style={{ marginTop: '15px' }}>
+                    <MDBRow style={{ marginTop: "15px" }}>
                       <MDBCol>
-                        <span className="ms-2 font" style={{ fontSize: "20px" }}>Rating </span>
-                        <span className="text-success ms-2 me-2" style={{ fontSize: "20px" }}> <FetchRatingsComponent user_id={influencer.user_id} /></span>
+                        <span
+                          className="ms-2 font"
+                          style={{ fontSize: "20px" }}
+                        >
+                          Rating{" "}
+                        </span>
+                        <span
+                          className="text-success ms-2 me-2"
+                          style={{ fontSize: "20px" }}
+                        >
+                          {" "}
+                          <FetchRatingsComponent user_id={influencer.user_id} />
+                        </span>
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol>
                         {(() => {
-                          var rating = <FetchRatingsComponent user_id = {influencer.user_id}/>;
+                          var rating = (
+                            <FetchRatingsComponent
+                              user_id={influencer.user_id}
+                            />
+                          );
                           const stars = [];
-                          console.log("rating sayısı: ", <FetchRatingsComponent user_id = {influencer.user_id}/>);
+                          console.log("rating sayısı: ", rating);
                           for (let i = 0; i < Math.floor(rating); i++) {
-                            
-                              <MDBCol md='1' key={`full-${i}`}>
+                            stars.push(
+                              <MDBCol md="1" key={`full-${i}`}>
                                 <FontAwesomeIcon icon={faStar} />
                               </MDBCol>
-                           
+                            );
                           }
 
                           // Check if there's a half star to add
                           if (rating % 1 >= 0.5) {
-                            
-                              <MDBCol md='1' key={'half'}>
+                            stars.push(
+                              <MDBCol md="1" key={"half"}>
                                 <FontAwesomeIcon icon={faStarHalfAlt} />
                               </MDBCol>
-                            
+                            );
                           }
 
                           return stars;
