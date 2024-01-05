@@ -109,7 +109,7 @@ export default function MyCollaborations () {
                       />
                       <div className='ms-3'>
                       <a
-                      onClick={() => navigate(`/ShowProfile/${data.proposed_user_id}`)}
+                      onClick={() => navigate(`/ShowProfile/${data.proposed_user_id}/${data.belongToCampaign.campaign_id}`)}
                       style={{ cursor: 'pointer' }}
                       className='hover-link'
                     >
