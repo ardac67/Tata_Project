@@ -38,7 +38,9 @@ const CampaingTable = () => {
 const columns = [
   {
     name: 'Campaign Header',
-    selector: row => row.belongToCampaign.campaign_header  // Corrected: Now this just returns the campaign header.
+    selector: row =>(
+      <Link to={`/details/${row.belongToCampaign.campaign_id}`}>{row.belongToCampaign.campaign_header}</Link>
+    )  // Corrected: Now this just returns the campaign header.
 
   },
   {
