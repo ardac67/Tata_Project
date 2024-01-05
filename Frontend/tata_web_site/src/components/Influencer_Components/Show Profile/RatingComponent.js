@@ -13,7 +13,7 @@ import { CardBody } from 'react-bootstrap'
 import Cookies from 'universal-cookie'
 import { useQuery } from '@tanstack/react-query'
 import fetchRatings from './fetchRatings'
-import { useParams } from 'react-router-dom'
+import { useParams,useNavigate } from 'react-router-dom'
 function formatDateAndHour (dateStr) {
   let date = new Date(dateStr)
   let year = date.getFullYear()
@@ -51,6 +51,7 @@ const subDate = date1 => {
   return differenceInDays
 }
 const RatingComponent = () => {
+  const navigate = useNavigate()
   const cookies = new Cookies(null, { path: '/' })
   const token = cookies.get('token')
   const {id} = useParams() 
@@ -76,10 +77,12 @@ const RatingComponent = () => {
               <MDBCardHeader style={{ fontSize: '15px' }}>
                 📊 About the Campaign
                 <span
+                onClick={() => navigate(`/CampaignDetails/${rating.belongToCampaign.campaign_id}`)}
                   style={{
                     fontWeight: 'bold',
                     marginRight: '10px',
-                    marginLeft: '10px'
+                    marginLeft: '10px',
+                    cursor:'pointer'
                   }}
                 >
                   {rating.belongToCampaign.campaign_header}

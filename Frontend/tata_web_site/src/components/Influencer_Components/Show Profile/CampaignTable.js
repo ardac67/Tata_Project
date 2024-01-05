@@ -46,7 +46,7 @@ const columns = [
     name: 'Campaign Header',
     selector: row => row.campaign_header,  // Corrected: Now this just returns the campaign header.
     cell: row => (  // 'cell' is used in react-data-table-component for custom render
-      <Link to={`/details/${row.campaign_id}`}>{row.campaign_header}</Link>  // Display the link with the campaign header
+      <Link to={`/CampaignDetails/${row.campaign_id}`}>{row.campaign_header}</Link>  // Display the link with the campaign header
     )
   },
   {

@@ -15,6 +15,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import fetchAllInf from "../Fetch/fetchAllInf";
 import { useQuery } from "@tanstack/react-query";
+import { faStar, faThumbsUp, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "universal-cookie";
 import { bufferToBase64 } from "../../../utils";
 import defaultImage from "../../Influencer_Components/default.jpg";
@@ -55,8 +57,6 @@ function BrowseInf({ searchTerm }) {
 
   const influencers = result.data.influencer;
   const collabs = result.data;
-  console.log("influencers: ", influencers);
-  console.log("collabs: ", collabs);
   // Filter campaigns based on the search term
   const filteredInfluencers = influencers.filter((influencer) =>
     influencer.user_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -82,7 +82,6 @@ function BrowseInf({ searchTerm }) {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  console.log({ influencers });
   return (
     <MDBCol md="7">
       {!currentInfluencers.length ? (
@@ -105,8 +104,8 @@ function BrowseInf({ searchTerm }) {
                       src={
                         influencer.user_image
                           ? `data:image/jpeg;base64,${bufferToBase64(
-                              influencer.user_image.data
-                            )}`
+                            influencer.user_image.data
+                          )}`
                           : defaultImage // Provide a placeholder image
                       }
                       fluid
@@ -131,16 +130,47 @@ function BrowseInf({ searchTerm }) {
                   </h1>
                   <h5>{influencer.Type}</h5>
                   <div className="mt-3 mb-3 text-muted small">
-                    <span className="">Total Proposals</span>
-                    <span className="text-success ms-2 me-2">
-                      {hashMap[influencer.user_id]}
-                    </span>
-                    <span className="ms-2">Rating </span>
-                    <span className="text-success ms-2 me-2"> <FetchRatingsComponent user_id={influencer.user_id} /></span>
-                  </div>
-                  <div className="mt-3 mb-0 text-muted small">
-                    <span>Ongoing Campaign</span>
-                    <span className="text-success ms-2 me-2"> N/A </span>
+                    <MDBRow>
+                      <MDBCol>
+                        <span className="ms-2 text-muted" style={{ fontSize: "20px" }}>Total Proposals</span>
+                        <span className="ms-2 font" style={{ fontSize: "20px" }}>
+                          {hashMap[influencer.user_id]}
+                        </span>
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow style={{ marginTop: '15px' }}>
+                      <MDBCol>
+                        <span className="ms-2 font" style={{ fontSize: "20px" }}>Rating </span>
+                        <span className="text-success ms-2 me-2" style={{ fontSize: "20px" }}> <FetchRatingsComponent user_id={influencer.user_id} /></span>
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
+                      <MDBCol>
+                        {(() => {
+                          var rating = <FetchRatingsComponent user_id = {influencer.user_id}/>;
+                          const stars = [];
+                          console.log("rating sayısı: ", <FetchRatingsComponent user_id = {influencer.user_id}/>);
+                          for (let i = 0; i < Math.floor(rating); i++) {
+                            
+                              <MDBCol md='1' key={`full-${i}`}>
+                                <FontAwesomeIcon icon={faStar} />
+                              </MDBCol>
+                           
+                          }
+
+                          // Check if there's a half star to add
+                          if (rating % 1 >= 0.5) {
+                            
+                              <MDBCol md='1' key={'half'}>
+                                <FontAwesomeIcon icon={faStarHalfAlt} />
+                              </MDBCol>
+                            
+                          }
+
+                          return stars;
+                        })()}
+                      </MDBCol>
+                    </MDBRow>
                   </div>
                 </MDBCol>
                 <MDBCol

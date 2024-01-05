@@ -132,7 +132,6 @@ export const InfluencerNavbar = () => {
                   >
                     My Colloborations
                   </MDBDropdownItem>
-                  <MDBDropdownItem link>Campaign Milesones</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavbarItem>

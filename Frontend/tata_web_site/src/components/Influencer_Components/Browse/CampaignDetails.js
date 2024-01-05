@@ -144,7 +144,7 @@ export default function CampaignDetails() {
                     </MDBCardText>
                   </MDBCol>
                   <MDBCol sm='9'>
-                    <MDBBadge color='success' pill>
+                    <MDBBadge color={campaign.status === 'Ended' ? 'danger' : 'success'} pill>
                       {campaign.status}
                     </MDBBadge>
                   </MDBCol>
@@ -325,7 +325,7 @@ export default function CampaignDetails() {
                   333 Reviews
                 </p>
                 <div className='d-flex justify-content-center mb-2'>
-                  <MDBBtn outline className='ms-1'>
+                  <MDBBtn outline className='ms-1' onClick={() => navigate("/ShowAllMessages")}>
                     Message
                   </MDBBtn>
                 </div>
@@ -381,47 +381,41 @@ export default function CampaignDetails() {
           </MDBCol>
         </MDBRow>
 
-        <MDBRow
-          style={{ marginTop: '50px', marginLeft: '20px', marginRight: '20px' }}
-        >
-          {(campaign.status === 'Ended' && result2.data.exists===0 ) && (
-            <MDBRow
-              style={{
-                marginTop: '50px',
-                marginLeft: '20px',
-                marginRight: '20px'
-              }}
-            >
-              <MDBCol>
-                <div className='rating-box'>
-                  <header>How was your experience?</header>
-                  <div className='stars'>
-                    {[1, 2, 3, 4, 5].map(index => (
-                      <i
-                        key={index}
-                        className={`fa-solid fa-star${index <= selectedRating ? ' active' : ''
-                          }`}
-                        onClick={() => handleStarClick(index)}
-                      ></i>
-                    ))}
-                  </div>
-                  <MDBInput
-                    style={{ marginTop: '25px' }}
-                    label='Comments'
-                    id='typeText'
-                    type='text'
-                    onChange={e => setMessage(e.target.value)}
-                  />
-                </div>
-              </MDBCol>
-              <MDBRow style={{ marginTop: '20px' }}>
-                <MDBCol>
-                  <MDBBtn onClick={createRating}>Apply</MDBBtn>
-                </MDBCol>
-              </MDBRow>
-            </MDBRow>
-          )}
+        <MDBRow style={{ marginTop: '50px', marginLeft: '20px', marginRight: '20px' }}>
+      {(campaign.status === 'Ended' && result2.data.exists === 0) && (
+        <MDBRow style={{ marginTop: '50px', marginLeft: '20px', marginRight: '20px' }}>
+          <MDBCol>
+            <div className='rating-box'>
+              <header>How was your experience?</header>
+              <div className='stars'>
+                {[1, 2, 3, 4, 5].map(index => (
+                  <i
+                    key={index}
+                    className={`fa-solid fa-star${index <= selectedRating ? ' active' : ''}`}
+                    onClick={() => handleStarClick(index)}
+                  ></i>
+                ))}
+              </div>
+              <MDBInput
+                style={{ marginTop: '25px' }}
+                label='Comments (Min 50 characters)'
+                id='typeText'
+                type='text'
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+            </div>
+          </MDBCol>
+          <MDBRow style={{ marginTop: '20px' }}>
+            <MDBCol>
+              <MDBBtn disabled={message.length < 50} onClick={createRating}>
+                Apply
+              </MDBBtn>
+            </MDBCol>
+          </MDBRow>
         </MDBRow>
+      )}
+    </MDBRow>
       </MDBContainer>
     </section>
   )

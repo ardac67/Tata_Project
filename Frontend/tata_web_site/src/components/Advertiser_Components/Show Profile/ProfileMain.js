@@ -50,7 +50,7 @@ const ProfileMain = ({ user }) => {
       </MDBSpinner>
     )
   }
-
+console.log("İDDDD",id)
   console.log('asdsadsad', result2)
   var rating_sum = 0
   var rating_average = 0
@@ -118,11 +118,6 @@ const ProfileMain = ({ user }) => {
           <MDBRow style={{ marginLeft: "10px", fontSize: "28px" }}>
             <MDBCol md="8">
               {user.name} @{user.user_name}
-            </MDBCol>
-            <MDBCol md="4" className="d-flex justify-content-end">
-              <MDBBtn style={{ marginRight: "0px" }} onClick={editButton}>
-                Edit Profile
-              </MDBBtn>
             </MDBCol>
           </MDBRow>
           <MDBRow
