@@ -271,6 +271,7 @@ export default function CampaignDetails() {
                 <hr />
                 <MDBRow className='justify-content-end'>
                   <MDBCol className='d-flex justify-content-center' sm='3'>
+                  {campaign.status !== 'Ended' && (
                     <MDBBtn
                       color='success'
                       size='sm'
@@ -280,6 +281,7 @@ export default function CampaignDetails() {
                     >
                       Propose
                     </MDBBtn>
+                  )}
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>
