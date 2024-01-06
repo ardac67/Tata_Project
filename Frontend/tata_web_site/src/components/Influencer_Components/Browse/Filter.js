@@ -81,7 +81,7 @@ const FilterBar = ({ onFilterChange }) => {
                 )
               }
             />
-             <MDBCheckbox
+            <MDBCheckbox
               id="facebook"
               label={
                 <div>
@@ -98,7 +98,7 @@ const FilterBar = ({ onFilterChange }) => {
                 )
               }
             />
-             <MDBCheckbox
+            <MDBCheckbox
               id="twitter"
               label={
                 <div>
@@ -115,7 +115,7 @@ const FilterBar = ({ onFilterChange }) => {
                 )
               }
             />
-              <MDBCheckbox
+            <MDBCheckbox
               id="twitch"
               label={
                 <div>
@@ -331,7 +331,8 @@ const FilterBar = ({ onFilterChange }) => {
                     : ["Entertainment", ...prevFilters]
                 )
               }
-            /><MDBCheckbox
+            />
+            <MDBCheckbox
               id="Finance"
               label={
                 <div>

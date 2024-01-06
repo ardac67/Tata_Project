@@ -24,7 +24,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import io from "socket.io-client";
 import { useEffect } from "react";
 var socket = io.connect("http://localhost:3002");

@@ -34,7 +34,6 @@ const Register = () => {
       contact: contact_data,
       media_links: media_links_data,
     };
-    console.log(post_object);
 
     axios
       .post("http://localhost:3001/createUser", post_object)
@@ -59,7 +58,6 @@ const Register = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result.split(",")[1]);
-        console.log("image", selectedImage);
       };
       reader.readAsDataURL(selectedImage);
     }

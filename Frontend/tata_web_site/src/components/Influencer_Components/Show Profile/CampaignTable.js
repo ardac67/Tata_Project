@@ -1,11 +1,10 @@
 import DataTable from "react-data-table-component";
-import { MDBRow, MDBCol, MDBSpinner, MDBBtn } from "mdb-react-ui-kit";
+import { MDBRow, MDBSpinner } from "mdb-react-ui-kit";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
 import fetchCampaigns from "./fetchCampaigns";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 const CampaingTable = () => {
-  const navigate = useNavigate();
   const cookies = new Cookies(null, { path: "/" });
   const { id } = useParams();
   const token = cookies.get("token");

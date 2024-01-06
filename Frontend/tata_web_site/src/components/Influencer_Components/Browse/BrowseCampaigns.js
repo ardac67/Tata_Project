@@ -17,7 +17,6 @@ import fetchAllCampaigns from "./fetchAllCampaign";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
 import "./BrowseCampaigns.css";
-import { ProgressBar } from "react-loader-spinner";
 import defaultImage from "../default1.png";
 import { bufferToBase64 } from "../../../utils";
 

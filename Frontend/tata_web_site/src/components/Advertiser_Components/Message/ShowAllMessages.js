@@ -12,7 +12,6 @@ import {
   MDBCardHeader,
   MDBSpinner,
 } from "mdb-react-ui-kit";
-import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -23,19 +22,16 @@ import getMessage from "./getMessage";
 import { bufferToBase64 } from "../../../utils";
 import defaultImage from "../default.jpg";
 
-var socket = io.connect("http://localhost:3002");
+var socket = io.connect("https://tata-mesagginn.onrender.com");
 
 export default function App() {
   const hashMap = {
     key1: "value1",
   };
   let myImage;
-  const [clear,setClear]=useState(false)
   const scrollRef = useRef(null);
-  const navigate = useNavigate();
   const [messageList, setMessageListe] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
-  const [color, setColor] = useState("");
   const [room_idd, setRoom] = useState("");
   const cookies = new Cookies(null, { path: "/" });
   const token = cookies.get("token");
@@ -103,7 +99,6 @@ export default function App() {
         )}`
       : defaultImage; // Provide a placeholder image
   }
-  console.log("IMAGE", myImage);
   for (var i = 0; i < collaborations.proposal.length; i++) {
     hashMap[collaborations.proposal[i].user.user_name] = collaborations
       .proposal[i].user.user_image
@@ -111,8 +106,6 @@ export default function App() {
       : null;
   }
   const joinRoom = async (id) => {
-    var colorTest = "red";
-    setColor(colorTest);
     setMessageListe([]);
     setRoom(id);
     setSelectedId(id);
@@ -131,12 +124,10 @@ export default function App() {
       );
     }
 
-    console.log("message", messageData.data.messages);
     const oldMessages = messageData.data.messages.map((msg) => ({
       user: msg.user_name,
       message: msg.message_body,
     }));
-    console.log("oldMessage", oldMessages);
     setMessageListe((list) => [...list], oldMessages);
     setMessage("");
   };
@@ -168,12 +159,7 @@ export default function App() {
       .catch((error) => {
         console.log(error);
       });
-    
   };
-
-  // console.log(collaborations);
-  // console.log(messageList);
-  // console.log("image", collaborations.proposal[0].belongToUser.user_image);
 
   return (
     <MDBContainer

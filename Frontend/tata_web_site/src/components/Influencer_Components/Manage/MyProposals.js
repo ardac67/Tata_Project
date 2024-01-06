@@ -10,9 +10,7 @@ import {
   MDBInputGroup,
   MDBSpinner,
 } from "mdb-react-ui-kit";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import fetchProposal from "../../Advertiser_Components/Fetch/fetchIndividualProposals";
 import Cookies from "universal-cookie";
 import { useQuery } from "@tanstack/react-query";
@@ -44,7 +42,7 @@ export default function MyProposals() {
     );
   }
   var data = result.data.proposal;
-  console.log(data)
+  console.log(data);
   const redirect = (path) => {
     navigate(path);
   };
@@ -105,8 +103,8 @@ export default function MyProposals() {
                         src={
                           data.belongsToCampaign.user.user_image
                             ? `data:image/jpeg;base64,${bufferToBase64(
-                              data.belongsToCampaign.user.user_image.data
-                            )}`
+                                data.belongsToCampaign.user.user_image.data
+                              )}`
                             : defaultImage // Provide a placeholder image
                         }
                         alt="avatar"
@@ -116,14 +114,22 @@ export default function MyProposals() {
                       />
                       <div className="ms-3">
                         <p
-                          className='mb-1 mt-2 fw-bold'
+                          className="mb-1 mt-2 fw-bold"
                           style={{
-                            color: hoveredUser === data.proposal_id ? 'blue' : 'black',
-                            cursor: 'pointer',
+                            color:
+                              hoveredUser === data.proposal_id
+                                ? "blue"
+                                : "black",
+                            cursor: "pointer",
                           }}
-                          onClick={() => navigate(`/ShowProfile/${data.belongsToCampaign.user_id}`)}
+                          onClick={() =>
+                            navigate(
+                              `/ShowProfile/${data.belongsToCampaign.user_id}`
+                            )
+                          }
                           onMouseEnter={() => setHoveredUser(data.proposal_id)}
-                          onMouseLeave={() => setHoveredUser(null)}>
+                          onMouseLeave={() => setHoveredUser(null)}
+                        >
                           {data.belongsToCampaign.user.name}
                         </p>
                         <p className="text-muted mb-0">
@@ -149,7 +155,6 @@ export default function MyProposals() {
                   </td>
 
                   <td>{formatDateAndHour(data.createdAt)}</td>
-
                 </tr>
               ))
             )}

@@ -12,27 +12,23 @@ import {
   MDBCardHeader,
   MDBSpinner,
 } from "mdb-react-ui-kit";
-import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import fetchCollaboration from "../Manage/fetchCollaboration";
 import io from "socket.io-client";
 import defaultImage from "../../Advertiser_Components/default.jpg";
-import { memo, useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import getMessage from "../../Advertiser_Components/Message/getMessage";
-import ScrollToBottom from "react-scroll-to-bottom";
 import { bufferToBase64 } from "../../../utils";
-var socket = io.connect("http://localhost:3002");
+var socket = io.connect("https://tata-mesagginn.onrender.com");
 export default function App() {
   const hashMap = {
     key1: "value1",
   };
   let myImage;
-  const navigate = useNavigate();
   const [messageList, setMessageListe] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
-  const [color, setColor] = useState("");
   const [room_idd, setRoom] = useState("");
   const cookies = new Cookies(null, { path: "/" });
   const token = cookies.get("token");
@@ -97,7 +93,6 @@ export default function App() {
     );
   }
   const collaborations = result.data;
-  console.log(collaborations);
   for (var i = 0; i < collaborations.proposal.length; i++) {
     hashMap[collaborations.proposal[i].belongToUser.user_name] = collaborations
       .proposal[i].belongToUser.user_image
@@ -111,10 +106,7 @@ export default function App() {
         )}`
       : defaultImage;
   }
-  console.log("arda", hashMap);
   const joinRoom = async (id) => {
-    var colorTest = "red";
-    setColor(colorTest);
     setMessageListe([]);
     setRoom(id);
     setSelectedId(id);
@@ -133,12 +125,10 @@ export default function App() {
       );
     }
 
-    console.log("message", messageData.data.messages);
     const oldMessages = messageData.data.messages.map((msg) => ({
       user: msg.user_name,
       message: msg.message_body,
     }));
-    console.log("oldMessage", oldMessages);
     setMessageListe((list) => [...list, ...oldMessages]);
   };
 
@@ -171,9 +161,6 @@ export default function App() {
       });
   };
 
-  console.log("messageList", messageList);
-  console.log(collaborations);
-  console.log(messageList);
   return (
     <MDBContainer fluid className="py-5" style={{ backgroundColor: "#eee" }}>
       <MDBRow>

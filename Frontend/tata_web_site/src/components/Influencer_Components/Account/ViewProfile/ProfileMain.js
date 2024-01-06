@@ -71,8 +71,6 @@ const ProfileMain = ({ user }) => {
     );
   }
 
-  console.log("asdsadsad", result2);
-  console.log("d", result);
   var rating_sum = 0;
   var rating_average = 0;
   var counter = 0;
@@ -86,11 +84,9 @@ const ProfileMain = ({ user }) => {
     }
     rating_average = rating_sum / result2.data.rating.length;
   }
-  console.log("sssssssssss");
-  console.log(result);
+
   var data = result.data.proposal;
   var index = data.length;
-  console.log("sayıııı : " + index);
   var ongoing_collaborations = [];
   var completed_collaborations = [];
 

@@ -3,10 +3,9 @@ import { MDBListGroup, MDBListGroupItem, MDBSpinner } from "mdb-react-ui-kit";
 import { useQuery } from "@tanstack/react-query";
 import fetchCollaboration from "./fetchCollaboration";
 import Cookies from "universal-cookie";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const TopTags = () => {
-  const navigate = useNavigate();
   const cookies = new Cookies(null, { path: "/" });
   const token = cookies.get("token");
   const { id } = useParams();

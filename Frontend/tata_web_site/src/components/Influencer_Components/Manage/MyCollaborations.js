@@ -41,10 +41,6 @@ export default function MyCollaborations() {
       .includes(searchTerm.toLowerCase())
   );
 
-  console.log(data);
-  const redirect = (path) => {
-    navigate(path);
-  };
   return (
     <>
       <div className="d-flex mt-4 ms-5">
