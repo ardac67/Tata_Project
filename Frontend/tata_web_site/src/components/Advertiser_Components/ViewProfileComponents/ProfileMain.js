@@ -64,7 +64,7 @@ const ProfileMain = ({ user }) => {
     ["collaboration", user_id, token],
     fetchCollaboration
   );
-  if (result.isLoading) {
+  if (result.isLoading || result1.isLoading || result2.isLoading) {
     return (
       <MDBSpinner role="status">
         <span className="visually-hidden">Loading...</span>

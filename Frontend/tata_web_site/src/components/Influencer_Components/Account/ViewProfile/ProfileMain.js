@@ -1,12 +1,22 @@
-import { MDBRow, MDBCol, MDBCardBody, MDBBtn,MDBSpinner } from "mdb-react-ui-kit";
+import {
+  MDBRow,
+  MDBCol,
+  MDBCardBody,
+  MDBBtn,
+  MDBSpinner,
+} from "mdb-react-ui-kit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faThumbsUp,faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStar,
+  faThumbsUp,
+  faStarHalfAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import fetchCollaboration from './fetchCollaboration'
+import fetchCollaboration from "./fetchCollaboration";
 import fetchRatings from "./fetchRatings";
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 import defaultImage from "../../default.jpg";
-import Cookies from 'universal-cookie'
+import Cookies from "universal-cookie";
 import { bufferToBase64 } from "../../../../utils";
 
 function formatDate(dateStr) {
@@ -19,18 +29,25 @@ function formatDate(dateStr) {
   return `${year}-${month}-${day}`;
 }
 
-function getDate(){
-// Create a new Date object
-var currentDate = new Date();
+function getDate() {
+  // Create a new Date object
+  var currentDate = new Date();
 
-// Get the current date components
-var year = currentDate.getFullYear();
-var month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-var day = currentDate.getDate();
+  // Get the current date components
+  var year = currentDate.getFullYear();
+  var month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+  var day = currentDate.getDate();
 
-// Format the date as a string (you can customize the format as needed)
-var formattedDate = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
-return formattedDate;
+  // Format the date as a string (you can customize the format as needed)
+  var formattedDate =
+    year +
+    "-" +
+    (month < 10 ? "0" : "") +
+    month +
+    "-" +
+    (day < 10 ? "0" : "") +
+    day;
+  return formattedDate;
 }
 
 const ProfileMain = ({ user }) => {
@@ -38,50 +55,53 @@ const ProfileMain = ({ user }) => {
   const editButton = () => {
     navigate("/AccountSettings");
   };
-  const cookies = new Cookies(null, { path: '/' })
-  const token = cookies.get('token')
-  const user_id = cookies.get('user_id')
-  const result2 = useQuery(['rating1', user_id, token], fetchRatings)
-  const result = useQuery(['collaboration', user_id, token], fetchCollaboration)
-  if (result.isLoading ) {
+  const cookies = new Cookies(null, { path: "/" });
+  const token = cookies.get("token");
+  const user_id = cookies.get("user_id");
+  const result2 = useQuery(["rating1", user_id, token], fetchRatings);
+  const result = useQuery(
+    ["collaboration", user_id, token],
+    fetchCollaboration
+  );
+  if (result.isLoading || result2.isLoading) {
     return (
-      <MDBSpinner role='status'>
-        <span className='visually-hidden'>Loading...</span>
+      <MDBSpinner role="status">
+        <span className="visually-hidden">Loading...</span>
       </MDBSpinner>
-    )
+    );
   }
 
-  console.log('asdsadsad', result2)
-  console.log('d', result)
-  var rating_sum = 0
-  var rating_average = 0
-  var counter = 0
+  console.log("asdsadsad", result2);
+  console.log("d", result);
+  var rating_sum = 0;
+  var rating_average = 0;
+  var counter = 0;
 
-  if(result2 != undefined){
-  for (var i = 0; i < result2.data.rating.length; i++) {
-    rating_sum += result2.data.rating[i].rating
-    if (result2.data.rating[i].rating === 5) {
-      counter++
+  if (result2 != undefined) {
+    for (var i = 0; i < result2.data.rating.length; i++) {
+      rating_sum += result2.data.rating[i].rating;
+      if (result2.data.rating[i].rating === 5) {
+        counter++;
+      }
     }
+    rating_average = rating_sum / result2.data.rating.length;
   }
-  rating_average = rating_sum / result2.data.rating.length
-}
- console.log("sssssssssss")
-  console.log(result)
-  var data = result.data.proposal
-  var index =data.length;
-  console.log("sayıııı : " + index)
+  console.log("sssssssssss");
+  console.log(result);
+  var data = result.data.proposal;
+  var index = data.length;
+  console.log("sayıııı : " + index);
   var ongoing_collaborations = [];
   var completed_collaborations = [];
 
-  for(var i=0;i<index;i++){
-    var campaignEndDate = formatDate(data[i].belongToCampaign.endedAt)
+  for (var i = 0; i < index; i++) {
+    var campaignEndDate = formatDate(data[i].belongToCampaign.endedAt);
     var todayDate = getDate();
-    if(campaignEndDate < todayDate){
-      completed_collaborations.push(data[i])
+    if (campaignEndDate < todayDate) {
+      completed_collaborations.push(data[i]);
     }
-    if(campaignEndDate >= todayDate){
-      ongoing_collaborations.push(data[i])
+    if (campaignEndDate >= todayDate) {
+      ongoing_collaborations.push(data[i]);
     }
   }
 
@@ -138,37 +158,37 @@ const ProfileMain = ({ user }) => {
             <MDBCol md="6" className="d-flex justify-content-end">
               {parseDateString(user.createdAt).toDateString()}
             </MDBCol>
-            </MDBRow>
+          </MDBRow>
           <MDBRow
             style={{
-              marginLeft: '19px',
-              fontSize: '20px',
-              marginTop: '10px'
+              marginLeft: "19px",
+              fontSize: "20px",
+              marginTop: "10px",
             }}
           >
             {(() => {
-              const stars = []
+              const stars = [];
               for (var i = 0; i < Math.floor(rating_average); i++) {
                 stars.push(
-                  <MDBCol md='1' key={i}>
+                  <MDBCol md="1" key={i}>
                     <FontAwesomeIcon icon={faStar} />
                   </MDBCol>
-                )
+                );
               }
 
               // Check if there's a half star to add
               if (rating_average % 1 >= 0.5) {
                 stars.push(
-                  <MDBCol md='1' key={'half'}>
+                  <MDBCol md="1" key={"half"}>
                     <FontAwesomeIcon icon={faStarHalfAlt} />
                   </MDBCol>
-                )
+                );
               }
 
-              return stars
+              return stars;
             })()}
 
-            <MDBCol md='7'>
+            <MDBCol md="7">
               ({rating_average.toFixed(1)}) {result2.data.rating.length} Reviews
             </MDBCol>
           </MDBRow>
@@ -180,17 +200,20 @@ const ProfileMain = ({ user }) => {
             }}
           >
             <MDBCol md="6">
-              <MDBRow style={{color:"#4040a1"}}>{num_of_completed_collaborations} Collaborations Completed</MDBRow>
-              <MDBRow style={{color:"#feb236"}}>{num_of_ongoing_collaborations} Ongoing Collaborations</MDBRow>
+              <MDBRow style={{ color: "#4040a1" }}>
+                {num_of_completed_collaborations} Collaborations Completed
+              </MDBRow>
+              <MDBRow style={{ color: "#feb236" }}>
+                {num_of_ongoing_collaborations} Ongoing Collaborations
+              </MDBRow>
             </MDBCol>
             <MDBCol md="6">
-              <MDBRow>
-              </MDBRow>
+              <MDBRow></MDBRow>
               <MDBCol>
                 <FontAwesomeIcon
                   icon={faThumbsUp}
-                  style={{ marginRight: '10px' }}
-                />{' '}
+                  style={{ marginRight: "10px" }}
+                />{" "}
                 {counter} Recommendations
               </MDBCol>
             </MDBCol>
