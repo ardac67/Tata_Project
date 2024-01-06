@@ -13,9 +13,10 @@ import {
   faPhone
 } from '@fortawesome/free-solid-svg-icons'
 import fetchContact from '../Fetch/fetchContact'
+import { useParams } from 'react-router-dom'
 const ContactMainProfile = ({user}) => {
   const cookies = new Cookies(null, { path: '/' })
-  const id = cookies.get('user_id')
+  const {id} = useParams()
   const token = cookies.get('token')
   const result = useQuery(['contact', id,token], fetchContact)
   if (result.isLoading) {

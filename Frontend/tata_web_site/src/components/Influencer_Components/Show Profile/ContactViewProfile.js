@@ -2,6 +2,7 @@ import { MDBCol, MDBCardBody, MDBCardText, MDBSpinner } from "mdb-react-ui-kit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "universal-cookie";
+import { useParams } from "react-router-dom";
 import {
   faEnvelope,
   faAddressBook,
@@ -10,7 +11,7 @@ import {
 import fetchContact from "../Account/Fetch/fetchContact";
 const ContactMainProfile = ({ user }) => {
   const cookies = new Cookies(null, { path: "/" });
-  const id = cookies.get("user_id");
+  const { id } = useParams(); 
   const token = cookies.get("token");
   const result = useQuery(["contact", id, token], fetchContact);
   if (result.isLoading) {
