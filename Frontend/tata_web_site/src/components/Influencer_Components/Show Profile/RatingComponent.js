@@ -69,7 +69,7 @@ const RatingComponent = () => {
       Showing 1 - {result.data.rating.length} out of {result.data.rating.length}{' '}
       reviews
       {!result.data.rating.length ? (
-        <h1>No collaborations yet</h1>
+        <h1>No Review or Rating Yet.</h1>
       ) : (
         result.data.rating.map(rating => (
           <MDBCardBody className='square border border-3'>
