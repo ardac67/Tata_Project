@@ -57,8 +57,8 @@ function BrowseCampaigns({ searchTerm, filters }) {
     const matchesFilters =
       (filters.platform.length === 0 ||
         filters.platform.some((platform) =>
-          campaign.collaboration_preferences[0].preffered_platforms[0].platform
-            .toLowerCase()
+          campaign.collaboration_preferences[0]?.preffered_platforms[0]?.platform
+            ?.toLowerCase()
             .includes(platform)
         )) &&
       // (filters.industry.length === 0 ||
