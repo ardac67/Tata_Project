@@ -22,7 +22,6 @@ import Cookies from "universal-cookie";
 import { bufferToBase64 } from "../../../utils";
 import defaultImage from "../../Influencer_Components/default.jpg";
 
-
 function formatDate(dateString) {
   const options = {
     year: "numeric",
@@ -34,32 +33,13 @@ function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString("en-UK", options);
 }
 
-// function FetchUserComponent({ user_id }) {
-//   const cookies = new Cookies(null, { path: "/" });
-//   const token = cookies.get("token");
-
-//   // Always call hooks at the top level
-//   const queryKey = ["user", user_id, token];
-//   const userData = useQuery(queryKey, fetchUser);
-
-//   if (userData.isLoading) {
-//     return (
-//       <MDBSpinner role="status">
-//         <span className="visually-hidden">Loading...</span>
-//       </MDBSpinner>
-//     );
-//   }
-
-//   return userData;
-// }
-
-function calculateAverageRating(ratings) {
+function calculateAverageRating(influencer) {
   var totalRating = 0;
-  for (var i = 0; i < ratings.length; i++) {
-    totalRating += ratings[i].rating;
+  for (var i = 0; i < influencer.rating.length; i++) {
+    totalRating += influencer.ratings[i].rating;
   }
 
-  return (totalRating / ratings.length).toFixed(2);
+  return (totalRating / influencer.rating.length).toFixed(2);
 }
 
 function BrowseInf({ searchTerm, filters }) {
@@ -73,6 +53,8 @@ function BrowseInf({ searchTerm, filters }) {
   const hashMap = {
     key1: "value1",
   };
+
+  console.log("hashmap", hashMap);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -101,6 +83,11 @@ function BrowseInf({ searchTerm, filters }) {
   // Filter influencers based on the search term, collaborations completed, subscribers, and rating
   // Filter influencers based on the search term and filters
   const filteredInfluencers = influencers.filter((influencer) => {
+    // console.log("totalRating: ", totalRating);
+    // console.log("influencer.name: ", influencer.user_name);
+    const matchesRatings =
+      !filters.rating || calculateAverageRating(influencer) >= filters.rating;
+
     const matchesSearchTerm = influencer.user_name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -110,12 +97,8 @@ function BrowseInf({ searchTerm, filters }) {
       !filters.totalProposals ||
       hashMap[influencer.user_id] >= filters.totalProposals;
 
-    const matchesRatings =
-      !filters.rating ||
-      calculateAverageRating(influencer.rating) >= filters.rating;
-
-    const matchesSubscribers =
-      !filters.subscribers || influencer.subscribers <= filters.subscribers;
+    // const matchesSubscribers =
+    //   !filters.subscribers || influencer.subscribers <= filters.subscribers;
 
     return matchesSearchTerm && matchesTotalProposals && matchesRatings;
   });
@@ -206,7 +189,9 @@ function BrowseInf({ searchTerm, filters }) {
                           style={{ fontSize: "20px" }}
                         >
                           {" "}
-                          {calculateAverageRating(influencer.rating)}
+                          {calculateAverageRating(influencer)
+                            ? calculateAverageRating(influencer)
+                            : "N/A"}
                         </span>
                       </MDBCol>
                     </MDBRow>
@@ -216,10 +201,7 @@ function BrowseInf({ searchTerm, filters }) {
                           const stars = [];
                           for (
                             var i = 0;
-                            i <
-                            Math.floor(
-                              calculateAverageRating(influencer.rating)
-                            );
+                            i < Math.floor(calculateAverageRating(influencer));
                             i++
                           ) {
                             stars.push(
@@ -233,10 +215,7 @@ function BrowseInf({ searchTerm, filters }) {
                           }
 
                           // Check if there's a half star to add
-                          if (
-                            calculateAverageRating(influencer.rating) % 1 >=
-                            0.5
-                          ) {
+                          if (calculateAverageRating(influencer) % 1 >= 0.5) {
                             stars.push(
                               <MDBCol md="1" key={"half"}>
                                 <FontAwesomeIcon

@@ -60,7 +60,7 @@ const FilterBar = ({ onFilterChange }) => {
               onChange={() => setTotalProposalsFilter(5)}
             />
             <MDBRadio
-              id="tp_gt100"
+              id="tp_gt10"
               label={
                 <div>
                   <span className="filter-label2"> More than 10</span>
@@ -70,7 +70,7 @@ const FilterBar = ({ onFilterChange }) => {
               onChange={() => setTotalProposalsFilter(10)}
             />
             <MDBRadio
-              id="tp_gt1000"
+              id="tp_gt20"
               label={
                 <div>
                   <span className="filter-label3"> More than 20</span>
@@ -80,7 +80,7 @@ const FilterBar = ({ onFilterChange }) => {
               onChange={() => setTotalProposalsFilter(20)}
             />
             <MDBRadio
-              id="tp_gt1000"
+              id="tp_gt50"
               label={
                 <div>
                   <span className="filter-label4"> More than 50</span>
