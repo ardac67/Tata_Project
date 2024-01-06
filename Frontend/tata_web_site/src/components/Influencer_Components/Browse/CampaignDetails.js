@@ -37,7 +37,7 @@ export default function CampaignDetails() {
   const { id } = useParams();
   const [selectedRating, setSelectedRating] = useState(0);
   const handleStarClick = (index) => {
-    setSelectedRating(index + 1);
+    setSelectedRating(index);
   };
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -70,13 +70,13 @@ export default function CampaignDetails() {
     axios
       .post(`http://localhost:3001/api/postRating`, data, { headers })
       .then((response) => {
-        toast.success("Success message here", {
+        toast.success("Success", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 4000,
         });
       })
       .catch((error) => {
-        toast.error(`Already applied ${error}`, {
+        toast.error(`Already applied`, {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 4000,
         });

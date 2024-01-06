@@ -35,11 +35,11 @@ function formatDate(dateString) {
 
 function calculateAverageRating(influencer) {
   var totalRating = 0;
-  for (var i = 0; i < influencer.rating.length; i++) {
+  for (var i = 0; i < influencer.ratings.length; i++) {
     totalRating += influencer.ratings[i].rating;
   }
 
-  return (totalRating / influencer.rating.length).toFixed(2);
+  return (totalRating / influencer.ratings.length).toFixed(2);
 }
 
 function BrowseInf({ searchTerm, filters }) {
